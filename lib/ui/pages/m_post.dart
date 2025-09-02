@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
+import 'package:minigram/ui/widgets/m_story.dart';
 
 // 홈 화면
 class Post extends StatelessWidget {
@@ -9,9 +10,10 @@ class Post extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
+      body: ListView(
         children: [
           _PostHeader(),
+          SizedBox(height: 4),
           _PostImage(),
           _PostFooter(),
         ],
@@ -32,12 +34,7 @@ class _PostHeader extends StatelessWidget {
       child: Row(
         children: [
           // 프로필 이미지 자리
-          CircleAvatar(
-            radius: 18,
-            backgroundImage: NetworkImage(
-              "https://i.namu.wiki/i/lbs5tIVXbGEvdR_3Co1azYeKBzKPNbo6GnxiHzndu1dCfSk7rob-Gs2wJZFmC4Oy7O_vq5hmzKzRd3i6WMl9_ul6pRENX1wAUU14fv1G_XFDwx8j1gY2gzugVVYZME2U2oJDqFoqREz3vuM1gcYaAQ.webp", // 프로필 이미지 URL
-            ),
-          ),
+          Story(size: 50),
           SizedBox(width: 10),
 
           // 아이디 + 이름 자리

@@ -7,7 +7,7 @@ class Story extends StatelessWidget {
 
   const Story({
     super.key,
-    this.size = 70,
+    required this.size,
     this.imageUrl = "https://cdn.pixabay.com/photo/2025/08/12/08/49/cat-9769723_1280.jpg",
   });
 
