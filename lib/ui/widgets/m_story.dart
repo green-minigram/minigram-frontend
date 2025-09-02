@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minigram/_core/styles/m_color.dart';
 
 class Story extends StatelessWidget {
   final double size;
@@ -22,23 +23,24 @@ class Story extends StatelessWidget {
           end: Alignment.topRight,
           colors: [
             // hex 컬러
-            Color(0xfffce80a),
-            Color(0xfffce80a),
-            Color(0xfffc3a0a),
-            Color(0xffc80afc),
-            Color(0xfffce80a),
+            MColor.kInsta.yellow,
+            MColor.kInsta.yellow,
+            MColor.kInsta.orange,
+            MColor.kInsta.red,
+            MColor.kInsta.pink,
+            MColor.kInsta.purple,
           ],
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.all(7),
+        padding: EdgeInsets.all(3),
         child: Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Colors.white,
+            color: MColor.kNormal.white,
           ),
           child: Padding(
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.all(4),
             child: CircleAvatar(
               backgroundImage: NetworkImage(imageUrl),
               radius: size / 2,
