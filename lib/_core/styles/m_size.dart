@@ -1,49 +1,84 @@
 // 사이즈 상수 정의
 class MSizes {
-  // Gap constants
-  static const double gapXXS = 2.0;
-  static const double gapXS = 5.0;
-  static const double gapS = 8.0;
-  static const double gapM = 10.0;
-  static const double gapL = 16.0;
-  static const double gapXL = 20.0;
-  static const double gapXXL = 24.0;
-  static const double gapHuge = 32.0;
+  /// 여백 (gap)
+  static const kGap = _Gaps();
 
-  // Icon sizes
-  static const double iconS = 16.0;
-  static const double iconM = 24.0;
-  static const double iconL = 32.0;
+  /// 아이콘 크기
+  static const kIcon = _Icons();
 
-  // Story sizes
+  /// 스토리 크기
+  static const kStory = _Stories();
+
+  /// 폰트 크기
+  static const kFont = _Fonts();
+
+  /// 선 굵기
+  static const kLine = _Lines();
+}
+
+/// Gap constants
+class _Gaps {
+  const _Gaps();
+
+  final double xxs = 2.0;
+  final double xs = 5.0;
+  final double s = 8.0;
+  final double m = 10.0;
+  final double l = 16.0;
+  final double xl = 20.0;
+  final double xxl = 24.0;
+  final double huge = 32.0;
+}
+
+/// Icon sizes
+class _Icons {
+  const _Icons();
+
+  final double s = 16.0;
+  final double m = 24.0;
+  final double l = 32.0;
+}
+
+/// Story sizes
+class _Stories {
+  const _Stories();
+
   /// 게시글 상단 프로필
-  static const double storyS = 50.0;
+  final double s = 50.0;
 
   /// 메인 스토리 프로필
-  static const double storyM = 75.0;
+  final double m = 75.0;
 
   /// 내 정보 페이지 프로필
-  static const double storyL = 110.0;
+  final double l = 110.0;
+}
 
-  // Font sizes (for reference)
-  static const double fontXXS = 8.0;
-  static const double fontTiny = 10.0;
-  static const double fontXS = 11.0;
-  static const double fontS = 12.0;
-  static const double fontNormal = 14.0;
-  static const double fontM = 16.0;
-  static const double fontL = 18.0;
-  static const double fontXL = 20.0;
-  static const double fontXXL = 24.0;
-  static const double fontHuge = 64.0;
+/// Font sizes
+class _Fonts {
+  const _Fonts();
 
-  // Line widths
+  final double xxs = 8.0;
+  final double tiny = 10.0;
+  final double xs = 11.0;
+  final double s = 12.0;
+  final double normal = 14.0;
+  final double m = 16.0;
+  final double l = 18.0;
+  final double xl = 20.0;
+  final double xxl = 24.0;
+  final double huge = 64.0;
+}
+
+/// Line widths
+class _Lines {
+  const _Lines();
+
   /// iOS 헤어라인 (리스트 구분선)
-  static const double lineHair = 0.5;
+  final double hair = 0.5;
 
   /// 기본 구분선
-  static const double lineNormal = 1.0;
+  final double normal = 1.0;
 
   /// 강조 라인
-  static const double lineThick = 2.0;
+  final double thick = 2.0;
 }
