@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minigram/_core/styles/m_color.dart';
 
 // 홈 화면
 class Post extends StatelessWidget {
@@ -48,19 +49,13 @@ class _PostHeader extends StatelessWidget {
                   children: [
                     Text(
                       "아이디 자리",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: MColor.kText.title),
                     ),
                   ],
                 ),
                 Text(
                   "이름자리",
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                  ),
+                  style: TextStyle(fontSize: 12, color: MColor.kText.secondary),
                 ),
               ],
             ),
@@ -70,7 +65,7 @@ class _PostHeader extends StatelessWidget {
           TextButton(
             onPressed: () {},
             style: TextButton.styleFrom(
-              foregroundColor: Colors.grey,
+              foregroundColor: MColor.kText.secondary,
               textStyle: TextStyle(fontWeight: FontWeight.bold),
             ),
             child: Text("팔로우"),
@@ -136,7 +131,7 @@ class _PostImage extends StatelessWidget {
                   height: 8,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: currentPage == index ? Colors.blue : Colors.grey,
+                    color: currentPage == index ? MColor.kIndicator.active : MColor.kIndicator.inactive,
                   ),
                 ),
               ),
@@ -172,7 +167,7 @@ class _PostFooterState extends State<_PostFooter> {
           // 좋아요 & 댓글
           Row(
             children: [
-              Icon(Icons.favorite, color: Colors.red, size: 20),
+              Icon(Icons.favorite, color: MColor.kButton.like, size: 20),
               SizedBox(width: 4),
               Text("3.2만"), // 좋아요 수
               SizedBox(width: 16),
@@ -202,7 +197,7 @@ class _PostFooterState extends State<_PostFooter> {
                   Expanded(
                     child: Text(
                       _expanded ? content : (content.length > 30 ? content.substring(0, 30) + "..." : content),
-                      style: TextStyle(fontSize: 14, color: Colors.black),
+                      style: TextStyle(fontSize: 14, color: MColor.kText.normal),
                     ),
                   ),
 
@@ -210,9 +205,9 @@ class _PostFooterState extends State<_PostFooter> {
                   if (!_expanded && content.length > 30)
                     GestureDetector(
                       onTap: () => setState(() => _expanded = true),
-                      child: const Text(
+                      child: Text(
                         " 더 보기",
-                        style: TextStyle(color: Colors.grey),
+                        style: TextStyle(color: MColor.kText.secondary),
                       ),
                     ),
                 ],
@@ -224,7 +219,7 @@ class _PostFooterState extends State<_PostFooter> {
           // 날짜
           Text(
             "8월 20일",
-            style: TextStyle(fontSize: 12, color: Colors.grey),
+            style: TextStyle(fontSize: 12, color: MColor.kText.secondary),
           ),
         ],
       ),
