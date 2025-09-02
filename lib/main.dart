@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:minigram/ui/pages/holder/main_holder.dart';
 
-void main() {
-  runApp(const MyApp());
+GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp();
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
-      home: Home(),
-    );
-  }
-}
-
-class Home extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Placeholder(),
+      theme: null,
+      home: MainHolder(),
+      routes: {
+        "/main-holder": (context) => Placeholder(),
+        "/login": (context) => Placeholder(),
+      },
     );
   }
 }
