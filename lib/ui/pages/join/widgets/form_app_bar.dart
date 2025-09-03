@@ -1,14 +1,12 @@
-// lib/join/widgets/m_form_app_bar.dart
-
 import 'package:flutter/material.dart';
 
 // PreferredSizeWidget을 상속받아 AppBar처럼 사용할 수 있는 커스텀 Appbar 위젯을 정의합니다.
-class MFormAppBar extends StatelessWidget implements PreferredSizeWidget {
+class FormAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String titleText;
   final VoidCallback? onLeadingPressed;
 
   // 생성자를 통해 제목과 뒤로 가기 버튼의 동작을 외부에서 주입받습니다.
-  const MFormAppBar({
+  const FormAppBar({
     Key? key,
     required this.titleText,
     this.onLeadingPressed,

@@ -4,6 +4,7 @@ import 'package:minigram/_core/styles/m_size.dart';
 
 class MAuthTextFormField extends StatelessWidget {
   final String title;
+  final String hintText;
   final String errorText;
   final Function(String)? onChanged;
   final bool obscureText;
@@ -11,6 +12,7 @@ class MAuthTextFormField extends StatelessWidget {
 
   const MAuthTextFormField({
     required this.title,
+    required this.hintText,
     this.errorText = "",
     this.onChanged,
     this.obscureText = false,
@@ -22,16 +24,18 @@ class MAuthTextFormField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: TextStyle(fontSize: MSizes.kFont.xxl),
-        ),
-        SizedBox(height: MSizes.kGap.xl),
+        disableTitle
+            ? Container()
+            : Text(
+                title,
+                style: TextStyle(fontSize: MSizes.kFont.xxl),
+              ),
+        disableTitle ? Container() : SizedBox(height: MSizes.kGap.xl),
         TextFormField(
           obscureText: obscureText,
           onChanged: onChanged,
           decoration: InputDecoration(
-            hintText: "${title}을 입력해주세요",
+            hintText: hintText,
             errorText: errorText.isEmpty ? null : errorText,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(MSizes.kBorderRadius.m),
