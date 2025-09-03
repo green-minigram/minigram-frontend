@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart'; // 사이즈 상수
-import 'package:minigram/ui/widgets/story.dart';
+import 'package:minigram/ui/widgets/m_story.dart';
 
 class StoryList extends StatelessWidget {
   // final List<Map<String, dynamic>> stories;

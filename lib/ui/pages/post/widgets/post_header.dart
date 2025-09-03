@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
+import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/ui/widgets/m_button.dart';
 
 class PostHeader extends StatelessWidget {
   PostHeader({
@@ -23,36 +25,25 @@ class PostHeader extends StatelessWidget {
 
           // 아이디 + 이름 자리
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      "아이디 자리",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                  ],
-                ),
-                Text(
-                  "이름자리",
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                  ),
-                ),
-              ],
+            child: Text(
+              "아이디 자리",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: MSizes.kFont.normal),
             ),
           ),
 
-          // TODO 재원님이 만들면 팔로우 버튼 끼우기
-          TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.grey,
-              textStyle: TextStyle(fontWeight: FontWeight.bold),
+          MButton.outline(
+            onPressed: () {
+              print("팔로우 버튼 클릭됨");
+            },
+            child: const Text(
+              "팔로우",
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            child: Text("팔로우"),
+            borderSide: BorderSide.none,
+            textColor: MColor.kText.normal,
+            borderRadius: 9,
+            backgroundColor: MColor.kButton.disabled,
+            padding: EdgeInsets.symmetric(horizontal: 16),
           ),
 
           // 더보기 버튼
