@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 
 class PostImage extends StatelessWidget {
@@ -20,7 +21,7 @@ class PostImage extends StatelessWidget {
         return Column(
           children: [
             AspectRatio(
-              aspectRatio: MSizes.kRatio.aspect34,
+              aspectRatio: MSize.kRatio.aspect34,
               child: PageView.builder(
                 controller: pageController,
                 itemCount: imageUrls.length,
@@ -37,7 +38,7 @@ class PostImage extends StatelessWidget {
                 },
               ),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: MSize.kGap.xs),
 
             // 넘기는거 표시하는 곳
             Row(
@@ -45,12 +46,12 @@ class PostImage extends StatelessWidget {
               children: List.generate(
                 imageUrls.length,
                 (index) => Container(
-                  margin: EdgeInsets.symmetric(horizontal: 3),
-                  width: 8,
-                  height: 8,
+                  margin: EdgeInsets.symmetric(horizontal: MSize.kGap.xxs),
+                  width: MSize.kGap.xs,
+                  height: MSize.kGap.xs,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: currentPage == index ? Colors.blue : Colors.grey,
+                    color: currentPage == index ? MColor.kIndicator.active : MColor.kIndicator.inactive,
                   ),
                 ),
               ),

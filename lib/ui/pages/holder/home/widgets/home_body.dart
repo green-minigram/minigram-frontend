@@ -14,7 +14,7 @@ class HomeBody extends StatelessWidget {
       children: [
         // 스토리 리스트
         StoryList(),
-        SizedBox(height: MSizes.kGap.xs),
+        SizedBox(height: MSize.kGap.xxxxs),
         PostList(),
       ],
     );
