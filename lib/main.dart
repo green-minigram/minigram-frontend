@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:minigram/_core/styles/m_theme.dart';
+import 'package:minigram/m_route.dart';
+import 'package:minigram/ui/pages/holder/main_holder.dart';
+import 'package:minigram/ui/pages/join/email_page.dart';
+import 'package:minigram/ui/pages/join/password_page.dart';
+import 'package:minigram/ui/pages/join/username_page.dart';
 import 'package:minigram/ui/pages/post/detail/post_detail_page.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -16,11 +22,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
-      theme: null,
+      theme: mTheme(),
       home: PostDetailPage(),
       routes: {
-        "/main-holder": (context) => Placeholder(),
-        "/login": (context) => Placeholder(),
+        "${MRoute.mainHolder}": (context) => const MainHolder(),
+        "${MRoute.joinEmail}": (context) => EmailPage(),
+        "${MRoute.joinUsername}": (context) => UsernamePage(),
+        "${MRoute.joinPassword}": (context) => PasswordPage(),
+        "${MRoute.login}": (context) => PasswordPage(),
       },
     );
   }
