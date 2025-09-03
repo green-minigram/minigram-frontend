@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:minigram/ui/pages/holder/main_holder.dart';
+import 'package:minigram/ui/pages/post/detail/post_detail_page.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: null,
-      home: MainHolder(),
+      home: PostDetailPage(),
       routes: {
         "/main-holder": (context) => Placeholder(),
         "/login": (context) => Placeholder(),
