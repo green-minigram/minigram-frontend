@@ -8,20 +8,20 @@ class UsernameBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: MSizes.kGap.l),
+      padding: EdgeInsets.symmetric(horizontal: MSize.kGap.l),
       child: Column(
         children: [
           Flexible(
             child: Form(
               child: ListView(
                 children: [
-                  SizedBox(height: MSizes.kGap.l),
+                  SizedBox(height: MSize.kGap.l),
                   MAuthTextFormField(
                     title: "아이디",
                     hintText: "아이디를 입력해주세요",
                     keyboardType: TextInputType.text,
                   ),
-                  SizedBox(height: MSizes.kGap.l),
+                  SizedBox(height: MSize.kGap.l),
                   MButton(
                     onPressed: () {
                       Navigator.pushNamed(context, MRoute.joinPassword);

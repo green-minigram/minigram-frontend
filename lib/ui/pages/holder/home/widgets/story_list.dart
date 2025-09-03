@@ -23,12 +23,12 @@ class StoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MSizes.kStory.m + MSizes.kGap.l + MSizes.kFont.s,
+      height: MSize.kStory.m + MSize.kGap.l + MSize.kFont.s,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.symmetric(horizontal: MSizes.kGap.s),
+        padding: EdgeInsets.symmetric(horizontal: MSize.kGap.xs),
         itemCount: dummyStories.length.clamp(0, 10),
-        separatorBuilder: (_, __) => SizedBox(width: MSizes.kGap.m),
+        separatorBuilder: (_, __) => SizedBox(width: MSize.kGap.s),
         itemBuilder: (context, index) {
           final story = dummyStories[index];
           final username = story['author']['username'];
@@ -45,7 +45,7 @@ class StoryList extends StatelessWidget {
                   child: Stack(
                     children: [
                       MStory(
-                        size: MSizes.kStory.m,
+                        size: MSize.kStory.m,
                         imageUrl: profileUrl,
                         isGradient: false,
                       ),
@@ -58,23 +58,23 @@ class StoryList extends StatelessWidget {
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: MColor.kNormal.white,
-                              width: MSizes.kLine.normal,
+                              width: MSize.kLine.normal,
                             ),
                           ),
                           child: Icon(
                             Icons.add,
-                            color: Colors.white,
-                            size: MSizes.kIcon.m,
+                            color: MColor.kNormal.white,
+                            size: MSize.kIcon.m,
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: MSizes.kGap.s),
+                SizedBox(height: MSize.kGap.xs),
                 Text(
                   "내 스토리",
-                  style: TextStyle(fontSize: MSizes.kFont.s),
+                  style: TextStyle(fontSize: MSize.kFont.s),
                   overflow: TextOverflow.ellipsis,
                 ),
               ],
@@ -89,14 +89,14 @@ class StoryList extends StatelessWidget {
                   print("$username 스토리 클릭됨");
                 },
                 child: MStory(
-                  size: MSizes.kStory.m,
+                  size: MSize.kStory.m,
                   imageUrl: profileUrl,
                 ),
               ),
-              SizedBox(height: MSizes.kGap.s),
+              SizedBox(height: MSize.kGap.xs),
               Text(
                 username,
-                style: TextStyle(fontSize: MSizes.kFont.s),
+                style: TextStyle(fontSize: MSize.kFont.s),
                 overflow: TextOverflow.ellipsis,
               ),
             ],
