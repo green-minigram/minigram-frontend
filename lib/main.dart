@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minigram/_core/styles/m_theme.dart';
 import 'package:minigram/ui/pages/holder/main_holder.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
-      theme: null,
+      theme: mTheme(),
       home: MainHolder(),
       routes: {
         "/main-holder": (context) => Placeholder(),
