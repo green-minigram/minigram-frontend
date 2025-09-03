@@ -7,11 +7,11 @@ import 'package:minigram/ui/widgets/m_button.dart';
 class PasswordBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Flexible(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: MSizes.kGap.l),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: MSizes.kGap.l),
+      child: Column(
+        children: [
+          Flexible(
             child: Form(
               child: ListView(
                 children: [
@@ -24,9 +24,7 @@ class PasswordBody extends StatelessWidget {
                   ),
                   SizedBox(height: MSizes.kGap.l),
                   MAuthTextFormField(
-                    title: "비밀번호",
                     hintText: "비밀번호를 확인해주세요",
-                    disableTitle: true,
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
                   ),
@@ -41,8 +39,8 @@ class PasswordBody extends StatelessWidget {
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

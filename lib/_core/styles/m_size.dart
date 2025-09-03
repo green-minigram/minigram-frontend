@@ -35,6 +35,7 @@ class _Gaps {
   final double xl = 20.0;
   final double xxl = 24.0;
   final double huge = 32.0;
+  final double doubleHuge = 64.0;
 }
 
 /// Icon sizes

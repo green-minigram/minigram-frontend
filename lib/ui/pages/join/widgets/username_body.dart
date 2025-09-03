@@ -7,11 +7,11 @@ import 'package:minigram/ui/widgets/m_button.dart';
 class UsernameBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Flexible(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: MSizes.kGap.l),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: MSizes.kGap.l),
+      child: Column(
+        children: [
+          Flexible(
             child: Form(
               child: ListView(
                 children: [
@@ -32,8 +32,8 @@ class UsernameBody extends StatelessWidget {
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

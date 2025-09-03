@@ -9,7 +9,7 @@ class EmailPage extends StatelessWidget {
       appBar: FormAppBar(
         titleText: "회원가입",
         onLeadingPressed: () {
-          // Navigator.pop(context);
+          Navigator.pop(context);
         },
       ),
       body: EmailBody(),
