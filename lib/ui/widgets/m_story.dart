@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
+import 'package:minigram/_core/styles/m_size.dart';
 
 class MStory extends StatelessWidget {
   final double size;
@@ -35,14 +36,14 @@ class MStory extends StatelessWidget {
             : null,
       ),
       child: Padding(
-        padding: const EdgeInsets.all(3),
+        padding: EdgeInsets.all(MSize.kGap.xxxs),
         child: Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: MColor.kNormal.white,
           ),
           child: Padding(
-            padding: const EdgeInsets.all(4),
+            padding: EdgeInsets.all(MSize.kGap.xxs),
             child: CircleAvatar(
               backgroundImage: NetworkImage(imageUrl),
               radius: size / 2,

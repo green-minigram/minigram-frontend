@@ -11,17 +11,17 @@ class UsernameBody extends StatelessWidget {
       children: [
         Flexible(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: MSizes.kGap.l),
+            padding: EdgeInsets.symmetric(horizontal: MSize.kGap.l),
             child: Form(
               child: ListView(
                 children: [
-                  SizedBox(height: MSizes.kGap.l),
+                  SizedBox(height: MSize.kGap.l),
                   MAuthTextFormField(
                     title: "아이디",
                     hintText: "아이디를 입력해주세요",
                     keyboardType: TextInputType.text,
                   ),
-                  SizedBox(height: MSizes.kGap.l),
+                  SizedBox(height: MSize.kGap.l),
                   MButton(
                     onPressed: () {
                       Navigator.pushNamed(context, MRoute.joinPassword);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minigram/_core/styles/m_size.dart';
 
 import 'post_card.dart';
 
@@ -16,7 +17,7 @@ class PostList extends StatelessWidget {
       // 더미 게시글 개수
       itemBuilder: (context, index) {
         return Padding(
-          padding: const EdgeInsets.only(bottom: 10),
+          padding: EdgeInsets.only(bottom: MSize.kGap.s),
           child: PostCard(),
         );
       },
