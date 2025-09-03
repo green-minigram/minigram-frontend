@@ -11,7 +11,7 @@ class PostHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: MSizes.kGap.l),
       child: Row(
         children: [
           // 프로필 이미지 자리
@@ -39,7 +39,7 @@ class PostHeader extends StatelessWidget {
             textColor: MColor.kText.normal,
             borderRadius: 9,
             backgroundColor: MColor.kButton.disabled,
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: MSizes.kGap.l),
           ),
 
           // 더보기 버튼
