@@ -3,21 +3,21 @@ import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 
 class MAuthTextFormField extends StatelessWidget {
-  final String title;
+  final String? title;
   final String hintText;
   final String errorText;
   final Function(String)? onChanged;
+  final Future<void> Function()? onTap;
   final bool obscureText;
-  final bool disableTitle;
   final TextInputType keyboardType;
 
   const MAuthTextFormField({
-    required this.title,
+    this.title,
     required this.hintText,
     this.errorText = "",
     this.onChanged,
+    this.onTap,
     this.obscureText = false,
-    this.disableTitle = false,
     this.keyboardType = TextInputType.text,
   });
 
@@ -26,19 +26,21 @@ class MAuthTextFormField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (!disableTitle) ...[
+        if (title != null) ...[
           Text(
-            title,
+            title!,
             style: TextStyle(fontSize: MSize.kFont.xxl),
           ),
           SizedBox(height: MSize.kGap.xl),
         ],
         TextFormField(
+          onTap: onTap,
           obscureText: obscureText,
           onChanged: onChanged,
           keyboardType: keyboardType,
           decoration: InputDecoration(
             hintText: hintText,
+            hintStyle: TextStyle(color: MColor.kText.secondary),
             errorText: errorText.isEmpty ? null : errorText,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(MSize.kBorderRadius.m),

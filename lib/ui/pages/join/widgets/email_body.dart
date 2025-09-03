@@ -7,11 +7,11 @@ import 'package:minigram/ui/widgets/m_button.dart';
 class EmailBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Flexible(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: MSize.kGap.l),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: MSize.kGap.l),
+      child: Column(
+        children: [
+          Flexible(
             child: Form(
               child: ListView(
                 children: [
@@ -32,8 +32,8 @@ class EmailBody extends StatelessWidget {
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
