@@ -19,11 +19,11 @@ class HomePage extends StatelessWidget {
     elevation: 0,
     leadingWidth: 150,
     leading: Padding(
-      padding: EdgeInsets.only(left: MSizes.kGap.sm),
+      padding: EdgeInsets.only(left: MSize.kGap.m),
       child: Text(
         "minigram",
         style: GoogleFonts.lobsterTwo(
-          fontSize: MSizes.kFont.xxxl,
+          fontSize: MSize.kFont.xxxl,
           fontWeight: FontWeight.w500,
           color: Colors.black,
         ),
@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
         icon: Icon(
           Icons.notifications_none,
           color: Colors.black,
-          size: MSizes.kIcon.l,
+          size: MSize.kIcon.l,
         ),
         onPressed: () {},
       ),

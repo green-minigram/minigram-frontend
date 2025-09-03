@@ -29,9 +29,9 @@ class MAuthTextFormField extends StatelessWidget {
         if (!disableTitle) ...[
           Text(
             title,
-            style: TextStyle(fontSize: MSizes.kFont.xxl),
+            style: TextStyle(fontSize: MSize.kFont.xxl),
           ),
-          SizedBox(height: MSizes.kGap.xl),
+          SizedBox(height: MSize.kGap.xl),
         ],
         TextFormField(
           obscureText: obscureText,
@@ -41,19 +41,19 @@ class MAuthTextFormField extends StatelessWidget {
             hintText: hintText,
             errorText: errorText.isEmpty ? null : errorText,
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(MSizes.kBorderRadius.m),
+              borderRadius: BorderRadius.circular(MSize.kBorderRadius.m),
               borderSide: BorderSide(color: MColor.kText.secondary),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(MSizes.kBorderRadius.m),
+              borderRadius: BorderRadius.circular(MSize.kBorderRadius.m),
               borderSide: BorderSide(color: MColor.kText.normal),
             ),
             errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(MSizes.kBorderRadius.m),
+              borderRadius: BorderRadius.circular(MSize.kBorderRadius.m),
               borderSide: BorderSide(color: MColor.kText.red),
             ),
             focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(MSizes.kBorderRadius.m),
+              borderRadius: BorderRadius.circular(MSize.kBorderRadius.m),
               borderSide: BorderSide(color: MColor.kText.red),
             ),
           ),
