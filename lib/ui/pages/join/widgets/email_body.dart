@@ -16,7 +16,11 @@ class EmailBody extends StatelessWidget {
               child: ListView(
                 children: [
                   SizedBox(height: MSizes.kGap.l),
-                  MAuthTextFormField(title: "이메일", hintText: "이메일을 입력해주세요"),
+                  MAuthTextFormField(
+                    title: "이메일",
+                    hintText: "이메일을 입력해주세요",
+                    keyboardType: TextInputType.emailAddress,
+                  ),
                   SizedBox(height: MSizes.kGap.l),
                   MButton(
                     onPressed: () {

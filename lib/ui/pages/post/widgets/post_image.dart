@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minigram/_core/styles/m_size.dart';
 
 class PostImage extends StatelessWidget {
   PostImage({super.key});
@@ -19,7 +20,7 @@ class PostImage extends StatelessWidget {
         return Column(
           children: [
             AspectRatio(
-              aspectRatio: 3 / 4,
+              aspectRatio: MSizes.kRatio.aspect34,
               child: PageView.builder(
                 controller: pageController,
                 itemCount: imageUrls.length,
