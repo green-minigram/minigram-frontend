@@ -8,10 +8,26 @@ import 'package:minigram/ui/widgets/m_button.dart';
 class LoginBody extends StatelessWidget {
   final scroll = ScrollController();
 
+  // MAuthTextFormField의 onTap 이벤트를 위한 함수
+  Future<void> _onFieldTapped() async {
+    await Future.delayed(const Duration(milliseconds: 600));
+    scroll.jumpTo(scroll.position.maxScrollExtent);
+  }
+
+  // 로그인 버튼의 onPressed 이벤트를 위한 함수
+  void _onLoginPressed() {
+    // Navigator.pushNamed(context, MRoute.joinUsername);
+  }
+
+  // 새 계정 만들기 버튼의 onPressed 이벤트를 위한 함수
+  void _onJoinPressed(BuildContext context) {
+    Navigator.pushNamed(context, MRoute.joinEmail);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: MSizes.kGap.l),
+      padding: EdgeInsets.symmetric(horizontal: MSize.kGap.l),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -24,47 +40,37 @@ class LoginBody extends StatelessWidget {
                     color: Colors.black26,
                     height: 300,
                   ),
-                  SizedBox(height: MSizes.kGap.l),
+                  SizedBox(height: MSize.kGap.l),
                   MAuthTextFormField(
                     hintText: "이메일",
                     keyboardType: TextInputType.emailAddress,
-                    onTap: () async {
-                      await Future.delayed(Duration(milliseconds: 600));
-                      scroll.jumpTo(scroll.position.maxScrollExtent);
-                    },
+                    onTap: _onFieldTapped,
                   ),
-                  SizedBox(height: MSizes.kGap.l),
+                  SizedBox(height: MSize.kGap.l),
                   MAuthTextFormField(
                     hintText: "비밀번호",
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
-                    onTap: () async {
-                      await Future.delayed(Duration(milliseconds: 600));
-                      scroll.jumpTo(scroll.position.maxScrollExtent);
-                    },
+                    onTap: _onFieldTapped,
                   ),
-                  SizedBox(height: MSizes.kGap.l),
+                  SizedBox(height: MSize.kGap.l),
                   MButton(
-                    onPressed: () {
-                      // Navigator.pushNamed(context, MRoute.joinUsername);
-                    },
+                    onPressed: _onLoginPressed,
                     text: "로그인",
                   ),
-                  SizedBox(height: MSizes.kGap.l),
+                  SizedBox(height: MSize.kGap.l),
                 ],
               ),
             ),
           ),
           MButton.outline(
-            onPressed: () {
-              Navigator.pushNamed(context, MRoute.joinEmail);
-            },
+            onPressed: () => _onJoinPressed(context),
             text: "새 계정 만들기",
             textColor: MColor.kText.blue,
             borderSide: BorderSide(color: MColor.kLine.main),
             backgroundColor: MColor.kBackGround.normal,
           ),
-          SizedBox(height: MSizes.kGap.doubleHuge),
+          SizedBox(height: MSize.kGap.doubleHuge),
         ],
       ),
     );
