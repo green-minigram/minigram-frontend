@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 
-class Story extends StatelessWidget {
+class MStory extends StatelessWidget {
   final double size;
   final String imageUrl;
 
-  const Story({
+  const MStory({
     super.key,
-    this.size = 70,
+    required this.size,
     this.imageUrl = "https://cdn.pixabay.com/photo/2025/08/12/08/49/cat-9769723_1280.jpg",
   });
 
