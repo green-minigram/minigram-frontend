@@ -23,13 +23,13 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: mTheme(),
-      home: LoginPage(),
+      home: MainHolder(),
       routes: {
         "${MRoute.mainHolder}": (context) => const MainHolder(),
-        "${MRoute.joinEmail}": (context) => EmailPage(),
-        "${MRoute.joinUsername}": (context) => UsernamePage(),
-        "${MRoute.joinPassword}": (context) => PasswordPage(),
-        "${MRoute.login}": (context) => LoginPage(),
+        "${MRoute.joinEmail}": (context) => const EmailPage(),
+        "${MRoute.joinUsername}": (context) => const UsernamePage(),
+        "${MRoute.joinPassword}": (context) => const PasswordPage(),
+        "${MRoute.login}": (context) => const LoginPage(),
       },
     );
   }

@@ -3,6 +3,8 @@ import 'package:minigram/ui/pages/join/widgets/email_body.dart';
 import 'package:minigram/ui/pages/join/widgets/form_app_bar.dart';
 
 class EmailPage extends StatelessWidget {
+  const EmailPage();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
