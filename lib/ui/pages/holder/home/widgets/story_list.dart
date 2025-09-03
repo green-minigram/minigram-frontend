@@ -44,7 +44,7 @@ class StoryList extends StatelessWidget {
                   },
                   child: Stack(
                     children: [
-                      Story(
+                      MStory(
                         size: MSizes.kStory.m,
                         imageUrl: profileUrl,
                         isGradient: false,
@@ -88,7 +88,7 @@ class StoryList extends StatelessWidget {
                 onTap: () {
                   print("$username 스토리 클릭됨");
                 },
-                child: Story(
+                child: MStory(
                   size: MSizes.kStory.m,
                   imageUrl: profileUrl,
                 ),

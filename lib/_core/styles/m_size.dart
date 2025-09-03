@@ -93,5 +93,6 @@ class _Lines {
 class _Ratios {
   const _Ratios();
 
+  /// 게시글 비율
   final double aspect34 = 3 / 4;
 }

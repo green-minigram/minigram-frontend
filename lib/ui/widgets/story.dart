@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 
-class Story extends StatelessWidget {
+class MStory extends StatelessWidget {
   final double size;
   final String imageUrl;
   final bool isGradient;
 
-  const Story({
+  const MStory({
     super.key,
     required this.size,
     required this.imageUrl,
