@@ -31,15 +31,11 @@ class PostHeader extends StatelessWidget {
             ),
           ),
 
-          MButton.outline(
+          MButton(
             onPressed: () {
               print("팔로우 버튼 클릭됨");
             },
-            child: const Text(
-              "팔로우",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            borderSide: BorderSide.none,
+            text: "팔로우",
             textColor: MColor.kText.normal,
             borderRadius: 9,
             backgroundColor: MColor.kButton.disabled,
