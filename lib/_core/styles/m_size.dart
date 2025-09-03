@@ -15,6 +15,9 @@ class MSizes {
   /// 선 굵기
   static const kLine = _Lines();
 
+  /// 화면 비율
+  static const kRatio = _Ratios();
+
   /// 보더 곡률
   static const kBorderRadius = _BorderRadius();
 }
@@ -26,6 +29,7 @@ class _Gaps {
   final double xxs = 2.0;
   final double xs = 5.0;
   final double s = 8.0;
+  final double sm = 12.0;
   final double m = 10.0;
   final double l = 16.0;
   final double xl = 20.0;
@@ -39,7 +43,8 @@ class _Icons {
 
   final double s = 16.0;
   final double m = 24.0;
-  final double l = 32.0;
+  final double l = 30.0;
+  final double xl = 32.0;
 }
 
 /// Story sizes
@@ -69,6 +74,7 @@ class _Fonts {
   final double l = 18.0;
   final double xl = 20.0;
   final double xxl = 24.0;
+  final double xxxl = 35.0;
   final double huge = 64.0;
 }
 
@@ -84,6 +90,14 @@ class _Lines {
 
   /// 강조 라인
   final double thick = 2.0;
+}
+
+/// Ratio widths
+class _Ratios {
+  const _Ratios();
+
+  /// 게시글 비율
+  final double aspect34 = 3 / 4;
 }
 
 /// BorderRadius
