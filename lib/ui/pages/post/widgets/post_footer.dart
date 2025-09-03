@@ -52,22 +52,15 @@ class _PostFooterState extends State<PostFooter> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // 본문
                   Expanded(
                     child: Text(
                       _expanded ? content : (content.length > 30 ? content.substring(0, 30) + "..." : content),
-                      style: TextStyle(fontSize: MSize.kFont.m, color: MColor.kText.normal),
                     ),
                   ),
-
-                  // 더보기 버튼 길이 제한 일단 30자로 더 짧으면 안보이게
                   if (!_expanded && content.length > 30)
                     GestureDetector(
                       onTap: () => setState(() => _expanded = true),
-                      child: Text(
-                        " 더 보기",
-                        style: TextStyle(color: MColor.kText.secondary),
-                      ),
+                      child: Text(" 더 보기"),
                     ),
                 ],
               ),
