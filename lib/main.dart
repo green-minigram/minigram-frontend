@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:minigram/ui/pages/holder/main_holder.dart';
+import 'package:minigram/ui/pages/join/form_email_page.dart';
+import 'package:minigram/ui/pages/join/form_password_page.dart';
+import 'package:minigram/ui/pages/join/form_username_page.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -17,10 +19,11 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: null,
-      home: MainHolder(),
+      home: FormEmailPage(),
       routes: {
         "/main-holder": (context) => Placeholder(),
-        "/login": (context) => Placeholder(),
+        "/join/form-username": (context) => FormUsernamePage(),
+        "/join/form-password": (context) => FormPasswordPage(),
       },
     );
   }
