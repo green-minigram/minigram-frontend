@@ -15,7 +15,6 @@ class HomePage extends StatelessWidget {
   }
 
   AppBar _appBar(BuildContext context) => AppBar(
-    backgroundColor: Colors.white,
     elevation: 0,
     leadingWidth: 150,
     leading: Padding(
