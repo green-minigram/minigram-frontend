@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: null,
-      home: MainHolder(),
+      home: EmailPage(),
       routes: {
         "${MRoute.mainHolder}": (context) => const MainHolder(),
         "${MRoute.joinEmail}": (context) => EmailPage(),
