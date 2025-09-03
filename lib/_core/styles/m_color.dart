@@ -127,10 +127,10 @@ class _Texts {
   final Color secondary = const Color(0xFF68717B);
 
   /// 에러/경고 텍스트
-  final Color red = const Color(0xFFFF0000);
+  final Color red = const Color(0xFFFF453A);
 
   /// 수정/완료 텍스트
-  final Color blue = const Color(0xFF0000FF);
+  final Color blue = const Color(0xFF3F4FEE);
 }
 
 /// Input Colors
