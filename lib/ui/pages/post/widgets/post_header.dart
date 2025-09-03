@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minigram/_core/styles/m_color.dart';
 
 class PostHeader extends StatelessWidget {
   PostHeader({
@@ -57,7 +58,42 @@ class PostHeader extends StatelessWidget {
           // 더보기 버튼
           IconButton(
             icon: Icon(Icons.more_horiz),
-            onPressed: () {},
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                ),
+                builder: (context) {
+                  return SafeArea(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ListTile(
+                          leading: Icon(Icons.person_remove_outlined),
+                          title: Text("팔로우 취소"),
+                          onTap: () {
+                            Navigator.pop(context);
+                            print("팔로우 취소 클릭됨");
+                          },
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.flag_outlined, color: MColor.kText.red),
+                          title: Text(
+                            "신고",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                          onTap: () {
+                            Navigator.pop(context);
+                            print("신고 클릭됨");
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
           ),
         ],
       ),
