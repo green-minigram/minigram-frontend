@@ -9,6 +9,7 @@ class MAuthTextFormField extends StatelessWidget {
   final Function(String)? onChanged;
   final bool obscureText;
   final bool disableTitle;
+  final TextInputType keyboardType;
 
   const MAuthTextFormField({
     required this.title,
@@ -17,6 +18,7 @@ class MAuthTextFormField extends StatelessWidget {
     this.onChanged,
     this.obscureText = false,
     this.disableTitle = false,
+    this.keyboardType = TextInputType.text,
   });
 
   @override
@@ -24,16 +26,17 @@ class MAuthTextFormField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        disableTitle
-            ? Container()
-            : Text(
-                title,
-                style: TextStyle(fontSize: MSizes.kFont.xxl),
-              ),
-        disableTitle ? Container() : SizedBox(height: MSizes.kGap.xl),
+        if (!disableTitle) ...[
+          Text(
+            title,
+            style: TextStyle(fontSize: MSizes.kFont.xxl),
+          ),
+          SizedBox(height: MSizes.kGap.xl),
+        ],
         TextFormField(
           obscureText: obscureText,
           onChanged: onChanged,
+          keyboardType: keyboardType,
           decoration: InputDecoration(
             hintText: hintText,
             errorText: errorText.isEmpty ? null : errorText,

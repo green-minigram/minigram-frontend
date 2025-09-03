@@ -16,7 +16,11 @@ class UsernameBody extends StatelessWidget {
               child: ListView(
                 children: [
                   SizedBox(height: MSizes.kGap.l),
-                  MAuthTextFormField(title: "아이디", hintText: "아이디를 입력해주세요"),
+                  MAuthTextFormField(
+                    title: "아이디",
+                    hintText: "아이디를 입력해주세요",
+                    keyboardType: TextInputType.text,
+                  ),
                   SizedBox(height: MSizes.kGap.l),
                   MButton(
                     onPressed: () {

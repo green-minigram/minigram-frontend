@@ -16,9 +16,20 @@ class PasswordBody extends StatelessWidget {
               child: ListView(
                 children: [
                   SizedBox(height: MSizes.kGap.l),
-                  MAuthTextFormField(title: "비밀번호", hintText: "비밀번호를 입력해주세요"),
+                  MAuthTextFormField(
+                    title: "비밀번호",
+                    hintText: "비밀번호를 입력해주세요",
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: true,
+                  ),
                   SizedBox(height: MSizes.kGap.l),
-                  MAuthTextFormField(title: "비밀번호", hintText: "비밀번호를 확인해주세요", disableTitle: true),
+                  MAuthTextFormField(
+                    title: "비밀번호",
+                    hintText: "비밀번호를 확인해주세요",
+                    disableTitle: true,
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: true,
+                  ),
                   SizedBox(height: MSizes.kGap.l),
                   MButton(
                     onPressed: () {
