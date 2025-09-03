@@ -68,7 +68,7 @@ class PostHeader extends StatelessWidget {
                           leading: Icon(Icons.flag_outlined, color: MColor.kText.red),
                           title: Text(
                             "신고",
-                            style: TextStyle(color: Colors.red),
+                            style: TextStyle(color: MColor.kText.red),
                           ),
                           onTap: () {
                             Navigator.pop(context);
