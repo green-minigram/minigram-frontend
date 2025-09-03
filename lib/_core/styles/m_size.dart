@@ -17,6 +17,9 @@ class MSizes {
 
   /// 화면 비율
   static const kRatio = _Ratios();
+
+  /// 보더 곡률
+  static const kBorderRadius = _BorderRadius();
 }
 
 /// Gap constants
@@ -95,4 +98,18 @@ class _Ratios {
 
   /// 게시글 비율
   final double aspect34 = 3 / 4;
+}
+
+/// BorderRadius
+class _BorderRadius {
+  const _BorderRadius();
+
+  /// 8.0
+  final double s = 8.0;
+
+  /// 16.0
+  final double m = 16.0;
+
+  /// 24.0
+  final double l = 24.0;
 }

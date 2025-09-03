@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 class MButton extends StatelessWidget {
   final VoidCallback onPressed; // 버튼 눌림 이벤트 (필수)
-  final Widget child; // 버튼 내용 (필수)
+  final String text; // 버튼 내용 (필수)
   final Color? backgroundColor; // 배경색 (선택적)
   final Color? textColor; // 텍스트 색상 (선택적)
+  final double? textSize; // 텍스트 사이즈 (선택적)
   final double borderRadius; // 모서리 둥글기 (기본값 있음)
   final EdgeInsetsGeometry padding; // 내부 여백 (기본값 있음)
   final BorderSide? borderSide; // 보더 속성
@@ -13,9 +14,10 @@ class MButton extends StatelessWidget {
   const MButton({
     Key? key,
     required this.onPressed, // 필수 매개변수
-    required this.child, // 필수 매개변수
+    required this.text, // 필수 매개변수
     this.backgroundColor, // 선택적 - null이면 기본값 사용
     this.textColor, // 선택적 - null이면 기본값 사용
+    this.textSize = 16, // 선택적 - null이면 기본값 사용
     this.borderRadius = 15.0, // 기본값: 15.0
     this.padding = const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0), // 기본 패딩
   }) : borderSide = null,
@@ -26,9 +28,10 @@ class MButton extends StatelessWidget {
   const MButton.outline({
     Key? key,
     required this.onPressed, // 필수 매개변수
-    required this.child, // 필수 매개변수
+    required this.text, // 필수 매개변수
     this.backgroundColor, // 선택적 - null이면 기본값 사용
     this.textColor, // 선택적 - null이면 기본값 사용
+    this.textSize = 16, // 선택적 - null이면 기본값 사용
     this.borderRadius = 15.0, // 기본값: 15.0
     this.padding = const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0), // 기본 패딩
     required this.borderSide, // outline에서는 보더가 필수!
@@ -52,7 +55,7 @@ class MButton extends StatelessWidget {
           padding: padding,
         ),
         onPressed: onPressed,
-        child: child,
+        child: Text(text, style: TextStyle(fontSize: textSize)),
       );
     } else {
       // 보더가 없는 경우 - FilledButton 사용 (그림자 없음!)
@@ -67,7 +70,7 @@ class MButton extends StatelessWidget {
           // elevation 설정 불필요! FilledButton은 기본적으로 elevation: 0
         ),
         onPressed: onPressed,
-        child: child,
+        child: Text(text, style: TextStyle(fontSize: textSize)),
       );
     }
   }
