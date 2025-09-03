@@ -14,6 +14,9 @@ class MSizes {
 
   /// 선 굵기
   static const kLine = _Lines();
+
+  /// 보더 곡률
+  static const kBorderRadius = _BorderRadius();
 }
 
 /// Gap constants
@@ -81,4 +84,18 @@ class _Lines {
 
   /// 강조 라인
   final double thick = 2.0;
+}
+
+/// BorderRadius
+class _BorderRadius {
+  const _BorderRadius();
+
+  /// 8.0
+  final double s = 8.0;
+
+  /// 16.0
+  final double m = 16.0;
+
+  /// 24.0
+  final double l = 24.0;
 }
