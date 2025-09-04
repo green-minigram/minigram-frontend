@@ -10,7 +10,8 @@ class MStory extends StatelessWidget {
   const MStory({
     super.key,
     required this.size,
-    required this.imageUrl,
+    this.imageUrl =
+        'https://pixabay.com/ko/photos/%EA%B3%A0%EC%96%91%EC%9D%B4-%EC%A3%BC%EB%B0%A9-%EC%95%A0%EC%99%84-%EB%8F%99%EB%AC%BC-%EB%8F%99%EB%AC%BC-9769723/',
     this.isGradient = true,
   });
 
