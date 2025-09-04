@@ -10,7 +10,7 @@ class PostHeader extends StatelessWidget {
   PostHeader({
     super.key,
     this.showFollowButton = true,
-    this.isOwner = true,
+    this.isOwner = false,
   });
 
   @override
@@ -76,56 +76,64 @@ class PostHeader extends StatelessWidget {
                         Container(
                           margin: EdgeInsets.all(MSize.kGap.m),
                           decoration: BoxDecoration(
-                            color: MColor.kButton.disabled,
                             borderRadius: BorderRadius.circular(MSize.kGap.m),
                           ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              if (isOwner) ...[
-                                ListTile(
-                                  leading: Icon(Icons.edit),
-                                  title: Text("수정"),
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                    print("수정 클릭됨");
-                                  },
-                                ),
-                                Divider(height: MSize.kLine.normal),
-                                ListTile(
-                                  leading: Icon(Icons.delete, color: MColor.kIcon.red),
-                                  title: Text(
-                                    "삭제",
-                                    style: TextStyle(color: MColor.kText.red),
+                          child: Material(
+                            borderRadius: BorderRadius.circular(MSize.kGap.m),
+                            clipBehavior: Clip.hardEdge,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                if (isOwner) ...[
+                                  ListTile(
+                                    leading: Icon(Icons.edit),
+                                    tileColor: MColor.kButton.disabled,
+                                    title: Text("수정"),
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      print("수정 클릭됨");
+                                    },
                                   ),
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                    print("삭제 클릭됨");
-                                  },
-                                ),
-                              ] else ...[
-                                ListTile(
-                                  leading: Icon(Icons.person_remove_outlined),
-                                  title: Text("팔로우 취소"),
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                    print("팔로우 취소 클릭됨");
-                                  },
-                                ),
-                                Divider(height: MSize.kLine.normal),
-                                ListTile(
-                                  leading: Icon(Icons.flag_outlined, color: MColor.kIcon.red),
-                                  title: Text(
-                                    "신고",
-                                    style: TextStyle(color: MColor.kText.red),
+                                  Divider(height: MSize.kLine.normal),
+                                  ListTile(
+                                    tileColor: MColor.kButton.disabled,
+                                    leading: Icon(Icons.delete, color: MColor.kIcon.red),
+                                    title: Text(
+                                      "삭제",
+                                      style: TextStyle(color: MColor.kText.red),
+                                    ),
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      print("삭제 클릭됨");
+                                    },
                                   ),
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                    print("신고 클릭됨");
-                                  },
-                                ),
+                                ] else
+                                  ...[
+                                    ListTile(
+                                      tileColor: MColor.kButton.disabled,
+                                      leading: Icon(Icons.person_remove_outlined),
+                                      title: Text("팔로우 취소"),
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                        print("팔로우 취소 클릭됨");
+                                      },
+                                    ),
+                                    Divider(height: MSize.kLine.normal),
+                                    ListTile(
+                                      tileColor: MColor.kButton.disabled,
+                                      leading: Icon(Icons.flag_outlined, color: MColor.kIcon.red),
+                                      title: Text(
+                                        "신고",
+                                        style: TextStyle(color: MColor.kText.red),
+                                      ),
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                        print("신고 클릭됨");
+                                      },
+                                    ),
+                                  ],
                               ],
-                            ],
+                            ),
                           ),
                         ),
                       ],
