@@ -38,17 +38,17 @@ class _PostFooterState extends State<PostFooter> {
               SizedBox(width: MSize.kGap.xxs),
               Text("3.2만"), // 좋아요 수
               SizedBox(width: MSize.kGap.l),
-              GestureDetector(
-                onTap: () {
+              TextButton.icon(
+                onPressed: () {
                   print("댓글 버튼 클릭됨");
                   Navigator.push(context, MaterialPageRoute(builder: (_) => PostReplyPage()));
                 },
-                child: Row(
-                  children: [
-                    Icon(Icons.mode_comment_outlined, size: MSize.kIcon.s),
-                    SizedBox(width: MSize.kGap.xxs),
-                    Text("301"),
-                  ],
+                icon: Icon(Icons.mode_comment_outlined, size: MSize.kIcon.s),
+                label: Text("301"),
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  minimumSize: Size(0, 0),
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
               ), // 댓글 수
             ],
