@@ -4,8 +4,11 @@ import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/ui/widgets/m_button.dart';
 
 class PostHeader extends StatelessWidget {
+  final bool showFollowButton;
+
   PostHeader({
     super.key,
+    this.showFollowButton = true,
   });
 
   @override
@@ -31,16 +34,18 @@ class PostHeader extends StatelessWidget {
             ),
           ),
 
-          MButton(
-            onPressed: () {
-              print("팔로우 버튼 클릭됨");
-            },
-            text: "팔로우",
-            textColor: MColor.kText.normal,
-            borderRadius: MSize.kBorderRadius.s,
-            backgroundColor: MColor.kButton.disabled,
-            padding: EdgeInsets.symmetric(horizontal: MSize.kGap.l),
-          ),
+          // 팔로우 버튼 (조건부 렌더링)
+          if (showFollowButton)
+            MButton(
+              onPressed: () {
+                print("팔로우 버튼 클릭됨");
+              },
+              text: "팔로우",
+              textColor: MColor.kText.normal,
+              borderRadius: MSize.kBorderRadius.s,
+              backgroundColor: MColor.kButton.disabled,
+              padding: EdgeInsets.symmetric(horizontal: MSize.kGap.l),
+            ),
 
           // 더보기 버튼
           IconButton(
