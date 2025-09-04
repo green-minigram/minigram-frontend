@@ -27,6 +27,9 @@ class MColor {
 
   /// 페이지 이동 인디케이터 색상
   static const kIndicator = _Indicators();
+
+  /// 페이지 이동 인디케이터 색상
+  static const kIcon = _Icons();
 }
 
 /// Primary Colors
@@ -52,6 +55,12 @@ class _Normals {
 
   /// 검은색
   final Color black = const Color(0xFF000000);
+
+  /// 회색 (light) shade100
+  final Color grey100 = const Color(0xFFF5F5F5);
+
+  /// 회색 (중간) shade400
+  final Color grey400 = const Color(0xFFBDBDBD);
 }
 
 /// Instagram Gradient Colors
@@ -153,4 +162,12 @@ class _Indicators {
 
   /// 다른 페이지 (비활성화)
   final Color inactive = const Color(0xFF9E9E9E);
+}
+
+/// Icon Colors
+class _Icons {
+  const _Icons();
+
+  /// 신고/삭제 등등
+  final Color red = const Color(0xFFFF453A);
 }

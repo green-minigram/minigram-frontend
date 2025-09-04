@@ -3,7 +3,9 @@ import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 
 class PostFooter extends StatefulWidget {
-  PostFooter({super.key});
+  PostFooter({
+    super.key,
+  });
 
   @override
   State<PostFooter> createState() => _PostFooterState();
