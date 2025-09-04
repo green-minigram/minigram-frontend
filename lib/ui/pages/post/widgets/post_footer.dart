@@ -26,13 +26,27 @@ class _PostFooterState extends State<PostFooter> {
           // 좋아요 & 댓글
           Row(
             children: [
-              Icon(Icons.favorite, color: MColor.kButton.like, size: MSize.kIcon.s),
+              GestureDetector(
+                onTap: () {
+                  print("좋아요 아이콘 클릭됨");
+                },
+                child: Icon(Icons.favorite, color: MColor.kButton.like, size: MSize.kIcon.s),
+              ),
               SizedBox(width: MSize.kGap.xxs),
               Text("3.2만"), // 좋아요 수
               SizedBox(width: MSize.kGap.l),
-              Icon(Icons.mode_comment_outlined, size: MSize.kIcon.s),
-              SizedBox(width: MSize.kGap.xxs),
-              Text("301"), // 댓글 수
+              GestureDetector(
+                onTap: () {
+                  print("댓글 버튼 클릭됨");
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.mode_comment_outlined, size: MSize.kIcon.s),
+                    SizedBox(width: MSize.kGap.xxs),
+                    Text("301"),
+                  ],
+                ),
+              ), // 댓글 수
             ],
           ),
           SizedBox(height: MSize.kGap.xxs),

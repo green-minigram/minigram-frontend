@@ -45,6 +45,7 @@ class PostDetailPage extends StatelessWidget {
         backgroundColor: MColor.kButton.disabled,
         padding: EdgeInsets.symmetric(horizontal: MSize.kGap.l),
       ),
+      SizedBox(width: MSize.kGap.m),
     ],
   );
 }
