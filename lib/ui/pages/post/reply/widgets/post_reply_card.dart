@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/_core/util/m_date.dart';
 import 'package:minigram/ui/pages/post/reply/widgets/post_reply_child_card.dart';
 import 'package:minigram/ui/widgets/m_story.dart';
 
@@ -38,97 +39,134 @@ class _PostReplyCardState extends State<PostReplyCard> {
               ),
               SizedBox(width: MSize.kGap.xs),
 
-              // 댓글 본문
+              // 본문
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // 첫 줄: 닉네임 + 댓글 내용
-                    RichText(
-                      text: TextSpan(
-                        style: TextStyle(
-                          color: MColor.kText.normal,
-                          fontSize: MSize.kFont.normal,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: "${author["username"]} ",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: MColor.kText.normal,
-                            ),
-                          ),
-                          TextSpan(text: widget.comment["content"]),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: MSize.kGap.xxxs),
-
-                    // 둘째 줄: 작성시간 + 답글 달기 + 작성자
+                    // 첫 줄: 닉네임 + 작성시간
                     Row(
                       children: [
                         Text(
-                          widget.comment["createdAt"],
+                          author["username"],
                           style: TextStyle(
-                            color: MColor.kText.secondary,
-                            fontSize: MSize.kFont.s,
+                            fontWeight: FontWeight.bold,
+                            fontSize: MSize.kFont.normal,
+                            color: MColor.kText.normal,
                           ),
                         ),
-                        SizedBox(width: MSize.kGap.s),
+                        SizedBox(width: MSize.kGap.xs),
                         Text(
-                          "답글 달기",
+                          MDate.timeAgo(widget.comment["createdAt"]),
                           style: TextStyle(
-                            color: MColor.kText.secondary,
                             fontSize: MSize.kFont.s,
+                            color: MColor.kText.secondary,
                           ),
                         ),
                         if (author["isPostAuthor"] == true) ...[
-                          SizedBox(width: MSize.kGap.s),
+                          SizedBox(width: MSize.kGap.xxs),
                           Text(
-                            "작성자",
+                            "· 작성자",
                             style: TextStyle(
-                              color: MColor.kText.description,
                               fontSize: MSize.kFont.s,
                               fontWeight: FontWeight.w600,
+                              color: MColor.kText.description,
                             ),
                           ),
                         ],
                       ],
                     ),
 
-                    // 대댓글 토글 버튼
-                    if (replies.isNotEmpty) ...[
-                      SizedBox(height: MSize.kGap.xs),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _showReplies = !_showReplies;
-                          });
-                        },
-                        child: Text(
-                          _showReplies ? "답글 숨기기" : "답글 ${replies.length}개 보기",
-                          style: TextStyle(
-                            color: MColor.kText.secondary,
-                            fontSize: MSize.kFont.s,
-                            fontWeight: FontWeight.w500,
-                          ),
+                    // 둘째 줄: 댓글 내용
+                    Padding(
+                      padding: EdgeInsets.only(top: MSize.kGap.xxxs),
+                      child: Text(
+                        widget.comment["content"],
+                        style: TextStyle(
+                          fontSize: MSize.kFont.normal,
+                          color: MColor.kText.normal,
                         ),
                       ),
-                    ],
+                    ),
+
+                    // 셋째 줄: 답글 달기 + 작성자
+                    Padding(
+                      padding: EdgeInsets.only(top: MSize.kGap.xxxs),
+                      child: Row(
+                        children: [
+                          Text(
+                            "답글 달기",
+                            style: TextStyle(
+                              fontSize: MSize.kFont.s,
+                              color: MColor.kText.secondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // 넷째 줄: 대댓글 토글 버튼
+                    if (replies.isNotEmpty)
+                      Padding(
+                        padding: EdgeInsets.only(top: MSize.kGap.xxxs),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 0,
+                              child: Container(
+                                margin: EdgeInsets.only(right: MSize.kGap.xs),
+                                height: 1,
+                                width: 16,
+                                color: MColor.kLine.main,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _showReplies = !_showReplies;
+                                });
+                              },
+                              child: Text(
+                                _showReplies ? "답글 숨기기" : "답글 ${replies.length}개 더 보기",
+                                style: TextStyle(
+                                  fontSize: MSize.kFont.s,
+                                  fontWeight: FontWeight.w500,
+                                  color: MColor.kText.secondary,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                   ],
                 ),
               ),
 
-              // 좋아요 버튼
-              IconButton(
-                icon: Icon(
-                  widget.comment["isLiked"] ? Icons.favorite : Icons.favorite_border,
-                  size: MSize.kIcon.m,
-                  color: widget.comment["isLiked"] ? MColor.kButton.like : MColor.kText.secondary,
-                ),
-                onPressed: () {
-                  print("댓글 좋아요: ${widget.comment["commentId"]}");
-                },
+              // 오른쪽 좋아요 버튼
+              Column(
+                children: [
+                  InkWell(
+                    borderRadius: BorderRadius.circular(20),
+                    onTap: () {
+                      print("댓글 좋아요: ${widget.comment["commentId"]}");
+                    },
+                    child: Icon(
+                      widget.comment["isLiked"] ? Icons.favorite : Icons.favorite_border,
+                      size: MSize.kIcon.m,
+                      color: widget.comment["isLiked"] ? MColor.kButton.like : MColor.kText.secondary,
+                    ),
+                  ),
+                  if ((widget.comment["likesCount"] ?? 0) > 0) ...[
+                    SizedBox(height: 2),
+                    Text(
+                      "${widget.comment["likesCount"]}",
+                      style: TextStyle(
+                        fontSize: MSize.kFont.s,
+                        color: MColor.kText.secondary,
+                      ),
+                    ),
+                  ],
+                ],
               ),
             ],
           ),

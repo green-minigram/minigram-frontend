@@ -29,22 +29,42 @@ class _PostFooterState extends State<PostFooter> {
           // 좋아요 & 댓글
           Row(
             children: [
-              GestureDetector(
-                onTap: () {
-                  print("좋아요 아이콘 클릭됨");
-                },
-                child: Icon(Icons.favorite, color: MColor.kButton.like, size: MSize.kIcon.s),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      print("좋아요 아이콘 클릭됨");
+                    },
+                    child: Icon(
+                      Icons.favorite,
+                      color: MColor.kButton.like,
+                      size: MSize.kIcon.s,
+                    ),
+                  ),
+                  SizedBox(width: MSize.kGap.xxs),
+                  Text(
+                    "3.2만",
+                    style: TextStyle(color: MColor.kText.title),
+                  ),
+                ],
               ),
-              SizedBox(width: MSize.kGap.xxs),
-              Text("3.2만"), // 좋아요 수
               SizedBox(width: MSize.kGap.l),
               TextButton.icon(
                 onPressed: () {
                   print("댓글 버튼 클릭됨");
                   Navigator.push(context, MaterialPageRoute(builder: (_) => PostReplyPage()));
                 },
-                icon: Icon(Icons.mode_comment_outlined, size: MSize.kIcon.s),
-                label: Text("301"),
+                icon: Icon(
+                  Icons.mode_comment_outlined,
+                  size: MSize.kIcon.s,
+                  color: MColor.kIcon.normal,
+                ),
+                label: Text(
+                  "301",
+                  style: TextStyle(color: MColor.kText.title),
+                ),
                 style: TextButton.styleFrom(
                   padding: EdgeInsets.zero,
                   minimumSize: Size(0, 0),

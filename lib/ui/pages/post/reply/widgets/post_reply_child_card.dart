@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/_core/util/m_date.dart';
 import 'package:minigram/ui/widgets/m_story.dart';
 
 class PostReplyChildCard extends StatelessWidget {
@@ -30,50 +31,29 @@ class PostReplyChildCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // ✅ 첫 줄: 닉네임 + 댓글 내용
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(
-                      color: MColor.kText.normal,
-                      fontSize: MSize.kFont.normal,
-                    ),
-                    children: [
-                      TextSpan(
-                        text: "${author["username"]} ",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: MColor.kText.normal,
-                        ),
-                      ),
-                      TextSpan(text: reply["content"]),
-                    ],
-                  ),
-                ),
-
-                SizedBox(height: MSize.kGap.xxxs),
-
-                // ✅ 둘째 줄: 작성시간 + 답글 달기 + 작성자
+                // 첫 줄: 닉네임 + 작성시간
                 Row(
                   children: [
                     Text(
-                      reply["createdAt"],
+                      author["username"],
                       style: TextStyle(
-                        color: MColor.kText.secondary,
-                        fontSize: MSize.kFont.s,
+                        fontWeight: FontWeight.bold,
+                        fontSize: MSize.kFont.normal,
+                        color: MColor.kText.normal,
                       ),
                     ),
-                    SizedBox(width: MSize.kGap.s),
+                    SizedBox(width: MSize.kGap.xs),
                     Text(
-                      "답글 달기",
+                      MDate.timeAgo(reply["createdAt"]),
                       style: TextStyle(
-                        color: MColor.kText.secondary,
                         fontSize: MSize.kFont.s,
+                        color: MColor.kText.secondary,
                       ),
                     ),
                     if (author["isPostAuthor"] == true) ...[
-                      SizedBox(width: MSize.kGap.s),
+                      SizedBox(width: MSize.kGap.xxs),
                       Text(
-                        "작성자",
+                        "· 작성자",
                         style: TextStyle(
                           color: MColor.kText.description,
                           fontSize: MSize.kFont.s,
@@ -83,20 +63,63 @@ class PostReplyChildCard extends StatelessWidget {
                     ],
                   ],
                 ),
+
+                // 둘째 줄: 댓글 내용
+                Padding(
+                  padding: EdgeInsets.only(top: MSize.kGap.xxxs),
+                  child: Text(
+                    reply["content"],
+                    style: TextStyle(
+                      fontSize: MSize.kFont.normal,
+                      color: MColor.kText.normal,
+                    ),
+                  ),
+                ),
+
+                // 셋째 줄: 답글 달기 + 작성자
+                Padding(
+                  padding: EdgeInsets.only(top: MSize.kGap.xxxs),
+                  child: Row(
+                    children: [
+                      Text(
+                        "답글 달기",
+                        style: TextStyle(
+                          color: MColor.kText.secondary,
+                          fontSize: MSize.kFont.s,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
 
-          // 좋아요 버튼
-          IconButton(
-            icon: Icon(
-              reply["isLiked"] ? Icons.favorite : Icons.favorite_border,
-              size: MSize.kIcon.s,
-              color: reply["isLiked"] ? MColor.kButton.like : MColor.kText.secondary,
-            ),
-            onPressed: () {
-              print("대댓글 좋아요: ${reply["commentId"]}");
-            },
+          // ✅ 좋아요 버튼 + 좋아요 수
+          Column(
+            children: [
+              InkWell(
+                borderRadius: BorderRadius.circular(20),
+                onTap: () {
+                  print("대댓글 좋아요: ${reply["commentId"]}");
+                },
+                child: Icon(
+                  reply["isLiked"] ? Icons.favorite : Icons.favorite_border,
+                  size: MSize.kIcon.m,
+                  color: reply["isLiked"] ? MColor.kButton.like : MColor.kText.secondary,
+                ),
+              ),
+              if ((reply["likesCount"] ?? 0) > 0) ...[
+                SizedBox(height: 2),
+                Text(
+                  "${reply["likesCount"]}",
+                  style: TextStyle(
+                    fontSize: MSize.kFont.s,
+                    color: MColor.kText.secondary,
+                  ),
+                ),
+              ],
+            ],
           ),
         ],
       ),

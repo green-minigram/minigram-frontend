@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_svg: ^2.2.0
   google_fonts: ^6.2.1
+  timeago: ^3.7.1 # 시간 차이를 “n분 전 / n일 전” 같은 상대 시간으로 바꿔줌.
+  intl: ^0.19.0 # 문자열을 DateTime으로 변환하거나, 날짜/숫자를 포맷팅할 때 사용.
 
 dev_dependencies:
   flutter_test:
