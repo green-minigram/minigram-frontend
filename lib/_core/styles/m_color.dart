@@ -88,7 +88,10 @@ class _BackGrounds {
   const _BackGrounds();
 
   /// 기본 흰색
-  final Color normal = const Color(0xFFFFFFFF);
+  final Color normal = const Color(0xFFFFFFFF); // FFFFFF
+
+  /// 회색 버튼색상
+  final Color gray = const Color(0xFFF3F4F6); // F3F4F6
 }
 
 /// Line Colors
