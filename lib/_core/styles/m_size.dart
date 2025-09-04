@@ -157,6 +157,9 @@ class _BorderRadius {
   const _BorderRadius();
 
   /// 8.0
+  final double xxs = 3.0;
+
+  /// 8.0
   final double xs = 8.0;
 
   /// 9.0
