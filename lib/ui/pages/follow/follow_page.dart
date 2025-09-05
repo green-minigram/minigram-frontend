@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/ui/pages/follow/widgets/follow_body.dart';
 
 class FollowPage extends StatelessWidget {
   const FollowPage({super.key});
@@ -10,12 +11,7 @@ class FollowPage extends StatelessWidget {
       length: 2, // 팔로워, 팔로잉
       child: Scaffold(
         appBar: _appbar(context),
-        body: const TabBarView(
-          children: [
-            Center(child: Text("팔로워 리스트")),
-            Center(child: Text("팔로잉 리스트")),
-          ],
-        ),
+        body: FollowBody(),
       ),
     );
   }

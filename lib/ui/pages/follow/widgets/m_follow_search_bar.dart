@@ -24,7 +24,8 @@ class MFollowSearchBar extends StatelessWidget {
                 child: TextField(
                   style: TextStyle(fontSize: MSize.kFont.l, fontWeight: FontWeight.bold),
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(0),
+                    isDense: true,
+                    contentPadding: EdgeInsets.symmetric(vertical: MSize.kGap.s),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(MSize.kBorderRadius.m),
                       borderSide: BorderSide.none,
@@ -37,18 +38,20 @@ class MFollowSearchBar extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: MColor.kText.secondary,
                     ),
-                    prefixIcon: Icon(
-                      Icons.search,
+                    prefixIcon: Icon(Icons.search, size: 20),
+                    prefixIconConstraints: BoxConstraints(minWidth: 40, minHeight: 40),
+                    suffixIconConstraints: BoxConstraints(minWidth: 40, minHeight: 40),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        print('x 버튼 클릭됨');
+                      },
+                      icon: Icon(Icons.clear, size: 20),
                     ),
-                    suffix: IconButton(onPressed: () {}, icon: Icon(Icons.clear)),
                   ),
                 ),
               ),
             ],
           ),
-        ),
-        Divider(
-          height: 5,
         ),
       ],
     );
