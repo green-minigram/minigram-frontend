@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:minigram/ui/pages/holder/profile/widgets/profile_body.dart';
 
 class ProfilePage extends StatelessWidget {
-  final bool isMe = false;
+  final bool isMe = true;
 
   const ProfilePage({Key? key}) : super(key: key);
 

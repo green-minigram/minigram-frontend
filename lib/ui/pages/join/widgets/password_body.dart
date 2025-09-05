@@ -35,7 +35,11 @@ class PasswordBody extends StatelessWidget {
                   SizedBox(height: MSize.kGap.l),
                   MButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, MRoute.login);
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        MRoute.login,
+                        (route) => route.isFirst,
+                      );
                     },
                     text: "완료",
                   ),
