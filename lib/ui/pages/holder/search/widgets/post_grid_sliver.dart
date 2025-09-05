@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_size.dart';
-import 'package:minigram/ui/pages/holder/search/widgets/grid_item.dart';
+import 'package:minigram/ui/widgets/m_grid_item.dart';
 
 class PostGridSliver extends StatelessWidget {
   const PostGridSliver({super.key});
@@ -9,14 +9,14 @@ class PostGridSliver extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverGrid(
       delegate: SliverChildBuilderDelegate(
-        (context, index) => GridItem(),
+        (context, index) => MGridItem(),
         childCount: 30,
       ),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         childAspectRatio: MSize.kRatio.aspect34,
-        crossAxisSpacing: MSize.kGap.xxxxs,
-        mainAxisSpacing: MSize.kGap.xxxxs,
+        crossAxisSpacing: MSize.kGap.xxxs,
+        mainAxisSpacing: MSize.kGap.xxxs,
       ),
     );
   }
