@@ -91,7 +91,7 @@ class PostReplyBody extends StatelessWidget {
             child: Row(
               children: [
                 CircleAvatar(
-                  radius: 18,
+                  radius: MSize.kBorderRadius.l,
                   backgroundImage: NetworkImage("https://i.pravatar.cc/150?img=3"),
                 ),
                 SizedBox(width: MSize.kGap.xs),

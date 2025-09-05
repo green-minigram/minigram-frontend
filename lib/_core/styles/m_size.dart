@@ -171,6 +171,9 @@ class _BorderRadius {
   /// 18.0
   final double l = 18.0;
 
-  /// 24.0
+  /// 20.0
   final double xl = 24.0;
+
+  /// 24.0
+  final double xxl = 24.0;
 }

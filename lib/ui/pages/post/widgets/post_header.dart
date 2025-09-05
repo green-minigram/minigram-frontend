@@ -55,7 +55,7 @@ class PostHeader extends StatelessWidget {
                 context: context,
                 backgroundColor: MColor.kBackGround.normal,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(MSize.kBorderRadius.xl)),
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(MSize.kBorderRadius.xxl)),
                 ),
                 builder: (context) {
                   return SafeArea(

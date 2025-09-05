@@ -146,7 +146,7 @@ class _PostReplyCardState extends State<PostReplyCard> {
               Column(
                 children: [
                   InkWell(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(MSize.kBorderRadius.xl),
                     onTap: () {
                       print("댓글 좋아요: ${widget.comment["commentId"]}");
                     },
@@ -157,7 +157,7 @@ class _PostReplyCardState extends State<PostReplyCard> {
                     ),
                   ),
                   if ((widget.comment["likesCount"] ?? 0) > 0) ...[
-                    SizedBox(height: 2),
+                    SizedBox(height: MSize.kGap.xxxxs),
                     Text(
                       "${widget.comment["likesCount"]}",
                       style: TextStyle(

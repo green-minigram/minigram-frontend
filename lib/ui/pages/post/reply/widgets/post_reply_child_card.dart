@@ -95,11 +95,11 @@ class PostReplyChildCard extends StatelessWidget {
             ),
           ),
 
-          // ✅ 좋아요 버튼 + 좋아요 수
+          // 좋아요 버튼 + 좋아요 수
           Column(
             children: [
               InkWell(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(MSize.kBorderRadius.xl),
                 onTap: () {
                   print("대댓글 좋아요: ${reply["commentId"]}");
                 },
@@ -110,7 +110,7 @@ class PostReplyChildCard extends StatelessWidget {
                 ),
               ),
               if ((reply["likesCount"] ?? 0) > 0) ...[
-                SizedBox(height: 2),
+                SizedBox(height: MSize.kGap.xxxxs),
                 Text(
                   "${reply["likesCount"]}",
                   style: TextStyle(
