@@ -2,20 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:minigram/ui/pages/follow/following/following_card_item.dart';
 import 'package:minigram/ui/pages/follow/widgets/m_follow_search_bar.dart';
 
-class FollowingBody extends StatelessWidget {
+class FollowingBody extends StatefulWidget {
   const FollowingBody({super.key});
 
   @override
+  State<FollowingBody> createState() => _FollowingBodyState();
+}
+
+class _FollowingBodyState extends State<FollowingBody> {
+  String query = "";
+
+  @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverToBoxAdapter(
-          child: MFollowSearchBar(), // 검색바
+    // 더미 데이터
+    final int totalFollowingCount = 10;
+
+    return Column(
+      children: [
+        MFollowSearchBar(
+          onChanged: (value) {
+            setState(() {
+              query = value;
+            });
+            print("검색어(Following): $value");
+          },
         ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) => FollowingCardItem(),
-            childCount: 20,
+        Expanded(
+          child: ListView.builder(
+            itemCount: totalFollowingCount,
+            itemBuilder: (context, index) {
+              // 나중에 query 적용해서 필터링하면 됨
+              return FollowingCardItem();
+            },
           ),
         ),
       ],

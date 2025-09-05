@@ -3,8 +3,11 @@ import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 
 class MFollowSearchBar extends StatelessWidget {
+  final void Function(String value)? onChanged;
+
   const MFollowSearchBar({
     super.key,
+    this.onChanged,
   });
 
   @override
@@ -48,6 +51,7 @@ class MFollowSearchBar extends StatelessWidget {
                       icon: Icon(Icons.clear, size: 20),
                     ),
                   ),
+                  onChanged: onChanged,
                 ),
               ),
             ],
