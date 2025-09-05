@@ -8,7 +8,14 @@ import 'package:minigram/ui/widgets/m_story.dart';
 class PostReplyCard extends StatefulWidget {
   final Map<String, dynamic> comment;
 
-  const PostReplyCard({super.key, required this.comment});
+  // 부모(PostReplyBody)로 전달할 콜백 추가
+  final void Function(String username)? onReplyTap;
+
+  const PostReplyCard({
+    super.key,
+    required this.comment,
+    this.onReplyTap,
+  });
 
   @override
   State<PostReplyCard> createState() => _PostReplyCardState();
@@ -25,7 +32,6 @@ class _PostReplyCardState extends State<PostReplyCard> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 원댓글
         Padding(
           padding: EdgeInsets.symmetric(vertical: MSize.kGap.xs),
           child: Row(
@@ -89,19 +95,24 @@ class _PostReplyCardState extends State<PostReplyCard> {
                       ),
                     ),
 
-                    // 셋째 줄: 답글 달기 + 작성자
+                    // 셋째 줄: 답글 달기 버튼 InkWell로 교체 + 콜백 실행
                     Padding(
                       padding: EdgeInsets.only(top: MSize.kGap.xxxs),
-                      child: Row(
-                        children: [
-                          Text(
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(MSize.kBorderRadius.xxs),
+                        onTap: () {
+                          widget.onReplyTap?.call(author["username"]); // 콜백 실행
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: MSize.kGap.xxxxs, horizontal: 4),
+                          child: Text(
                             "답글 달기",
                             style: TextStyle(
-                              fontSize: MSize.kFont.s,
                               color: MColor.kText.secondary,
+                              fontSize: MSize.kFont.s,
                             ),
                           ),
-                        ],
+                        ),
                       ),
                     ),
 
@@ -177,7 +188,14 @@ class _PostReplyCardState extends State<PostReplyCard> {
           Padding(
             padding: EdgeInsets.only(left: MSize.kGap.huge),
             child: Column(
-              children: replies.map((reply) => PostReplyChildCard(reply: reply)).toList(),
+              children: replies
+                  .map(
+                    (reply) => PostReplyChildCard(
+                      reply: reply,
+                      onReplyTap: widget.onReplyTap, // 부모 콜백 전달
+                    ),
+                  )
+                  .toList(),
             ),
           ),
       ],

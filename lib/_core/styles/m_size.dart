@@ -63,7 +63,10 @@ class _Icons {
   const _Icons();
 
   /// 16.0
-  final double xs = 16.0;
+  final double xxs = 16.0;
+
+  /// 16.0
+  final double xs = 18.0;
 
   /// 20.0
   final double s = 20.0;
@@ -179,4 +182,7 @@ class _BorderRadius {
 
   /// 24.0
   final double xxl = 24.0;
+
+  /// 24.0
+  final double xxxl = 30.0;
 }

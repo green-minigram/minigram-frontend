@@ -7,7 +7,14 @@ import 'package:minigram/ui/widgets/m_story.dart';
 class PostReplyChildCard extends StatelessWidget {
   final Map<String, dynamic> reply;
 
-  const PostReplyChildCard({super.key, required this.reply});
+  // 부모로 이벤트 전달할 콜백 추가
+  final void Function(String username)? onReplyTap;
+
+  const PostReplyChildCard({
+    super.key,
+    required this.reply,
+    this.onReplyTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -76,19 +83,25 @@ class PostReplyChildCard extends StatelessWidget {
                   ),
                 ),
 
-                // 셋째 줄: 답글 달기 + 작성자
+                // 셋째 줄: 답글 달기 버튼 (InkWell)
                 Padding(
                   padding: EdgeInsets.only(top: MSize.kGap.xxxs),
-                  child: Row(
-                    children: [
-                      Text(
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(MSize.kGap.xxs),
+                    onTap: () {
+                      // 부모로 이벤트 전달
+                      onReplyTap?.call(author["username"]);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: MSize.kGap.xxxxs, horizontal: MSize.kGap.xxs),
+                      child: Text(
                         "답글 달기",
                         style: TextStyle(
                           color: MColor.kText.secondary,
                           fontSize: MSize.kFont.s,
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ],

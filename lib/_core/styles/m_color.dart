@@ -173,4 +173,7 @@ class _Icons {
 
   /// 기본 아이콘 (검은색)
   final Color normal = const Color(0xFF000000);
+
+  /// 흰색 아이콘
+  final Color white = const Color(0xFFFFFFFF);
 }

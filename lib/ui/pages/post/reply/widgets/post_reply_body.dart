@@ -1,9 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/ui/pages/post/reply/widgets/post_reply_card.dart';
 
-class PostReplyBody extends StatelessWidget {
+class PostReplyBody extends StatefulWidget {
   const PostReplyBody({super.key});
+
+  @override
+  State<PostReplyBody> createState() => _PostReplyBodyState();
+}
+
+class _PostReplyBodyState extends State<PostReplyBody> {
+  final FocusNode _replyFocusNode = FocusNode();
+  final TextEditingController _controller = TextEditingController();
+
+  String? _replyToUser;
+
+  void _focusReplyField(String username) {
+    setState(() {
+      _replyToUser = username;
+    });
+    FocusScope.of(context).requestFocus(_replyFocusNode);
+  }
+
+  void _cancelReply() {
+    setState(() {
+      _replyToUser = null;
+    });
+    _replyFocusNode.unfocus();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,16 +103,41 @@ class PostReplyBody extends StatelessWidget {
             itemCount: comments.length,
             itemBuilder: (context, index) {
               final comment = comments[index];
-              return PostReplyCard(comment: comment);
+              return PostReplyCard(
+                comment: comment,
+                onReplyTap: (username) => _focusReplyField(username),
+              );
             },
           ),
         ),
 
         Divider(height: MSize.kLine.normal),
 
+        // oo님에게 답글 남기는 중" 안내바
+        if (_replyToUser != null)
+          Container(
+            color: Colors.grey[200],
+            padding: EdgeInsets.symmetric(horizontal: MSize.kGap.m, vertical: MSize.kGap.xs),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text("$_replyToUser님에게 답글 남기는 중"),
+                ),
+                IconButton(
+                  icon: Icon(Icons.close, size: MSize.kIcon.xs),
+                  onPressed: _cancelReply,
+                ),
+              ],
+            ),
+          ),
+
+        // 댓글 입력창
         SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: MSize.kGap.m, vertical: MSize.kGap.xs),
+            padding: EdgeInsets.symmetric(
+              horizontal: MSize.kGap.m,
+              vertical: MSize.kGap.xs,
+            ),
             child: Row(
               children: [
                 CircleAvatar(
@@ -95,19 +145,43 @@ class PostReplyBody extends StatelessWidget {
                   backgroundImage: NetworkImage("https://i.pravatar.cc/150?img=3"),
                 ),
                 SizedBox(width: MSize.kGap.xs),
+
+                // 둥근 입력창
                 Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: "회원님의 생각을 남겨보세요.",
-                      border: InputBorder.none,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: MSize.kGap.m, vertical: MSize.kGap.xs),
+                    decoration: BoxDecoration(
+                      color: MColor.kNormal.white,
+                      border: Border.all(color: MColor.kLine.main),
+                      borderRadius: BorderRadius.circular(MSize.kBorderRadius.xxxl),
+                    ),
+                    child: TextField(
+                      controller: _controller,
+                      focusNode: _replyFocusNode,
+                      decoration: InputDecoration(
+                        hintText: "회원님의 생각을 남겨보세요.",
+                        border: InputBorder.none,
+                      ),
                     ),
                   ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: () {
-                    print("댓글 전송");
-                  },
+
+                SizedBox(width: MSize.kGap.xs),
+
+                // 전송 버튼
+                Container(
+                  decoration: BoxDecoration(
+                    color: MColor.kPrimary.normal,
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_upward, color: MColor.kIcon.white),
+                    onPressed: () {
+                      print("댓글 전송: ${_controller.text}");
+                      _controller.clear();
+                      _cancelReply(); // 전송 후 리셋
+                    },
+                  ),
                 ),
               ],
             ),
