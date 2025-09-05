@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/ui/widgets/m_bottom_sheet.dart';
-import 'package:minigram/ui/widgets/m_bottom_sheet_launcher.dart';
+import 'package:minigram/ui/widgets/m_bottom_sheet_item.dart';
 import 'package:minigram/ui/widgets/m_button.dart';
 
 class PostHeader extends StatelessWidget {
@@ -55,11 +55,11 @@ class PostHeader extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.more_horiz),
             onPressed: () {
-              MBottomSheetLauncher.show(
+              MBottomSheet.show(
                 context,
                 items: isOwner
                     ? [
-                        MBottomSheetItem(
+                        MSheetItem(
                           text: "수정",
                           icon: Icons.edit,
                           color: MColor.kText.normal,
@@ -68,7 +68,7 @@ class PostHeader extends StatelessWidget {
                             print("수정 클릭됨");
                           },
                         ),
-                        MBottomSheetItem(
+                        MSheetItem(
                           text: "삭제",
                           icon: Icons.delete,
                           color: MColor.kIcon.red,
@@ -79,7 +79,7 @@ class PostHeader extends StatelessWidget {
                         ),
                       ]
                     : [
-                        MBottomSheetItem(
+                        MSheetItem(
                           text: "팔로우 취소",
                           icon: Icons.person_remove_outlined,
                           color: MColor.kText.normal,
@@ -88,7 +88,7 @@ class PostHeader extends StatelessWidget {
                             print("팔로우 취소 클릭됨");
                           },
                         ),
-                        MBottomSheetItem(
+                        MSheetItem(
                           text: "신고",
                           icon: Icons.flag_outlined,
                           color: MColor.kIcon.red,
