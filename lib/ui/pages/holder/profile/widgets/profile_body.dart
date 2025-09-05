@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/ui/pages/holder/profile/widgets/profile_grid_builder.dart';
 import 'package:minigram/ui/pages/holder/profile/widgets/profile_header_bio.dart';
 import 'package:minigram/ui/pages/holder/profile/widgets/profile_header_btn.dart';
 import 'package:minigram/ui/pages/holder/profile/widgets/profile_header_info.dart';
-import 'package:minigram/ui/widgets/m_grid_item.dart';
 
 class ProfileBody extends StatelessWidget {
   const ProfileBody({
@@ -43,18 +43,8 @@ class ProfileBody extends StatelessWidget {
             Expanded(
               child: TabBarView(
                 children: [
-                  GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      childAspectRatio: MSize.kRatio.aspect34,
-                      crossAxisSpacing: MSize.kGap.xxxs,
-                      mainAxisSpacing: MSize.kGap.xxxs,
-                    ),
-                    itemBuilder: (context, index) {
-                      return MGridItem();
-                    },
-                  ),
-                  Container(color: Colors.red),
+                  ProfileGridBuilder(),
+                  ProfileGridBuilder(),
                 ],
               ),
             ),
