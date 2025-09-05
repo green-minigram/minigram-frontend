@@ -10,33 +10,39 @@ class FollowingBody extends StatefulWidget {
 }
 
 class _FollowingBodyState extends State<FollowingBody> {
+  final TextEditingController _controller = TextEditingController();
   String query = "";
+
+  void _onSearchChanged(String value) {
+    setState(() => query = value);
+    print("검색어(Following): $value");
+  }
+
+  void _onClearSearch() {
+    _controller.clear();
+    setState(() => query = "");
+  }
 
   @override
   Widget build(BuildContext context) {
     // 더미 데이터
     final int totalFollowingCount = 10;
 
-    return Column(
-      children: [
-        MFollowSearchBar(
-          onChanged: (value) {
-            setState(() {
-              query = value;
-            });
-            print("검색어(Following): $value");
-          },
-        ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: totalFollowingCount,
-            itemBuilder: (context, index) {
-              // 나중에 query 적용해서 필터링하면 됨
-              return FollowingCardItem();
-            },
-          ),
-        ),
-      ],
+    return ListView.builder(
+      itemCount: totalFollowingCount + 1,
+      itemBuilder: (context, index) {
+        if (index == 0) {
+          // 첫 번째는 검색바
+          return MFollowSearchBar(
+            controller: _controller,
+            showClearButton: query.isNotEmpty,
+            onChanged: _onSearchChanged,
+            onClear: _onClearSearch,
+          );
+        }
+        // 나머지는 카드 아이템
+        return FollowingCardItem();
+      },
     );
   }
 }
