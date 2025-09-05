@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/ui/widgets/m_bottom_sheet.dart';
 import 'package:minigram/ui/widgets/m_button.dart';
 
 class PostHeader extends StatelessWidget {
@@ -53,93 +54,57 @@ class PostHeader extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.more_horiz),
             onPressed: () {
+              final items = isOwner
+                  ? [
+                      MBottomSheetItem(
+                        text: "수정",
+                        icon: Icons.edit,
+                        color: MColor.kText.normal,
+                        onTap: () {
+                          Navigator.pop(context);
+                          print("수정 클릭됨");
+                        },
+                      ),
+                      MBottomSheetItem(
+                        text: "삭제",
+                        icon: Icons.delete,
+                        color: MColor.kIcon.red,
+                        onTap: () {
+                          Navigator.pop(context);
+                          print("삭제 클릭됨");
+                        },
+                      ),
+                    ]
+                  : [
+                      MBottomSheetItem(
+                        text: "팔로우 취소",
+                        icon: Icons.person_remove_outlined,
+                        color: MColor.kText.normal,
+                        onTap: () {
+                          Navigator.pop(context);
+                          print("팔로우 취소 클릭됨");
+                        },
+                      ),
+                      MBottomSheetItem(
+                        text: "신고",
+                        icon: Icons.flag_outlined,
+                        color: MColor.kIcon.red,
+                        onTap: () {
+                          Navigator.pop(context);
+                          print("신고 클릭됨");
+                        },
+                      ),
+                    ];
+
               showModalBottomSheet(
                 context: context,
                 backgroundColor: MColor.kBackGround.normal,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(MSize.kBorderRadius.xl)),
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(MSize.kBorderRadius.xl),
+                  ),
                 ),
-                builder: (context) {
-                  return SafeArea(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          width: 40,
-                          height: 5,
-                          margin: EdgeInsets.only(top: MSize.kGap.xs, bottom: MSize.kGap.m),
-                          decoration: BoxDecoration(
-                            color: MColor.kNormal.grey400,
-                            borderRadius: BorderRadius.circular(MSize.kBorderRadius.xxs),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.all(MSize.kGap.m),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(MSize.kGap.m),
-                          ),
-                          child: Material(
-                            borderRadius: BorderRadius.circular(MSize.kGap.m),
-                            clipBehavior: Clip.hardEdge,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                if (isOwner) ...[
-                                  ListTile(
-                                    leading: Icon(Icons.edit),
-                                    tileColor: MColor.kButton.disabled,
-                                    title: Text("수정"),
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                      print("수정 클릭됨");
-                                    },
-                                  ),
-                                  Divider(height: MSize.kLine.normal),
-                                  ListTile(
-                                    tileColor: MColor.kButton.disabled,
-                                    leading: Icon(Icons.delete, color: MColor.kIcon.red),
-                                    title: Text(
-                                      "삭제",
-                                      style: TextStyle(color: MColor.kText.red),
-                                    ),
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                      print("삭제 클릭됨");
-                                    },
-                                  ),
-                                ] else
-                                  ...[
-                                    ListTile(
-                                      tileColor: MColor.kButton.disabled,
-                                      leading: Icon(Icons.person_remove_outlined),
-                                      title: Text("팔로우 취소"),
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                        print("팔로우 취소 클릭됨");
-                                      },
-                                    ),
-                                    Divider(height: MSize.kLine.normal),
-                                    ListTile(
-                                      tileColor: MColor.kButton.disabled,
-                                      leading: Icon(Icons.flag_outlined, color: MColor.kIcon.red),
-                                      title: Text(
-                                        "신고",
-                                        style: TextStyle(color: MColor.kText.red),
-                                      ),
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                        print("신고 클릭됨");
-                                      },
-                                    ),
-                                  ],
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                builder: (_) => MBottomSheet(items: items),
               );
             },
           ),
