@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class GridItem extends StatelessWidget {
-  const GridItem({
+class MGridItem extends StatelessWidget {
+  const MGridItem({
     super.key,
   });
 
