@@ -4,8 +4,15 @@ import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/ui/widgets/m_button.dart';
 import 'package:minigram/ui/widgets/m_story.dart';
 
-class FollowingCardItem extends StatelessWidget {
+class FollowingCardItem extends StatefulWidget {
   const FollowingCardItem({super.key});
+
+  @override
+  State<FollowingCardItem> createState() => _FollowingCardItemState();
+}
+
+class _FollowingCardItemState extends State<FollowingCardItem> {
+  bool isFollowing = true;
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +55,16 @@ class FollowingCardItem extends StatelessWidget {
 
           // 팔로우 버튼
           MButton(
-            onPressed: () {},
-            text: '팔로우',
+            onPressed: () {
+              setState(() {
+                isFollowing = !isFollowing;
+              });
+            },
+            text: isFollowing ? '팔로잉' : '팔로우',
             padding: EdgeInsets.symmetric(horizontal: MSize.kGap.xxl),
             borderRadius: MSize.kBorderRadius.s,
+            backgroundColor: isFollowing ? MColor.kButton.disabled : MColor.kButton.primary,
+            textColor: isFollowing ? MColor.kText.normal : MColor.kText.white,
           ),
         ],
       ),

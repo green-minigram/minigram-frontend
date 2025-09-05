@@ -4,8 +4,15 @@ import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/ui/widgets/m_button.dart';
 import 'package:minigram/ui/widgets/m_story.dart';
 
-class FollowerCardItem extends StatelessWidget {
+class FollowerCardItem extends StatefulWidget {
   const FollowerCardItem({super.key});
+
+  @override
+  State<FollowerCardItem> createState() => _FollowerCardItemState();
+}
+
+class _FollowerCardItemState extends State<FollowerCardItem> {
+  bool isFollowing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +24,7 @@ class FollowerCardItem extends StatelessWidget {
       child: Row(
         children: [
           // 프로필
-          MStory(
-            size: MSize.kStory.m,
-          ),
+          MStory(size: MSize.kStory.m),
           SizedBox(width: MSize.kGap.m),
 
           // 닉네임 + 이름
@@ -48,10 +53,16 @@ class FollowerCardItem extends StatelessWidget {
 
           // 팔로우 버튼
           MButton(
-            onPressed: () {},
-            text: '팔로우',
+            onPressed: () {
+              setState(() {
+                isFollowing = !isFollowing;
+              });
+            },
+            text: isFollowing ? '팔로잉' : '팔로우',
             padding: EdgeInsets.symmetric(horizontal: MSize.kGap.xxl),
             borderRadius: MSize.kBorderRadius.s,
+            backgroundColor: isFollowing ? MColor.kButton.disabled : MColor.kButton.primary,
+            textColor: isFollowing ? MColor.kText.normal : MColor.kText.white,
           ),
         ],
       ),
