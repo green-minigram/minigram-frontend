@@ -55,6 +55,8 @@ class _Gaps {
 
   /// 32.0
   final double huge = 32.0;
+
+  /// 64.0
   final double doubleHuge = 64.0;
 }
 
