@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/ui/widgets/m_bottom_sheet.dart';
+import 'package:minigram/ui/widgets/m_bottom_sheet_item.dart';
 
 class ProfileEditHeader extends StatelessWidget {
   const ProfileEditHeader({
     super.key,
   });
+
+  void onImageEditTap(BuildContext context) {
+    MBottomSheet.show(
+      context,
+      items: [
+        MSheetItem(text: "라이브러리에서 선택", icon: Icons.image_outlined, color: Colors.black, onTap: () {}),
+        MSheetItem(text: "현재 사진 삭제", icon: Icons.delete_outline, color: Colors.red, onTap: () {}),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,24 +27,18 @@ class ProfileEditHeader extends StatelessWidget {
         spacing: MSize.kGap.m,
         children: [
           Material(
-            // Material 위젯에 원형 모양과 배경색을 지정합니다.
             shape: CircleBorder(
               side: BorderSide(
-                // ✅ 여기에 테두리 속성을 추가
-                color: MColor.kLine.main, // 테두리 색상
+                color: MColor.kLine.main,
               ),
             ),
             color: MColor.kBackGround.gray,
             child: InkWell(
-              // InkWell의 splash 효과가 원형이 되도록 border radius를 지정합니다.
               borderRadius: BorderRadius.circular(35),
-              onTap: () {
-                print('프로필 아바타 클릭!');
-              },
+              onTap: () => onImageEditTap(context),
               child: CircleAvatar(
-                // CircleAvatar는 배경색 없이 아이콘만 표시하도록 변경
                 radius: 35,
-                backgroundColor: Colors.transparent, // 투명하게 설정
+                backgroundColor: Colors.transparent,
                 child: Icon(
                   Icons.person,
                   color: MColor.kBackGround.darkGray,
@@ -42,7 +48,7 @@ class ProfileEditHeader extends StatelessWidget {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () => onImageEditTap(context),
             child: Text(
               "사진 또는 아바타 수정",
               style: TextStyle(

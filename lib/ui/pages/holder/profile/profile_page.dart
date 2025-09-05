@@ -15,10 +15,10 @@ class ProfilePage extends StatelessWidget {
 
   AppBar _appBar() {
     return AppBar(
-      title: Text('유저아이디'),
+      title: const Text('유저아이디'),
       centerTitle: false,
       surfaceTintColor: Colors.transparent,
-      actions: [IconButton(icon: Icon(Icons.menu), onPressed: () {})],
+      actions: [IconButton(icon: const Icon(Icons.menu), onPressed: () {})],
     );
   }
 }

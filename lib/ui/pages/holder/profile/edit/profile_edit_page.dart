@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:minigram/m_route.dart';
 import 'package:minigram/ui/pages/holder/profile/edit/widgets/profile_edit_header.dart';
 import 'package:minigram/ui/pages/holder/profile/edit/widgets/profile_edit_list_item.dart';
+import 'package:minigram/ui/widgets/m_app_bar_bottom_line.dart';
 
 class ProfileEditPage extends StatelessWidget {
   const ProfileEditPage();
@@ -9,9 +10,8 @@ class ProfileEditPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar(context),
-      body: Column(
+      body: ListView(
         children: [
-          Divider(),
           ProfileEditHeader(),
           Divider(),
           ProfileEditListItem(title: "이름", subtitle: "", trailingUrl: MRoute.profileEditName),
@@ -33,13 +33,14 @@ class ProfileEditPage extends StatelessWidget {
 
   AppBar _appBar(BuildContext context) {
     return AppBar(
-      title: Text("프로필 편집"),
+      title: const Text("프로필 편집"),
       leading: IconButton(
         onPressed: () {
           Navigator.pop(context);
         },
-        icon: Icon(Icons.arrow_back_ios),
+        icon: const Icon(Icons.arrow_back_ios),
       ),
+      bottom: const MAppBarBottomLine(),
     );
   }
 }

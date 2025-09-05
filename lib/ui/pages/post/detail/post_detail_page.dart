@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/ui/pages/post/detail/widgets/post_detail_body.dart';
+import 'package:minigram/ui/widgets/m_app_bar_bottom_line.dart';
 import 'package:minigram/ui/widgets/m_button.dart';
 
 class PostDetailPage extends StatelessWidget {
@@ -47,5 +48,6 @@ class PostDetailPage extends StatelessWidget {
       ),
       SizedBox(width: MSize.kGap.m),
     ],
+    bottom: const MAppBarBottomLine(),
   );
 }

@@ -47,7 +47,7 @@ class ProfileEditListItem extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, trailingUrl!);
               },
-              icon: Icon(Icons.edit, size: MSize.kIcon.m),
+              icon: Icon(Icons.edit_outlined, size: MSize.kIcon.m),
             ),
         ],
       ),
