@@ -142,6 +142,9 @@ class _Lines {
 
   /// 2.0 (강조 라인)
   final double thick = 2.0;
+
+  /// 16.0
+  final double width16 = 16.0;
 }
 
 /// Ratio widths

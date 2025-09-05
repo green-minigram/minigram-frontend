@@ -115,8 +115,8 @@ class _PostReplyCardState extends State<PostReplyCard> {
                               flex: 0,
                               child: Container(
                                 margin: EdgeInsets.only(right: MSize.kGap.xs),
-                                height: 1,
-                                width: 16,
+                                height: MSize.kLine.normal,
+                                width: MSize.kLine.width16,
                                 color: MColor.kLine.main,
                               ),
                             ),
