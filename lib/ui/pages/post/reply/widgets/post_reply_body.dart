@@ -15,6 +15,7 @@ class _PostReplyBodyState extends State<PostReplyBody> {
   final TextEditingController _controller = TextEditingController();
 
   String? _replyToUser;
+  String? _highlightedCommentId;
 
   void _focusReplyField(String username) {
     setState(() {
@@ -28,6 +29,12 @@ class _PostReplyBodyState extends State<PostReplyBody> {
       _replyToUser = null;
     });
     _replyFocusNode.unfocus();
+  }
+
+  void _highlightComment(String? commentId) {
+    setState(() {
+      _highlightedCommentId = commentId;
+    });
   }
 
   @override
@@ -105,7 +112,9 @@ class _PostReplyBodyState extends State<PostReplyBody> {
               final comment = comments[index];
               return PostReplyCard(
                 comment: comment,
+                isHighlighted: comment["commentId"] == _highlightedCommentId, // ✅ 강조 여부 전달
                 onReplyTap: (username) => _focusReplyField(username),
+                onHighlightChange: _highlightComment,
               );
             },
           ),

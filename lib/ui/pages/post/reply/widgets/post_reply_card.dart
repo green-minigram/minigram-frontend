@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/_core/util/m_date.dart';
-import 'package:minigram/ui/pages/post/reply/widgets/comment_action_sheet.dart';
 import 'package:minigram/ui/pages/post/reply/widgets/post_reply_child_card.dart';
 import 'package:minigram/ui/widgets/m_story.dart';
 
@@ -13,12 +12,14 @@ class PostReplyCard extends StatefulWidget {
 
   // 부모(PostReplyBody)로 전달할 콜백 추가
   final void Function(String username)? onReplyTap;
-  final bool isHighlighted; // ✅ 강조 여부
+  final void Function(String? commentId)? onHighlightChange; // ✅ 부모에 전달
+  final bool isHighlighted; // ✅ 강조 여부 (부모에서 제어)
 
   const PostReplyCard({
     super.key,
     required this.comment,
     this.onReplyTap,
+    this.onHighlightChange,
     this.isHighlighted = false,
   });
 
@@ -28,6 +29,78 @@ class PostReplyCard extends StatefulWidget {
 
 class _PostReplyCardState extends State<PostReplyCard> {
   bool _showReplies = false;
+
+  // ✅ 액션 시트 열기
+  void _showActionSheet(Offset tapOffset) {
+    final overlay = Overlay.of(context);
+    late OverlayEntry entry;
+
+    void closeSheet() {
+      entry.remove();
+      widget.onHighlightChange?.call(null); // 닫을 때 강조 해제
+    }
+
+    entry = OverlayEntry(
+      builder: (context) {
+        return Stack(
+          children: [
+            // 배경 블러 + 딤
+            Positioned.fill(
+              child: GestureDetector(
+                onTap: closeSheet,
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  child: Container(color: Colors.black.withOpacity(0.3)),
+                ),
+              ),
+            ),
+
+            // 댓글 기준 액션 시트
+            Positioned(
+              left: 16,
+              right: 16,
+              top: tapOffset.dy,
+              child: Material(
+                borderRadius: BorderRadius.circular(16),
+                color: Colors.white,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ListTile(
+                      title: const Text("좋아요"),
+                      trailing: const Icon(Icons.favorite_border),
+                      onTap: () {
+                        print("좋아요: ${widget.comment["commentId"]}");
+                        closeSheet();
+                      },
+                    ),
+                    ListTile(
+                      title: const Text("답글 달기"),
+                      trailing: const Icon(Icons.reply),
+                      onTap: () {
+                        widget.onReplyTap?.call(widget.comment["author"]["username"]);
+                        closeSheet();
+                      },
+                    ),
+                    ListTile(
+                      title: const Text("삭제", style: TextStyle(color: Colors.red)),
+                      trailing: const Icon(Icons.delete, color: Colors.red),
+                      onTap: () {
+                        print("삭제: ${widget.comment["commentId"]}");
+                        closeSheet();
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+
+    overlay.insert(entry);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,37 +114,13 @@ class _PostReplyCardState extends State<PostReplyCard> {
           padding: EdgeInsets.symmetric(vertical: MSize.kGap.xs),
           child: GestureDetector(
             onLongPressStart: (details) {
-              showGeneralDialog(
-                context: context,
-                barrierDismissible: true,
-                // ✅ 블러 영역 터치 시 닫기
-                barrierLabel: '',
-                barrierColor: Colors.black.withOpacity(0.3),
-                pageBuilder: (context, anim1, anim2) {
-                  return Stack(
-                    children: [
-                      // ✅ 블러 배경
-                      BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                        child: Container(color: Colors.black.withOpacity(0)),
-                      ),
-
-                      // ✅ 커스텀 액션 시트 (취소 버튼 제거된 상태)
-                      CommentActionSheet(
-                        onLike: () => print("좋아요: ${widget.comment["commentId"]}"),
-                        onReply: () => widget.onReplyTap?.call(author["username"]),
-                        onDelete: () => print("삭제: ${widget.comment["commentId"]}"),
-                      ),
-                    ],
-                  );
-                },
-              );
+              widget.onHighlightChange?.call(widget.comment["commentId"]); // ✅ 부모에 강조 요청
+              _showActionSheet(details.globalPosition);
             },
-            // ✅ 강조 표시: 선택된 댓글 배경 하이라이트
+
+            // ✅ 강조 표시
             child: Container(
-              color: widget.isHighlighted
-                  ? Colors.grey.withOpacity(0.2) // 강조 색상
-                  : Colors.transparent,
+              color: widget.isHighlighted ? Colors.grey.withOpacity(0.2) : Colors.transparent,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
