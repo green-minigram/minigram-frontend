@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_theme.dart';
 import 'package:minigram/m_route.dart';
 import 'package:minigram/ui/pages/holder/main_holder.dart';
+import 'package:minigram/ui/pages/holder/profile/edit/profile_edit_name_page.dart';
 import 'package:minigram/ui/pages/holder/profile/edit/profile_edit_page.dart';
 import 'package:minigram/ui/pages/join/email_page.dart';
 import 'package:minigram/ui/pages/join/password_page.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         "${MRoute.joinPassword}": (context) => const PasswordPage(),
         "${MRoute.login}": (context) => const LoginPage(),
         "${MRoute.profileEdit}": (context) => const ProfileEditPage(),
+        "${MRoute.profileEditName}": (context) => const ProfileEditNamePage(),
       },
     );
   }

@@ -44,7 +44,9 @@ class ProfileEditListItem extends StatelessWidget {
           // trailing (수정) 버튼
           if (trailingUrl != null)
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, trailingUrl!);
+              },
               icon: Icon(Icons.edit, size: MSize.kIcon.m),
             ),
         ],

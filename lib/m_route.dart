@@ -5,4 +5,8 @@ class MRoute {
   static final String joinPassword = "/join/form-password";
   static final String login = "/login";
   static final String profileEdit = "/profile/edit";
+  static final String profileEditName = "/profile/edit/name";
+  static final String profileEditBio = "/profile/edit/bio";
+  static final String profileEditBirthDate = "/profile/edit/birth-date";
+  static final String profileEditGender = "/profile/edit/gender";
 }

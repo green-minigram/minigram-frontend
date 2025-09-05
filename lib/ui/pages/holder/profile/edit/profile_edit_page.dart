@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minigram/m_route.dart';
 import 'package:minigram/ui/pages/holder/profile/edit/widgets/profile_edit_header.dart';
 import 'package:minigram/ui/pages/holder/profile/edit/widgets/profile_edit_list_item.dart';
 
@@ -13,17 +14,18 @@ class ProfileEditPage extends StatelessWidget {
           Divider(),
           ProfileEditHeader(),
           Divider(),
-          ProfileEditListItem(title: "이름", subtitle: "쌀", trailingUrl: "123"),
+          ProfileEditListItem(title: "이름", subtitle: "", trailingUrl: MRoute.profileEditName),
           Divider(),
           ProfileEditListItem(title: "사용자 이름", subtitle: "ssar"),
           Divider(),
-          ProfileEditListItem(title: "소개", subtitle: "안녕하세요", trailingUrl: "123"),
+          ProfileEditListItem(title: "소개", subtitle: "", trailingUrl: MRoute.profileEditBio),
           Divider(),
           ProfileEditListItem(title: "연락처 정보", subtitle: "ssar@nate.com"),
           Divider(),
-          ProfileEditListItem(title: "생일", subtitle: "2000년 1월 1일", trailingUrl: "123"),
+          ProfileEditListItem(title: "생일", subtitle: "", trailingUrl: MRoute.profileEditBirthDate),
           Divider(),
-          ProfileEditListItem(title: "성별", subtitle: "남성", trailingUrl: "123"),
+          ProfileEditListItem(title: "성별", subtitle: "", trailingUrl: MRoute.profileEditGender),
+          Divider(),
         ],
       ),
     );
