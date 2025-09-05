@@ -25,12 +25,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: mTheme(),
       home: FollowPage(),
+      //MainHolder(),
       routes: {
         "${MRoute.mainHolder}": (context) => const MainHolder(),
         "${MRoute.joinEmail}": (context) => const EmailPage(),
         "${MRoute.joinUsername}": (context) => const UsernamePage(),
         "${MRoute.joinPassword}": (context) => const PasswordPage(),
         "${MRoute.login}": (context) => const LoginPage(),
+        "${MRoute.follower}": (context) => const FollowPage(),
+        "${MRoute.following}": (context) => const FollowPage(),
       },
     );
   }
