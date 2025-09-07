@@ -143,6 +143,9 @@ class _Texts {
 
   /// 수정/완료 텍스트
   final Color blue = const Color(0xFF3F4FEE);
+
+  /// 흰색
+  final Color white = const Color(0xFFFFFFFF);
 }
 
 /// Input Colors
