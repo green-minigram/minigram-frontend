@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # 날짜 선택 한글화
   flutter_localizations:
     sdk: flutter
 

@@ -9,4 +9,6 @@ class MRoute {
   static final String profileEditBio = "/profile/edit/bio";
   static final String profileEditBirthDate = "/profile/edit/birth-date";
   static final String profileEditGender = "/profile/edit/gender";
+  static final String follower = "/follower";
+  static final String following = "/following";
 }
