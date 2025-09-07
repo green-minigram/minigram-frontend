@@ -58,9 +58,6 @@ class MSearchBar extends StatelessWidget {
             ],
           ),
         ),
-        Divider(
-          height: 5,
-        ),
       ],
     );
   }

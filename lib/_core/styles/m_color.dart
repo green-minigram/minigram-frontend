@@ -90,8 +90,17 @@ class _BackGrounds {
   /// 기본 흰색
   final Color normal = const Color(0xFFFFFFFF); // FFFFFF
 
-  /// 회색 버튼색상
-  final Color gray = const Color(0xFFF3F4F6); // F3F4F6
+  /// 밝은 회색
+  final Color lightGray = const Color(0xFFF3F4F6);
+
+  /// 약간 진한 회색
+  final Color lightDarkGray = const Color(0xFFD0D3D9);
+
+  /// 진한 회색
+  final Color darkGray = const Color(0xFF828894);
+
+  /// 얕은 회색
+  final Color gray = const Color(0xFFF4F5F7);
 }
 
 /// Line Colors
@@ -106,6 +115,9 @@ class _Lines {
 
   /// 신고 목록 화면
   final Color warning = const Color(0xFFDBDBDB);
+
+  /// 회색선
+  final Color gray = const Color(0xFFDDE2E8);
 }
 
 /// Button Colors
