@@ -93,6 +93,9 @@ class _BackGrounds {
   /// 밝은 회색
   final Color lightGray = const Color(0xFFF3F4F6);
 
+  /// 약간 진한 회색
+  final Color lightDarkGray = const Color(0xFFD0D3D9);
+
   /// 진한 회색
   final Color darkGray = const Color(0xFF828894);
 
@@ -112,6 +115,9 @@ class _Lines {
 
   /// 신고 목록 화면
   final Color warning = const Color(0xFFDBDBDB);
+
+  /// 회색선
+  final Color gray = const Color(0xFFDDE2E8);
 }
 
 /// Button Colors
