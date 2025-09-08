@@ -4,6 +4,7 @@ import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/ui/widgets/m_bottom_sheet.dart';
 import 'package:minigram/ui/widgets/m_bottom_sheet_item.dart';
 import 'package:minigram/ui/widgets/m_button.dart';
+import 'package:minigram/ui/widgets/m_story.dart';
 
 class PostHeader extends StatelessWidget {
   final bool showFollowButton;
@@ -22,11 +23,8 @@ class PostHeader extends StatelessWidget {
       child: Row(
         children: [
           // 프로필 이미지 자리
-          CircleAvatar(
-            radius: MSize.kBorderRadius.l,
-            backgroundImage: NetworkImage(
-              "https://i.namu.wiki/i/lbs5tIVXbGEvdR_3Co1azYeKBzKPNbo6GnxiHzndu1dCfSk7rob-Gs2wJZFmC4Oy7O_vq5hmzKzRd3i6WMl9_ul6pRENX1wAUU14fv1G_XFDwx8j1gY2gzugVVYZME2U2oJDqFoqREz3vuM1gcYaAQ.webp", // 프로필 이미지 URL
-            ),
+          MStory(
+            size: MSize.kStory.s,
           ),
           SizedBox(width: MSize.kGap.s),
 
@@ -98,6 +96,9 @@ class PostHeader extends StatelessWidget {
                           },
                         ),
                       ],
+                    ),
+                  );
+                },
               );
             },
           ),

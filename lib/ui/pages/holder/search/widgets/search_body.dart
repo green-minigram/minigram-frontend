@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/ui/pages/holder/search/widgets/m_search_bar.dart';
-import 'package:minigram/ui/pages/holder/search/widgets/recent_search_sliver.dart';
-import 'package:minigram/ui/widgets/m_app_bar_bottom_line.dart';
+import 'package:minigram/ui/pages/holder/search/widgets/post_grid_sliver.dart';
 
 class SearchBody extends StatelessWidget {
   const SearchBody({
