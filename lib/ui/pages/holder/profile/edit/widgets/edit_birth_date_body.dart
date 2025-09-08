@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 
-class ProfileEditBirthDateBody extends StatelessWidget {
-  const ProfileEditBirthDateBody({
+class EditBirthDateBody extends StatelessWidget {
+  const EditBirthDateBody({
     super.key,
   });
 

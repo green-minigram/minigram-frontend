@@ -4,8 +4,8 @@ import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/ui/widgets/m_bottom_sheet.dart';
 import 'package:minigram/ui/widgets/m_bottom_sheet_item.dart';
 
-class ProfileEditHeader extends StatelessWidget {
-  const ProfileEditHeader({
+class EditHeader extends StatelessWidget {
+  const EditHeader({
     super.key,
   });
 

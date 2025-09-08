@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 
-class ProfileEditNameBody extends StatelessWidget {
-  const ProfileEditNameBody({super.key});
+class EditNameBody extends StatelessWidget {
+  const EditNameBody({super.key});
 
   @override
   Widget build(BuildContext context) {
