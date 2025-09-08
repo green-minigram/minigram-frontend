@@ -2,9 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 
-class MSearchBar extends StatelessWidget {
-  const MSearchBar({
+class MFollowSearchBar extends StatelessWidget {
+  final void Function(String value)? onChanged;
+  final VoidCallback? onClear;
+  final bool showClearButton;
+  final TextEditingController controller;
+
+  const MFollowSearchBar({
     super.key,
+    required this.controller,
+    this.onChanged,
+    this.onClear,
+    this.showClearButton = false,
   });
 
   @override
@@ -22,9 +31,11 @@ class MSearchBar extends StatelessWidget {
             children: [
               Expanded(
                 child: TextField(
+                  controller: controller,
                   style: TextStyle(fontSize: MSize.kFont.l, fontWeight: FontWeight.bold),
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(0),
+                    isDense: true,
+                    contentPadding: EdgeInsets.symmetric(vertical: MSize.kGap.s),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(MSize.kBorderRadius.m),
                       borderSide: BorderSide.none,
@@ -37,22 +48,17 @@ class MSearchBar extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: MColor.kText.secondary,
                     ),
-                    prefixIcon: Icon(
-                      Icons.search,
-                    ),
+                    prefixIcon: Icon(Icons.search, size: 20),
+                    prefixIconConstraints: BoxConstraints(minWidth: 40, minHeight: 40),
+                    suffixIconConstraints: BoxConstraints(minWidth: 40, minHeight: 40),
+                    suffixIcon: showClearButton
+                        ? IconButton(
+                            onPressed: onClear,
+                            icon: Icon(Icons.clear, size: 20),
+                          )
+                        : null,
                   ),
-                ),
-              ),
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  padding: EdgeInsets.only(left: MSize.kGap.m),
-                  alignment: Alignment.center,
-                  height: 50,
-                  child: Text(
-                    "취소",
-                    style: TextStyle(fontSize: MSize.kFont.l, fontWeight: FontWeight.bold),
-                  ),
+                  onChanged: onChanged,
                 ),
               ),
             ],

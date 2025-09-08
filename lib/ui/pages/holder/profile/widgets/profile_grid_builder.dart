@@ -30,7 +30,7 @@ class ProfileGridBuilder extends StatelessWidget {
 
   Material _AddBox() {
     return Material(
-      color: MColor.kBackGround.gray,
+      color: MColor.kBackGround.lightGray,
       child: InkWell(
         onTap: () {
           print("추가하기 클릭됨");

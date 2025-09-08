@@ -20,10 +20,12 @@ class ProfileHeaderBtn extends StatelessWidget {
           Expanded(
             child: isMe
                 ? MButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/profile/edit");
+                    },
                     text: "프로필 편집",
                     textColor: MColor.kText.normal,
-                    backgroundColor: MColor.kBackGround.gray,
+                    backgroundColor: MColor.kBackGround.lightGray,
                     padding: EdgeInsets.symmetric(vertical: MSize.kGap.xxxxs),
                   )
                 : MButton(

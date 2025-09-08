@@ -21,7 +21,7 @@ class JoinPageIndicator extends StatelessWidget {
           height: 4,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(2),
-            color: index == pageNum ? MColor.kButton.primary : MColor.kButton.disabled,
+            color: index == pageNum ? MColor.kIndicator.active : MColor.kIndicator.inactive,
           ),
         );
       }),
