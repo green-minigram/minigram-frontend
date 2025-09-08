@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
-import 'package:minigram/ui/pages/post/reply/post_reply_page.dart';
+import 'package:minigram/ui/pages/post/reply/post_Comment_page.dart';
 
 class PostFooter extends StatefulWidget {
   PostFooter({
@@ -54,7 +54,7 @@ class _PostFooterState extends State<PostFooter> {
               TextButton.icon(
                 onPressed: () {
                   print("댓글 버튼 클릭됨");
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => PostReplyPage()));
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => PostCommentPage()));
                 },
                 icon: Icon(
                   Icons.mode_comment_outlined,

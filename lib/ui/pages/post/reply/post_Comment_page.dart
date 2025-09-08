@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:minigram/ui/pages/post/reply/widgets/post_reply_body.dart';
+import 'package:minigram/ui/pages/post/reply/widgets/post_comment_body.dart';
 
-class PostReplyPage extends StatelessWidget {
-  const PostReplyPage({super.key});
+class PostCommentPage extends StatelessWidget {
+  const PostCommentPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     print('게시글 댓글 상세 페이지 렌더링됨!'); // 렌더링 확인용
     return Scaffold(
       appBar: _appBar(context),
-      body: PostReplyBody(),
+      body: PostCommentBody(),
     );
   }
 
