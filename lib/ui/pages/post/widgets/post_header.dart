@@ -61,7 +61,7 @@ class PostHeader extends StatelessWidget {
                     ? [
                         MSheetItem(
                           text: "수정",
-                          icon: Icons.edit,
+                          icon: Icons.edit_outlined,
                           color: MColor.kText.normal,
                           onTap: () {
                             Navigator.pop(context);
@@ -70,7 +70,7 @@ class PostHeader extends StatelessWidget {
                         ),
                         MSheetItem(
                           text: "삭제",
-                          icon: Icons.delete,
+                          icon: Icons.delete_outline,
                           color: MColor.kIcon.red,
                           onTap: () {
                             Navigator.pop(context);

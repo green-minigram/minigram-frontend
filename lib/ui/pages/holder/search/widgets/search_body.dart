@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/ui/pages/holder/search/widgets/m_search_bar.dart';
 import 'package:minigram/ui/pages/holder/search/widgets/recent_search_sliver.dart';
+import 'package:minigram/ui/widgets/m_app_bar_bottom_line.dart';
 
 class SearchBody extends StatelessWidget {
   const SearchBody({
@@ -14,9 +15,10 @@ class SearchBody extends StatelessWidget {
         SliverAppBar(
           expandedHeight: 75,
           collapsedHeight: 75,
-          pinned: false,
+          pinned: true,
           flexibleSpace: MSearchBar(),
           surfaceTintColor: Colors.transparent,
+          bottom: const MAppBarBottomLine(),
         ),
         RecentSearchesSliver(), // 검색어가 존재하면 보이는 화면
         // PostGridSliver(), // 제일 처음 보이는 화면
