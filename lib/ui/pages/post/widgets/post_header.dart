@@ -96,9 +96,6 @@ class PostHeader extends StatelessWidget {
                           },
                         ),
                       ],
-                    ),
-                  );
-                },
               );
             },
           ),
