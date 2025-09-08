@@ -1,46 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/ui/pages/holder/profile/edit/widgets/edit_gender_body.dart';
 import 'package:minigram/ui/widgets/m_app_bar_bottom_line.dart';
 
-enum GenderType {
-  male("MALE"),
-  female("FEMALE");
-
-  const GenderType(this.serverValue);
-
-  final String serverValue;
-}
-
 class ProfileEditGenderPage extends StatelessWidget {
-  GenderType? _character = GenderType.male;
-
   ProfileEditGenderPage();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar(context),
-      body: Column(
-        children: <Widget>[
-          ListTile(
-            title: Text("남성"),
-            trailing: Radio<GenderType>(
-              value: GenderType.male,
-              groupValue: _character,
-              onChanged: (GenderType? value) {},
-            ),
-          ),
-          ListTile(
-            title: Text("여성"),
-            trailing: Radio<GenderType>(
-              value: GenderType.female,
-              groupValue: _character,
-              onChanged: (GenderType? value) {},
-            ),
-          ),
-        ],
-      ),
+      body: EditGenderBody(),
     );
   }
 

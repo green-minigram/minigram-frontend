@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minigram/m_route.dart';
 import 'package:minigram/ui/pages/holder/profile/widgets/profile_body.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -8,17 +9,24 @@ class ProfilePage extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _appBar(),
+      appBar: _appBar(context),
       body: ProfileBody(isMe: isMe),
     );
   }
 
-  AppBar _appBar() {
+  AppBar _appBar(BuildContext context) {
     return AppBar(
       title: const Text('유저아이디'),
       centerTitle: false,
       surfaceTintColor: Colors.transparent,
-      actions: [IconButton(icon: const Icon(Icons.menu), onPressed: () {})],
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            Navigator.pushNamed(context, MRoute.profileSetting);
+          },
+        ),
+      ],
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
-import 'package:minigram/ui/pages/holder/profile/edit/widgets/profile_edit_name_body.dart';
+import 'package:minigram/ui/pages/holder/profile/edit/widgets/edit_name_body.dart';
 import 'package:minigram/ui/widgets/m_app_bar_bottom_line.dart';
 
 class ProfileEditNamePage extends StatelessWidget {
@@ -11,7 +11,7 @@ class ProfileEditNamePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar(context),
-      body: ProfileEditNameBody(),
+      body: EditNameBody(),
     );
   }
 

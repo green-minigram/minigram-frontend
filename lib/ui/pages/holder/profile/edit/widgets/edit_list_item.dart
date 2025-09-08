@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 
-class ProfileEditListItem extends StatelessWidget {
+class EditListItem extends StatelessWidget {
   final String title;
   final String subtitle;
   final String? trailingUrl;
 
-  const ProfileEditListItem({
+  const EditListItem({
     super.key,
     required this.title,
     required this.subtitle,

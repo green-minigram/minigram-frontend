@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/ui/pages/holder/profile/widgets/profile_grid_builder.dart';
 import 'package:minigram/ui/pages/holder/profile/widgets/profile_header_bio.dart';
-import 'package:minigram/ui/pages/holder/profile/widgets/profile_header_btn.dart';
+import 'package:minigram/ui/pages/holder/profile/widgets/profile_header_button.dart';
 import 'package:minigram/ui/pages/holder/profile/widgets/profile_header_info.dart';
 
 class ProfileBody extends StatelessWidget {
@@ -24,7 +24,7 @@ class ProfileBody extends StatelessWidget {
               delegate: SliverChildListDelegate([
                 ProfileHeaderInfo(),
                 ProfileHeaderBio(),
-                ProfileHeaderBtn(isMe: isMe),
+                ProfileHeaderButton(isMe: isMe),
               ]),
             ),
           ),
