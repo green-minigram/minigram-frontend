@@ -42,7 +42,7 @@ dependencies:
   timeago: ^3.7.1 # 시간 차이를 “n분 전 / n일 전” 같은 상대 시간으로 바꿔줌.
   intl: ^0.20.2 # 문자열을 DateTime으로 변환하거나, 날짜/숫자를 포맷팅할 때 사용.
   flutter_slidable: ^4.0.1 # 리스트 아이템을 좌우 스와이프해서 삭제/편집 같은 버튼을 노출할 때 사용
-  image_picker: ^1.2.0 # 갤러리에 이미지에 접근
+  image_picker: ^1.1.2 # 갤러리에 이미지에 접근
 
 dev_dependencies:
   flutter_test:

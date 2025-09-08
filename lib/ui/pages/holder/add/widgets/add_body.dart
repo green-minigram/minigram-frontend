@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 
@@ -43,6 +44,54 @@ class AddBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ImagePicker _picker = ImagePicker();
+
+    Future<void> _pickImages() async {
+      try {
+        final List<XFile> images = await _picker.pickMultiImage(
+          imageQuality: 85,
+          limit: 10,
+        );
+
+        if (images.isNotEmpty) {
+          // 최대 10장 제한
+          final limitedImages = images.take(10).toList();
+
+          for (var img in limitedImages) {
+            print("선택한 이미지 경로: ${img.path}");
+          }
+
+          if (images.length > 10) {
+            print("10장까지만 업로드 가능합니다. (추가 ${images.length - 10}장은 제외됨)");
+          }
+
+          // TODO: limitedImages → 업로드 화면으로 넘기기
+        } else {
+          print("이미지 선택 취소됨");
+        }
+      } catch (e) {
+        print("이미지 선택 중 오류: $e");
+      }
+    }
+
+    Future<void> _pickVideo() async {
+      try {
+        final XFile? video = await _picker.pickVideo(
+          source: ImageSource.gallery,
+          maxDuration: const Duration(seconds: 60), // 예: 최대 30초
+        );
+
+        if (video != null) {
+          print("선택한 영상 경로: ${video.path}");
+          // TODO: 선택한 영상 → 업로드 화면으로 넘기기
+        } else {
+          print("영상 선택 취소됨");
+        }
+      } catch (e) {
+        print("이미지 선택 중 오류: $e");
+      }
+    }
+
     return Padding(
       padding: EdgeInsets.all(MSize.kGap.xxl),
       child: Column(
@@ -52,8 +101,9 @@ class AddBody extends StatelessWidget {
             icon: Icons.photo_library,
             label: "게시글 등록하기",
             color: MColor.kPrimary.normal,
-            onTap: () {
+            onTap: () async {
               print("게시글 등록 선택");
+              await _pickImages();
             },
           ),
           SizedBox(height: MSize.kGap.huge),
@@ -61,8 +111,9 @@ class AddBody extends StatelessWidget {
             icon: Icons.play_circle_fill,
             label: "스토리 등록하기",
             color: Colors.blue,
-            onTap: () {
+            onTap: () async {
               print("스토리 등록 선택");
+              await _pickVideo();
             },
           ),
         ],
