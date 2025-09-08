@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:minigram/_core/enums/filter_type.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
-import 'package:minigram/ui/pages/holder/profile/setting/abusereport/widgets/report_list_header.dart';
-import 'package:minigram/ui/pages/holder/profile/setting/abusereport/widgets/sort_button.dart';
+import 'package:minigram/ui/pages/abusereport/widgets/report_list_header.dart';
+import 'package:minigram/ui/pages/abusereport/widgets/sort_button.dart';
 
 class AbuseReportBodyHeader extends StatelessWidget {
   const AbuseReportBodyHeader({
