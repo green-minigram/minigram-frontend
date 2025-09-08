@@ -15,10 +15,6 @@ class AddPage extends StatelessWidget {
 
   AppBar _appbar(BuildContext context) {
     return AppBar(
-      leading: IconButton(
-        onPressed: () => Navigator.pop(context),
-        icon: Icon(Icons.arrow_back_ios),
-      ),
       title: Text('미니그램 만들기'),
       centerTitle: true,
     );

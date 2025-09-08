@@ -19,11 +19,11 @@ class FollowPage extends StatelessWidget {
   AppBar _appbar(BuildContext context) {
     return AppBar(
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back),
+        icon: const Icon(Icons.arrow_back_ios),
         onPressed: () => Navigator.pop(context),
       ),
       title: Text(
-        "9912151n_", // 프로필 주인 아이디 (하드코딩 예시)
+        "9912151n_",
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: MSize.kFont.l,

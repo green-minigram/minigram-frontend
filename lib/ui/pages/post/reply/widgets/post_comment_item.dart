@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_size.dart';
-import 'package:minigram/ui/pages/post/reply/widgets/post_comment_header.dart';
 import 'package:minigram/ui/pages/post/reply/widgets/post_comment_item_body.dart';
+import 'package:minigram/ui/pages/post/reply/widgets/post_comment_item_header.dart';
 import 'package:minigram/ui/pages/post/reply/widgets/post_comment_item_like.dart';
 import 'package:minigram/ui/widgets/m_story.dart';
 

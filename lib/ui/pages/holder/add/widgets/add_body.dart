@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/ui/pages/post/write/post_write_page.dart';
+import 'package:minigram/ui/pages/story/write/story_write_page.dart';
 
 class AddBody extends StatelessWidget {
   const AddBody({super.key});
@@ -53,21 +54,13 @@ class AddBody extends StatelessWidget {
           imageQuality: 85,
           limit: 10,
         );
-
         if (images.isNotEmpty) {
-          // 최대 10장 제한
-          final limitedImages = images.take(10).toList();
-          final paths = limitedImages.map((img) => img.path).toList();
+          final paths = images.map((img) => img.path).toList();
 
-          for (var img in limitedImages) {
+          for (var img in images) {
             print("선택한 이미지 경로: ${img.path}");
           }
 
-          if (images.length > 10) {
-            print("10장까지만 업로드 가능합니다. (추가 ${images.length - 10}장은 제외됨)");
-          }
-
-          // limitedImages → 업로드 화면으로 넘기기
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -82,21 +75,27 @@ class AddBody extends StatelessWidget {
       }
     }
 
-    Future<void> _pickVideo() async {
+    Future<void> _pickVideo(BuildContext context) async {
       try {
         final XFile? video = await _picker.pickVideo(
           source: ImageSource.gallery,
-          maxDuration: const Duration(seconds: 60), // 예: 최대 30초
+          maxDuration: const Duration(seconds: 60), // 최대 60초
         );
 
         if (video != null) {
           print("선택한 영상 경로: ${video.path}");
-          // TODO: 선택한 영상 → 업로드 화면으로 넘기기
+          // StoryWritePage로 이동하면서 videoPath 전달
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => StoryWritePage(videoPath: video.path),
+            ),
+          );
         } else {
           print("영상 선택 취소됨");
         }
       } catch (e) {
-        print("이미지 선택 중 오류: $e");
+        print("영상 선택 중 오류: $e");
       }
     }
 
@@ -121,7 +120,7 @@ class AddBody extends StatelessWidget {
             color: Colors.blue,
             onTap: () async {
               print("스토리 등록 선택");
-              await _pickVideo();
+              await _pickVideo(context);
             },
           ),
         ],

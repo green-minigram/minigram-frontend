@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
-import 'package:minigram/ui/pages/post/reply/post_Comment_page.dart';
+import 'package:minigram/ui/pages/post/reply/post_comment_page.dart';
 
 class PostFooter extends StatefulWidget {
   PostFooter({
