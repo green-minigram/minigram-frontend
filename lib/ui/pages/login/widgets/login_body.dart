@@ -15,8 +15,8 @@ class LoginBody extends StatelessWidget {
   }
 
   // 로그인 버튼의 onPressed 이벤트를 위한 함수
-  void _onLoginPressed() {
-    // Navigator.pushNamed(context, MRoute.joinUsername);
+  void _onLoginPressed(context) {
+    Navigator.pushNamedAndRemoveUntil(context, MRoute.mainHolder, (route) => route.isFirst);
   }
 
   // 새 계정 만들기 버튼의 onPressed 이벤트를 위한 함수
@@ -55,7 +55,9 @@ class LoginBody extends StatelessWidget {
                   ),
                   SizedBox(height: MSize.kGap.l),
                   MButton(
-                    onPressed: _onLoginPressed,
+                    onPressed: () {
+                      _onLoginPressed(context);
+                    },
                     text: "로그인",
                   ),
                   SizedBox(height: MSize.kGap.l),

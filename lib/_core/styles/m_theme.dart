@@ -16,7 +16,7 @@ ThemeData mTheme() {
     ),
     dividerTheme: DividerThemeData(
       thickness: MSize.kLine.normal,
-      color: MColor.kLine.subtle,
+      color: MColor.kLine.main,
     ),
     textTheme: GoogleFonts.notoSansTextTheme(),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -26,13 +26,13 @@ ThemeData mTheme() {
       selectedLabelStyle: TextStyle(fontSize: MSize.kFont.s, fontWeight: FontWeight.w700),
       unselectedLabelStyle: TextStyle(fontSize: MSize.kFont.s, fontWeight: FontWeight.w400),
     ),
-    inputDecorationTheme: InputDecorationTheme(
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: MColor.kLine.main),
-      ),
-      contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      hintStyle: TextStyle(fontSize: MSize.kFont.normal, color: MColor.kText.normal),
-    ),
+    // inputDecorationTheme: InputDecorationTheme(
+    //   border: OutlineInputBorder(
+    //     borderRadius: BorderRadius.circular(8),
+    //     borderSide: BorderSide(color: MColor.kLine.main),
+    //   ),
+    //   contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+    //   hintStyle: TextStyle(fontSize: MSize.kFont.normal, color: MColor.kText.normal),
+    // ),
   );
 }
