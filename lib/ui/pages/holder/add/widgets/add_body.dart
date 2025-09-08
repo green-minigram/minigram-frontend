@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/ui/pages/post/write/post_write_page.dart';
 
 class AddBody extends StatelessWidget {
   const AddBody({super.key});
@@ -56,6 +57,7 @@ class AddBody extends StatelessWidget {
         if (images.isNotEmpty) {
           // 최대 10장 제한
           final limitedImages = images.take(10).toList();
+          final paths = limitedImages.map((img) => img.path).toList();
 
           for (var img in limitedImages) {
             print("선택한 이미지 경로: ${img.path}");
@@ -65,7 +67,13 @@ class AddBody extends StatelessWidget {
             print("10장까지만 업로드 가능합니다. (추가 ${images.length - 10}장은 제외됨)");
           }
 
-          // TODO: limitedImages → 업로드 화면으로 넘기기
+          // limitedImages → 업로드 화면으로 넘기기
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => PostWritePage(imagePaths: paths),
+            ),
+          );
         } else {
           print("이미지 선택 취소됨");
         }
