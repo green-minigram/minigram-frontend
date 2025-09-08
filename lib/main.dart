@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:minigram/_core/styles/m_theme.dart';
+import 'package:minigram/_core/util/m_date.dart';
 import 'package:minigram/m_route.dart';
 import 'package:minigram/ui/pages/follow/follow_page.dart';
 import 'package:minigram/ui/pages/holder/main_holder.dart';
@@ -20,6 +21,7 @@ GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MDate.init();
   runApp(MyApp());
 }
 

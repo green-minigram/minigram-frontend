@@ -188,4 +188,10 @@ class _Icons {
 
   /// 신고/삭제 등등
   final Color red = const Color(0xFFFF453A);
+
+  /// 기본 아이콘 (검은색)
+  final Color normal = const Color(0xFF000000);
+
+  /// 흰색 아이콘
+  final Color white = const Color(0xFFFFFFFF);
 }

@@ -20,22 +20,22 @@ class PostImage extends StatelessWidget {
       builder: (context, setState) {
         return Column(
           children: [
-            AspectRatio(
-              aspectRatio: MSize.kRatio.aspect34,
-              child: PageView.builder(
-                controller: pageController,
-                itemCount: imageUrls.length,
-                onPageChanged: (index) {
-                  setState(() {
-                    currentPage = index;
-                  });
-                },
-                itemBuilder: (context, index) {
-                  return Image.network(
-                    imageUrls[index],
-                    fit: BoxFit.cover,
-                  );
-                },
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: 600, // 최대 높이
+              ),
+              child: AspectRatio(
+                aspectRatio: MSize.kRatio.aspect34,
+                child: PageView.builder(
+                  controller: pageController,
+                  itemCount: imageUrls.length,
+                  itemBuilder: (context, index) {
+                    return Image.network(
+                      imageUrls[index],
+                      fit: BoxFit.cover,
+                    );
+                  },
+                ),
               ),
             ),
             SizedBox(height: MSize.kGap.xs),
