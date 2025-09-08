@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 
-class ProfileEditBioBody extends StatelessWidget {
-  const ProfileEditBioBody({
+class EditBioBody extends StatelessWidget {
+  const EditBioBody({
     super.key,
   });
 
