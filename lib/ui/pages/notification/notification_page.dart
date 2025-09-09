@@ -100,6 +100,17 @@ class NotificationPage extends StatelessWidget {
         ],
       },
     };
-    return NotificationBody(notifications: notifications);
+    return Scaffold(
+      appBar: _appBar(context),
+      body: NotificationBody(notifications: notifications),
+    );
   }
+
+  AppBar _appBar(BuildContext context) => AppBar(
+    leading: IconButton(
+      onPressed: () => Navigator.pop(context),
+      icon: Icon(Icons.arrow_back_ios),
+    ),
+    title: const Text("알림"),
+  );
 }

@@ -15,14 +15,11 @@ class NotificationCommentItem extends StatelessWidget {
     final post = data["post"];
 
     return ListTile(
-      // 프로필 → CircleAvatar 대신 MStory 사용
       leading: MStory(
-        size: MSize.kStory.s, // 50.0
+        size: MSize.kStory.s,
         imageUrl: user["profileImageUrl"],
-        isGradient: false, // 알림창이니까 그라데이션 빼는 것도 깔끔
+        isGradient: false,
       ),
-
-      // 메시지
       title: RichText(
         text: TextSpan(
           children: [
@@ -51,8 +48,6 @@ class NotificationCommentItem extends StatelessWidget {
           ],
         ),
       ),
-
-      // 알림 시간
       subtitle: Text(
         MDate.timeAgo(data["createdAt"] ?? ""),
         style: TextStyle(
@@ -60,14 +55,12 @@ class NotificationCommentItem extends StatelessWidget {
           fontSize: MSize.kFont.s,
         ),
       ),
-
-      // 게시글 대표 이미지
       trailing: ClipRRect(
         borderRadius: BorderRadius.circular(MSize.kBorderRadius.xs),
         child: Image.network(
           post["postImageUrl"],
-          width: 40,
-          height: 40,
+          width: MSize.kIcon.l,
+          height: MSize.kIcon.l,
           fit: BoxFit.cover,
         ),
       ),

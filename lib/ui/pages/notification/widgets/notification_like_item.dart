@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/_core/util/m_date.dart';
+import 'package:minigram/ui/widgets/m_story.dart';
 
 class NotificationLikeItem extends StatelessWidget {
   final Map<String, dynamic> data;
@@ -12,18 +14,21 @@ class NotificationLikeItem extends StatelessWidget {
     final post = data["post"];
 
     return ListTile(
-      leading: CircleAvatar(
-        backgroundImage: NetworkImage(user["profileImageUrl"] ?? ""),
+      leading: MStory(
+        size: MSize.kStory.s,
+        imageUrl: user["profileImageUrl"] ?? "",
+        isGradient: false,
       ),
       title: Text("${user["username"]}님이 회원님의 게시글을 좋아합니다."),
       subtitle: Text(
         MDate.timeAgo(data["createdAt"] ?? ""),
+        style: TextStyle(fontSize: MSize.kFont.s),
       ),
       trailing: post != null
           ? Image.network(
               post["postImageUrl"] ?? "",
-              width: 40,
-              height: 40,
+              width: MSize.kIcon.l,
+              height: MSize.kIcon.l,
               fit: BoxFit.cover,
             )
           : null,

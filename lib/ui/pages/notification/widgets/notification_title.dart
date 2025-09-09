@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minigram/_core/styles/m_size.dart';
 
 class NotificationTitle extends StatelessWidget {
   final String title;
@@ -8,10 +9,16 @@ class NotificationTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: EdgeInsets.symmetric(
+        horizontal: MSize.kGap.l,
+        vertical: MSize.kGap.xs,
+      ),
       child: Text(
         title,
-        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        style: TextStyle(
+          fontSize: MSize.kFont.l,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
