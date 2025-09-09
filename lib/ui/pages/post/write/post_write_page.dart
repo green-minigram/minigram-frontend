@@ -39,7 +39,7 @@ class _PostWritePageState extends State<PostWritePage> {
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(ctx),
-                child: const Text("확인"),
+                child: Text("확인"),
               ),
             ],
           ),
@@ -83,7 +83,7 @@ class _PostWritePageState extends State<PostWritePage> {
           ),
         ),
       ),
-      title: const Text('업로드'),
+      title: Text('업로드'),
       actions: [
         TextButton(
           onPressed: () {

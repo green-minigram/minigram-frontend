@@ -14,6 +14,7 @@ import 'package:minigram/ui/pages/join/email_page.dart';
 import 'package:minigram/ui/pages/join/password_page.dart';
 import 'package:minigram/ui/pages/join/username_page.dart';
 import 'package:minigram/ui/pages/login/login_page.dart';
+import 'package:minigram/ui/pages/post/update/post_update_page.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: mTheme(),
-      home: MainHolder(),
+      home: PostUpdatePage(),
       //MainHolder(),
       routes: {
         "${MRoute.mainHolder}": (context) => const MainHolder(),

@@ -50,10 +50,13 @@ class _PostFormImageState extends State<PostFormImage> {
               setState(() => _currentIndex = index);
             },
             itemBuilder: (context, index) {
-              return Image.file(
-                File(widget.imagePaths[index]),
-                fit: BoxFit.cover,
-              );
+              final path = widget.imagePaths[index];
+
+              if (path.startsWith('http')) {
+                return Image.network(path, fit: BoxFit.cover);
+              } else {
+                return Image.file(File(path), fit: BoxFit.cover);
+              }
             },
           ),
         ),
