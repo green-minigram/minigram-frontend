@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/ui/pages/post/reply/post_Comment_page.dart';
 
 class PostFooter extends StatefulWidget {
   PostFooter({
@@ -28,25 +29,46 @@ class _PostFooterState extends State<PostFooter> {
           // 좋아요 & 댓글
           Row(
             children: [
-              GestureDetector(
-                onTap: () {
-                  print("좋아요 아이콘 클릭됨");
-                },
-                child: Icon(Icons.favorite, color: MColor.kButton.like, size: MSize.kIcon.s),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      print("좋아요 아이콘 클릭됨");
+                    },
+                    child: Icon(
+                      Icons.favorite,
+                      color: MColor.kButton.like,
+                      size: MSize.kIcon.s,
+                    ),
+                  ),
+                  SizedBox(width: MSize.kGap.xxs),
+                  Text(
+                    "3.2만",
+                    style: TextStyle(color: MColor.kText.title),
+                  ),
+                ],
               ),
-              SizedBox(width: MSize.kGap.xxs),
-              Text("3.2만"), // 좋아요 수
               SizedBox(width: MSize.kGap.l),
-              GestureDetector(
-                onTap: () {
+              TextButton.icon(
+                onPressed: () {
                   print("댓글 버튼 클릭됨");
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => PostCommentPage()));
                 },
-                child: Row(
-                  children: [
-                    Icon(Icons.mode_comment_outlined, size: MSize.kIcon.s),
-                    SizedBox(width: MSize.kGap.xxs),
-                    Text("301"),
-                  ],
+                icon: Icon(
+                  Icons.mode_comment_outlined,
+                  size: MSize.kIcon.s,
+                  color: MColor.kIcon.normal,
+                ),
+                label: Text(
+                  "301",
+                  style: TextStyle(color: MColor.kText.title),
+                ),
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  minimumSize: Size(0, 0),
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
               ), // 댓글 수
             ],

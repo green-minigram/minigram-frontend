@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:minigram/_core/styles/m_theme.dart';
+import 'package:minigram/_core/util/m_date.dart';
 import 'package:minigram/m_route.dart';
+import 'package:minigram/ui/pages/abusereport/abuse_report_page.dart';
 import 'package:minigram/ui/pages/follow/follow_page.dart';
 import 'package:minigram/ui/pages/holder/main_holder.dart';
 import 'package:minigram/ui/pages/holder/profile/edit/profile_edit_bio_page.dart';
@@ -9,7 +11,6 @@ import 'package:minigram/ui/pages/holder/profile/edit/profile_edit_birth_date_pa
 import 'package:minigram/ui/pages/holder/profile/edit/profile_edit_gender_page.dart';
 import 'package:minigram/ui/pages/holder/profile/edit/profile_edit_name_page.dart';
 import 'package:minigram/ui/pages/holder/profile/edit/profile_edit_page.dart';
-import 'package:minigram/ui/pages/holder/profile/setting/abusereport/abuse_report_page.dart';
 import 'package:minigram/ui/pages/holder/profile/setting/profile_setting_page.dart';
 import 'package:minigram/ui/pages/join/email_page.dart';
 import 'package:minigram/ui/pages/join/password_page.dart';
@@ -20,6 +21,7 @@ GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MDate.init();
   runApp(MyApp());
 }
 
@@ -59,7 +61,7 @@ class MyApp extends StatelessWidget {
         "${MRoute.profileSetting}": (context) => ProfileSettingPage(),
         "${MRoute.follower}": (context) => const FollowPage(),
         "${MRoute.following}": (context) => const FollowPage(),
-        "${MRoute.abuseReportList}": (context) => const AbuseReportPage(),
+        "${MRoute.abuseReport}": (context) => const AbuseReportPage(),
       },
     );
   }

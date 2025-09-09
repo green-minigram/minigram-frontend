@@ -12,5 +12,5 @@ class MRoute {
   static final String profileSetting = "/profile/setting";
   static final String follower = "/follower";
   static final String following = "/following";
-  static final String abuseReportList = "/abuse-report";
+  static final String abuseReport = "/abuse-report";
 }
