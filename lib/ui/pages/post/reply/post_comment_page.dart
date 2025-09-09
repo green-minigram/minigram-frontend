@@ -6,7 +6,6 @@ class PostCommentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('게시글 댓글 상세 페이지 렌더링됨!'); // 렌더링 확인용
     return Scaffold(
       appBar: _appBar(context),
       body: PostCommentBody(),
