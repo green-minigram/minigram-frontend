@@ -38,6 +38,7 @@ class _PostCommentCardState extends State<PostCommentCard> {
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
             icon: Icons.delete,
+            padding: EdgeInsets.only(left: 8),
           ),
         ],
       ),
