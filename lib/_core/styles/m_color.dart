@@ -132,6 +132,9 @@ class _Buttons {
 
   /// 비활성화 버튼
   final Color disabled = const Color(0xFFEEF2F5);
+
+  /// 흰색 아이콘
+  final Color grey = const Color(0xFF6B6763);
 }
 
 /// Text Colors
