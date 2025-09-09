@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:minigram/ui/pages/holder/profile/setting/abusereport/widgets/abuse_report_body.dart';
+import 'package:minigram/ui/pages/abusereport/widgets/abuse_report_body.dart';
 
 class AbuseReportPage extends StatelessWidget {
   const AbuseReportPage();
