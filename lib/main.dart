@@ -5,7 +5,6 @@ import 'package:minigram/_core/util/m_date.dart';
 import 'package:minigram/m_route.dart';
 import 'package:minigram/ui/pages/abusereport/abuse_report_page.dart';
 import 'package:minigram/ui/pages/abusereport/complete/report_complete_page.dart';
-import 'package:minigram/ui/pages/abusereport/reason/abuse_report_reason_page.dart';
 import 'package:minigram/ui/pages/follow/follow_page.dart';
 import 'package:minigram/ui/pages/holder/main_holder.dart';
 import 'package:minigram/ui/pages/holder/profile/edit/profile_edit_bio_page.dart';
@@ -49,7 +48,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: mTheme(),
-      home: AbuseReportReasonPage(),
+      home: MainHolder(),
       routes: {
         "${MRoute.mainHolder}": (context) => const MainHolder(),
         "${MRoute.joinEmail}": (context) => const EmailPage(),
