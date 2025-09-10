@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:minigram/ui/pages/join/widgets/form_app_bar.dart';
-import 'package:minigram/ui/pages/join/widgets/password_body.dart';
+import 'package:minigram/ui/pages/auth/join_page/widgets/email_body.dart';
+import 'package:minigram/ui/pages/auth/join_page/widgets/form_app_bar.dart';
 
-class PasswordPage extends StatelessWidget {
-  const PasswordPage();
+class EmailPage extends StatelessWidget {
+  const EmailPage();
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class PasswordPage extends StatelessWidget {
           Navigator.pop(context);
         },
       ),
-      body: PasswordBody(),
+      body: EmailBody(),
     );
   }
 }

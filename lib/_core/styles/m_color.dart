@@ -197,4 +197,7 @@ class _Icons {
 
   /// 흰색 아이콘
   final Color white = const Color(0xFFFFFFFF);
+
+  /// 초록색
+  final Color green = const Color(0xFF40E300);
 }
