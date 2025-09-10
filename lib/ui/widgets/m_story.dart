@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/ui/pages/story/detail/story_detail_page.dart';
 
 class MStory extends StatelessWidget {
   final double size;
@@ -20,6 +21,12 @@ class MStory extends StatelessWidget {
       borderRadius: BorderRadius.circular(size / 2),
       onTap: () {
         print('스토리 클릭됨');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const StoryDetailPage(),
+          ),
+        );
       },
       child: Container(
         width: size,
