@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/m_route.dart';
 import 'package:minigram/ui/pages/holder/home/widgets/home_body.dart';
 import 'package:minigram/ui/pages/notification/notification_page.dart';
-import 'package:minigram/ui/pages/post/detail/post_detail_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,9 +16,7 @@ class HomePage extends StatelessWidget {
 
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => const PostDetailPage()),
-          );
+          Navigator.pushNamed(context, MRoute.notification);
         },
         child: const Icon(Icons.open_in_new),
       ),
