@@ -19,7 +19,28 @@ class NotificationLikeItem extends StatelessWidget {
         imageUrl: user["profileImageUrl"] ?? "",
         isGradient: false,
       ),
-      title: Text("${user["username"]}님이 회원님의 게시글을 좋아합니다."),
+      title: RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: user["username"],
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: MSize.kFont.normal, // 14.0
+                color: Colors.black, // MColor.kText.normal 쓰면 더 일관됨
+              ),
+            ),
+            TextSpan(
+              text: "님이 회원님의 게시글을 좋아합니다.",
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: MSize.kFont.normal,
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
+      ),
       subtitle: Text(
         MDate.timeAgo(data["createdAt"] ?? ""),
         style: TextStyle(fontSize: MSize.kFont.s),
