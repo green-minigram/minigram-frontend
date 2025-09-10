@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
-import 'package:minigram/ui/pages/abusereport/complete/report_complete_page.dart';
+import 'package:minigram/m_route.dart';
 
 class AbuseReportReasonBody extends StatelessWidget {
   const AbuseReportReasonBody({
@@ -53,12 +53,7 @@ class AbuseReportReasonBody extends StatelessWidget {
                 trailing: Icon(Icons.chevron_right),
                 onTap: () {
                   // TODO: 신고 사유 선택 시 신고 글 id/신고 이유 전송
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ReportCompletePage(),
-                    ),
-                  );
+                  Navigator.pushNamed(context, MRoute.reportComplete);
                 },
               );
             },
