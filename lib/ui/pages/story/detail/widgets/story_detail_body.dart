@@ -229,7 +229,7 @@ class _StoryDetailBodyState extends State<StoryDetailBody> {
                       icon: Icon(Icons.more_horiz, color: MColor.kIcon.white),
                       style: IconButton.styleFrom(
                         backgroundColor: Colors.transparent,
-                        shape: const CircleBorder(),
+                        shape: CircleBorder(),
                         fixedSize: Size(MSize.kIcon.xxl, MSize.kIcon.xxl),
                       ),
                     ),
