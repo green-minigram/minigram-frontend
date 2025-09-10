@@ -3,10 +3,18 @@ import 'package:flutter/services.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/ui/pages/story/write/widget/story_preview.dart';
+import 'package:minigram/ui/widgets/m_bottom_sheet.dart';
+import 'package:minigram/ui/widgets/m_bottom_sheet_item.dart';
 import 'package:minigram/ui/widgets/m_button.dart';
+import 'package:minigram/ui/widgets/m_show_alert_dialog.dart';
 
 class StoryDetailBody extends StatefulWidget {
-  const StoryDetailBody({super.key});
+  bool isOwner;
+
+  StoryDetailBody({
+    super.key,
+    this.isOwner = true,
+  });
 
   @override
   State<StoryDetailBody> createState() => _StoryDetailBodyState();
@@ -159,7 +167,65 @@ class _StoryDetailBodyState extends State<StoryDetailBody> {
 
                     // 메뉴 버튼
                     IconButton(
-                      onPressed: () => print("메뉴 클릭"),
+                      onPressed: () {
+                        MBottomSheet.show(
+                          context,
+                          items: widget.isOwner
+                              ? [
+                                  MSheetItem(
+                                    text: "삭제",
+                                    icon: Icons.delete_outline,
+                                    color: MColor.kIcon.red,
+                                    onTap: () {
+                                      Navigator.pop(context); // 먼저 BottomSheet 닫기
+                                      MShowAlertDialog.show(
+                                        context,
+                                        title: "스토리를 삭제하시겠어요?",
+                                        content: "삭제 선택 시 스토리가 영구적으로 삭제됩니다.",
+                                        failText: "취소",
+                                        successText: "삭제",
+                                        onFail: () {
+                                          print("삭제 취소됨");
+                                        },
+                                        onSuccess: () {
+                                          print("삭제 실행됨");
+                                          // 실제 삭제 로직 호출
+                                        },
+                                      );
+                                    },
+                                  ),
+                                  MSheetItem(
+                                    text: "취소",
+                                    icon: Icons.close,
+                                    color: MColor.kIcon.normal,
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      print("신고 클릭됨");
+                                    },
+                                  ),
+                                ]
+                              : [
+                                  MSheetItem(
+                                    text: "신고",
+                                    icon: Icons.flag_outlined,
+                                    color: MColor.kIcon.red,
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      print("신고 클릭됨");
+                                    },
+                                  ),
+                                  MSheetItem(
+                                    text: "취소",
+                                    icon: Icons.close,
+                                    color: MColor.kIcon.normal,
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      print("신고 클릭됨");
+                                    },
+                                  ),
+                                ],
+                        );
+                      },
                       icon: Icon(Icons.more_horiz, color: MColor.kIcon.white),
                       style: IconButton.styleFrom(
                         backgroundColor: Colors.transparent,
