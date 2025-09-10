@@ -85,7 +85,7 @@ class _StoryDetailBodyState extends State<StoryDetailBody> {
                           margin: EdgeInsets.symmetric(horizontal: MSize.kGap.xxxxs),
                           height: 3,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(2),
+                            borderRadius: BorderRadius.circular(MSize.kBorderRadius.xxs),
                             color: index == currentIndex
                                 ? MColor.kNormal.white
                                 : MColor.kNormal.white.withValues(alpha: 0.3),
@@ -95,19 +95,19 @@ class _StoryDetailBodyState extends State<StoryDetailBody> {
                     },
                   ),
                 ),
-                SizedBox(height: 12),
+                SizedBox(height: MSize.kGap.s),
 
                 // 프로필 + 아이디 + 시간 + 버튼들
                 Row(
                   children: [
                     // 프로필 아바타
                     CircleAvatar(
-                      radius: 18,
+                      radius: MSize.kBorderRadius.l,
                       backgroundImage: NetworkImage(
                         "https://picsum.photos/200/200",
                       ),
                     ),
-                    SizedBox(width: 8),
+                    SizedBox(width: MSize.kGap.xs),
 
                     // 아이디 + 시간
                     Column(
@@ -139,11 +139,11 @@ class _StoryDetailBodyState extends State<StoryDetailBody> {
                       borderSide: BorderSide(color: MColor.kIcon.white),
                       textColor: MColor.kText.white,
                       backgroundColor: Colors.transparent,
-                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      textSize: 12,
+                      padding: EdgeInsets.symmetric(horizontal: MSize.kGap.m, vertical: MSize.kGap.xs),
+                      textSize: MSize.kFont.s,
                       borderRadius: 9,
                     ),
-                    SizedBox(width: 8),
+                    SizedBox(width: MSize.kGap.xs),
 
                     // 좋아요 버튼
                     IconButton(
@@ -155,7 +155,7 @@ class _StoryDetailBodyState extends State<StoryDetailBody> {
                         fixedSize: Size(MSize.kIcon.xxl, MSize.kIcon.xxl),
                       ),
                     ),
-                    SizedBox(width: 8),
+                    SizedBox(width: MSize.kGap.xs),
 
                     // 메뉴 버튼
                     IconButton(
@@ -167,7 +167,7 @@ class _StoryDetailBodyState extends State<StoryDetailBody> {
                         fixedSize: Size(MSize.kIcon.xxl, MSize.kIcon.xxl),
                       ),
                     ),
-                    SizedBox(width: 8),
+                    SizedBox(width: MSize.kGap.xs),
 
                     // 닫기 버튼
                     IconButton(

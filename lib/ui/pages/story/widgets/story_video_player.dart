@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class StoryVideoPlayer extends StatefulWidget {
-  final String videoPath;
-  final bool autoPlay;
-  final bool loop;
+  final String videoPath; // 영상 주소
+  final bool autoPlay; // 자동 재생
+  final bool loop; // 영상 루프
 
   const StoryVideoPlayer({
     super.key,
     required this.videoPath,
     this.autoPlay = true,
-    this.loop = false,
+    this.loop = true,
   });
 
   @override
