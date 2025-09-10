@@ -12,7 +12,10 @@ class PostDetailBody extends StatelessWidget {
     return ListView(
       children: [
         SizedBox(height: MSize.kGap.xs),
-        PostHeader(showFollowButton: false),
+        PostHeader(
+          showFollowButton: false,
+          isOwner: true,
+        ),
         SizedBox(height: MSize.kGap.xs),
         PostImage(),
         SizedBox(height: MSize.kGap.xs),

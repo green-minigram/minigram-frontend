@@ -20,9 +20,31 @@ class NotificationFollowItem extends StatelessWidget {
         imageUrl: user["profileImageUrl"] ?? "",
         isGradient: false,
       ),
-      title: Text("${user["username"]}님이 회원님을 팔로우하기 시작했습니다."),
+      title: RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: user["username"],
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: MSize.kFont.normal, // 14.0
+                color: MColor.kText.title, // 색상 통일
+              ),
+            ),
+            TextSpan(
+              text: "님이 회원님을 팔로우하기 시작했습니다.",
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: MSize.kFont.normal,
+                color: MColor.kText.normal,
+              ),
+            ),
+          ],
+        ),
+      ),
       subtitle: Text(
         MDate.timeAgo(data["createdAt"] ?? ""),
+        style: TextStyle(fontSize: MSize.kFont.s, color: MColor.kText.secondary),
       ),
       trailing: MButton(
         onPressed: () {
