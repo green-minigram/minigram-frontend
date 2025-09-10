@@ -25,12 +25,33 @@ class _StoryVideoPlayerState extends State<StoryVideoPlayer> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.file(File(widget.videoPath))
-      ..initialize().then((_) {
-        setState(() {});
-        if (widget.autoPlay) _controller.play();
-        _controller.setLooping(widget.loop);
-      });
+    _initController(widget.videoPath);
+  }
+
+  void _initController(String path) {
+    if (path.startsWith("http")) {
+      _controller = VideoPlayerController.networkUrl(Uri.parse(path));
+    } else if (File(path).existsSync()) {
+      _controller = VideoPlayerController.file(File(path));
+    } else {
+      _controller = VideoPlayerController.asset(path);
+    }
+
+    _controller.initialize().then((_) {
+      if (!mounted) return;
+      setState(() {});
+      if (widget.autoPlay) _controller.play();
+      _controller.setLooping(widget.loop);
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant StoryVideoPlayer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.videoPath != widget.videoPath) {
+      _controller.dispose();
+      _initController(widget.videoPath);
+    }
   }
 
   @override

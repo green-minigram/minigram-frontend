@@ -81,6 +81,12 @@ class _Icons {
 
   /// 32.0
   final double xl = 32.0;
+
+  /// 36.0
+  final double xxl = 36.0;
+
+  /// 32.0
+  final double xxxl = 60.0;
 }
 
 /// Story sizes
