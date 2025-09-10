@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/ui/pages/holder/home/widgets/home_body.dart';
+import 'package:minigram/ui/pages/notification/notification_page.dart';
 import 'package:minigram/ui/pages/post/detail/post_detail_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -45,7 +46,14 @@ class HomePage extends StatelessWidget {
           color: Colors.black,
           size: MSize.kIcon.l,
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => NotificationPage(),
+            ),
+          );
+        },
       ),
     ],
   );
