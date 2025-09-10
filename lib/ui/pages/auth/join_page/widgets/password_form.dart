@@ -48,10 +48,8 @@ class PasswordForm extends ConsumerWidget {
           // 완료 버튼: 로딩 시 스피너 표시 + 비활성화
           MButton(
             text: "완료",
-            isLoading: isJoining, // 버튼 내부 인디케이터 표시
-            onPressed: () {
-              ref.read(sessionProvider.notifier).join(model.username, model.email, model.password);
-            },
+            isLoading: isJoining,
+            onPressed: isJoining ? null : ref.read(sessionProvider.notifier).join,
           ),
         ],
       ),

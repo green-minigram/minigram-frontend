@@ -9,8 +9,8 @@ String validateUsername(String value) {
   }
 
   // 2) 길이 5~20
-  if (v.length < 5) {
-    return "아이디는 최소 5자 이상이어야 합니다.";
+  if (v.length < 4) {
+    return "아이디는 최소 4자 이상이어야 합니다.";
   }
   if (v.length > 20) {
     return "아이디는 최대 20자 이하여야 합니다.";

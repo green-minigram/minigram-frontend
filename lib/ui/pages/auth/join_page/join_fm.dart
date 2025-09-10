@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:minigram/_core/util/validator_util.dart';
 import 'package:minigram/data/repository/user_repository.dart';
+import 'package:minigram/main.dart';
 import 'package:minigram/ui/pages/auth/join_page/join_email_handler.dart';
 import 'package:minigram/ui/pages/auth/join_page/join_username_handler.dart';
 
@@ -150,6 +152,27 @@ class JoinFM extends AutoDisposeNotifier<JoinModel> {
       // 에러 문구를 상태에 반영하는 최소한의 쓰기 콜백
       syncUsernameError: (err) => state = state.copyWith(usernameError: err),
     );
+  }
+
+  // 비밀번호/확인 동시 검증
+  // 실패 시: 스낵바 안내 + 폼 에러 동기화, 성공 시 true
+  bool confirmPassword() {
+    final pErr = validatePassword(state.password);
+    final pcErr = validatePasswordConfirm(state.password, state.passwordConfirm);
+
+    if (pErr.isNotEmpty || pcErr.isNotEmpty) {
+      state = state.copyWith(passwordError: pErr, passwordConfirmError: pcErr);
+
+      final ctx = navigatorKey.currentContext;
+      if (ctx != null) {
+        final msg = pErr.isNotEmpty ? pErr : pcErr;
+        ScaffoldMessenger.of(ctx).showSnackBar(
+          SnackBar(content: Text(msg.isEmpty ? "비밀번호를 확인해주세요" : msg)),
+        );
+      }
+      return false;
+    }
+    return true;
   }
 
   // 모든 input 데이터 검증 확인

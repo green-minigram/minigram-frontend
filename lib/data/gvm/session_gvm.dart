@@ -24,24 +24,31 @@ class SessionGVM extends Notifier<SessionModel> {
     return SessionModel();
   }
 
-  Future<void> join(String username, String email, String password) async {
-    Logger().d("username : $username, email : $email, password : $password");
+  // 선택지 A: 제출 전 과정을 한 곳에서 처리
+  Future<void> join() async {
     final fm = ref.read(joinProvider.notifier);
+    final s = ref.read(joinProvider);
 
-    // 폼 기본 검증 + 서버 가용성 확인
+    // 1) 비밀번호 가드(스낵바 & 폼 에러 동기화는 fm.confirmPassword 내부 처리)
+    final passwordOk = fm.confirmPassword();
+    if (!passwordOk) return;
+
+    // 2) 최종 검증(이메일/아이디 가용성 포함)
     final ok = fm.validateWithAvailability();
     if (!ok) {
       ScaffoldMessenger.of(mContext).showSnackBar(
-        const SnackBar(content: Text("유효성 혹은 중복검사 확인이 필요합니다.")),
+        const SnackBar(content: Text("이메일, 아이디, 비밀번호를 확인해주세요")),
       );
       return;
     }
 
-    // 로딩 시작
+    // 3) 로딩 시작(버튼 스피너 표시용)
     state = SessionModel(user: state.user, isLogin: state.isLogin, isJoining: true);
 
     try {
-      final body = await UserRepository().join(username, email, password);
+      Logger().d("join submit -> username:${s.username}, email:${s.email}");
+      // 4) 가입 호출(현재 2초 더미 딜레이 포함)
+      final body = await UserRepository().join(s.username, s.email, s.password);
       if (body["status"] != 200) {
         ScaffoldMessenger.of(mContext).showSnackBar(
           SnackBar(content: Text("${body["msg"]}")),
@@ -49,14 +56,14 @@ class SessionGVM extends Notifier<SessionModel> {
         return;
       }
 
-      // 성공 → 로그인 화면으로 스택 정리 이동
+      // 5) 성공 → 로그인으로 스택 초기화 이동
       Navigator.pushNamedAndRemoveUntil(mContext, MRoute.login, (route) => false);
     } catch (e) {
       ScaffoldMessenger.of(mContext).showSnackBar(
         const SnackBar(content: Text("일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.")),
       );
     } finally {
-      // 화면 전환 직전/직후에도 안전하게 false
+      // 6) 로딩 종료(전환 직전/직후에도 안전하게 false)
       state = SessionModel(user: state.user, isLogin: state.isLogin, isJoining: false);
     }
   }
