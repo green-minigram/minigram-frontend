@@ -1,9 +1,9 @@
 class MRoute {
   static final String mainHolder = "/main-holder";
-  static final String joinEmail = "/join/form-email";
-  static final String joinUsername = "/join/form-username";
-  static final String joinPassword = "/join/form-password";
-  static final String login = "/login";
+  static final String joinEmail = "/join_page/form-email";
+  static final String joinUsername = "/join_page/form-username";
+  static final String joinPassword = "/join_page/form-password";
+  static final String login = "/login_page";
   static final String profileEdit = "/profile/edit";
   static final String profileEditName = "/profile/edit/name";
   static final String profileEditBio = "/profile/edit/bio";
