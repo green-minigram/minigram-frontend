@@ -4,6 +4,7 @@ import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/ui/widgets/m_bottom_sheet.dart';
 import 'package:minigram/ui/widgets/m_bottom_sheet_item.dart';
 import 'package:minigram/ui/widgets/m_button.dart';
+import 'package:minigram/ui/widgets/m_show_alert_dialog.dart';
 import 'package:minigram/ui/widgets/m_story.dart';
 
 class PostHeader extends StatelessWidget {
@@ -71,8 +72,21 @@ class PostHeader extends StatelessWidget {
                           icon: Icons.delete_outline,
                           color: MColor.kIcon.red,
                           onTap: () {
-                            Navigator.pop(context);
-                            print("삭제 클릭됨");
+                            Navigator.pop(context); // 먼저 BottomSheet 닫기
+                            MShowAlertDialog.show(
+                              context,
+                              title: "게시물을 삭제하시겠어요?",
+                              content: "삭제 선택 시 게시물이 영구적으로 삭제됩니다.",
+                              failText: "취소",
+                              successText: "삭제",
+                              onFail: () {
+                                print("삭제 취소됨");
+                              },
+                              onSuccess: () {
+                                print("삭제 실행됨");
+                                // 실제 삭제 로직 호출
+                              },
+                            );
                           },
                         ),
                       ]
