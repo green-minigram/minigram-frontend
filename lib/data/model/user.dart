@@ -17,7 +17,7 @@ class User {
     : userId = data['userId'],
       username = data['username'],
       imgUrl = data['profileImageUrl'],
-      roles = data['roles'],
+      roles = data['roles'] ?? "",
       accessToken = data['accessToken'];
 
   @override
