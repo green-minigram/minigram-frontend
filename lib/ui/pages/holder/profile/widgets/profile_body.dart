@@ -36,15 +36,15 @@ class ProfileBody extends StatelessWidget {
           children: [
             TabBar(
               tabs: [
-                Tab(icon: Icon(Icons.grid_on_rounded)),
-                Tab(icon: Icon(Icons.video_library_rounded)),
+                Tab(icon: Icon(Icons.grid_on_rounded)), // 게시글
+                Tab(icon: Icon(Icons.video_library_rounded)), // 스토리
               ],
             ),
             Expanded(
               child: TabBarView(
                 children: [
-                  ProfileGridBuilder(),
-                  ProfileGridBuilder(),
+                  ProfileGridBuilder(isStoryTab: false), // 게시글 탭
+                  ProfileGridBuilder(isStoryTab: true), // 스토리 탭
                 ],
               ),
             ),

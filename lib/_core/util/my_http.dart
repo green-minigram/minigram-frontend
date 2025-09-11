@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-final baseUrl = "http://192.168.0.123:8080";
+final baseUrl = "http://192.168.0.65:8080"; //TODO
 // final baseUrl = "http://172.30.1.6:8080";
 
 //로그인 되면, dio에 jwt 추가하기
