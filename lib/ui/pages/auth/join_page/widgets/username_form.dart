@@ -14,6 +14,7 @@ class UsernameForm extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     JoinFM fm = ref.read(joinProvider.notifier);
     JoinModel model = ref.watch(joinProvider);
+
     return Form(
       child: ListView(
         children: [
@@ -23,9 +24,7 @@ class UsernameForm extends ConsumerWidget {
             hintText: "아이디를 입력해주세요",
             keyboardType: TextInputType.text,
             errorText: model.usernameError,
-            onChanged: (value) {
-              fm.username(value);
-            },
+            onChanged: fm.username,
             isChecking: model.isUsernameChecking,
             isAvailable: model.isUsernameAvailable,
           ),

@@ -8,6 +8,7 @@ import 'package:minigram/data/repository/user_repository.dart';
 import 'package:minigram/m_route.dart';
 import 'package:minigram/main.dart';
 import 'package:minigram/ui/pages/auth/join_page/join_fm.dart';
+import 'package:minigram/ui/pages/auth/login_page/login_fm.dart';
 import 'package:minigram/ui/pages/auth/login_page/login_page.dart';
 
 /// 1. 창고 관리자
@@ -34,6 +35,7 @@ class SessionGVM extends Notifier<SessionModel> {
     if (!passwordOk) return;
 
     // 2) 최종 검증(이메일/아이디 가용성 포함)
+    Logger().d("join submit -> username:${s.username}, email:${s.email}");
     final ok = fm.validateWithAvailability();
     if (!ok) {
       ScaffoldMessenger.of(mContext).showSnackBar(
@@ -43,11 +45,10 @@ class SessionGVM extends Notifier<SessionModel> {
     }
 
     // 3) 로딩 시작(버튼 스피너 표시용)
-    state = SessionModel(user: state.user, isLogin: state.isLogin, isJoining: true);
 
     try {
-      Logger().d("join submit -> username:${s.username}, email:${s.email}");
       // 4) 가입 호출(현재 2초 더미 딜레이 포함)
+      state = SessionModel(isJoining: true);
       final body = await UserRepository().join(s.username, s.email, s.password);
       if (body["status"] != 200) {
         ScaffoldMessenger.of(mContext).showSnackBar(
@@ -64,47 +65,51 @@ class SessionGVM extends Notifier<SessionModel> {
       );
     } finally {
       // 6) 로딩 종료(전환 직전/직후에도 안전하게 false)
-      state = SessionModel(user: state.user, isLogin: state.isLogin, isJoining: false);
+      state = SessionModel(isJoining: false);
     }
   }
 
-  // 이하 login/logout/autoLogin 기존 코드 유지
-  // Future<void> login(String username, String password) async {
-  //   // 1. 유효성 검사
-  //   Logger().d("username : ${username}, password : ${password}");
-  //   bool isValid = ref.read(loginProvider.notifier).validate();
-  //   if (!isValid) {
-  //     ScaffoldMessenger.of(mContext).showSnackBar(
-  //       SnackBar(content: Text("유효성 검사 실패입니다")),
-  //     );
-  //     return;
-  //   }
-  //
-  //   // 2. 통신
-  //   Map<String, dynamic> body = await UserRepository().login(username, password);
-  //   if (!body["success"]) {
-  //     ScaffoldMessenger.of(mContext).showSnackBar(
-  //       SnackBar(content: Text("${body["errorMessage"]}")),
-  //     );
-  //     return;
-  //   }
-  //
-  //   // 3. 파싱
-  //   User user = User.fromMap(body["response"]);
-  //
-  //   // 4. 토큰을 디바이스 저장
-  //   // 스플레쉬 화면에서 자동로그인 구현에 사용
-  //   await secureStorage.write(key: "accessToken", value: user.accessToken);
-  //
-  //   // 5. 세션모델 갱신
-  //   state = SessionModel(user: user, isLogin: true);
-  //
-  //   // 5. dio의 header에 토큰 세팅 [Bearer <- 이거 들어가 있음]
-  //   dio.options.headers["Authorization"] = user.accessToken;
-  //
-  //   // 6. 게시글 목록 페이지 이동
-  //   Navigator.pushNamed(mContext, "/post/list");
-  // }
+  Future<void> login(String email, String password) async {
+    // 1. 유효성 검사
+    Logger().d("email : ${email}, password : ${password}");
+    bool isValid = ref.read(loginProvider.notifier).validate();
+    if (!isValid) {
+      ScaffoldMessenger.of(mContext).showSnackBar(
+        SnackBar(content: Text("유효성 검사 실패입니다")),
+      );
+      return;
+    }
+
+    // 로그인 진행 상태
+    state = SessionModel(isLoggingIn: true);
+
+    // 2. 통신
+    Map<String, dynamic> body = await UserRepository().login(email, password);
+    if (body["status"] != 200) {
+      ScaffoldMessenger.of(mContext).showSnackBar(
+        SnackBar(content: Text("${body["msg"]}")),
+      );
+      return;
+    }
+
+    // 3. 파싱
+    User user = User.fromMap(body["body"]);
+
+    // 4. 토큰을 디바이스 저장
+    // 스플레쉬 화면에서 자동로그인 구현에 사용
+    await secureStorage.write(key: "accessToken", value: user.accessToken);
+
+    // 5. 세션모델 갱신
+    state = SessionModel(user: user, isLogin: true, isLoggingIn: false);
+
+    // 5. dio의 header에 토큰 세팅 [Bearer <- 이거 들어가 있음]
+    dio.options.headers["Authorization"] = user.accessToken;
+
+    Logger().d(state.user);
+
+    // 6. 게시글 목록 페이지 이동
+    Navigator.pushNamedAndRemoveUntil(mContext, MRoute.mainHolder, (route) => false);
+  }
 
   Future<void> logout() async {
     // 1. 토큰 디바이스 제거
@@ -159,11 +164,17 @@ class SessionModel {
   User? user;
   bool? isLogin;
   bool isJoining; // 회원가입 진행 중
+  bool isLoggingIn; // 로그인 진행 중
 
-  SessionModel({this.user, this.isLogin = false, this.isJoining = false});
+  SessionModel({
+    this.user,
+    this.isLogin = false,
+    this.isJoining = false,
+    this.isLoggingIn = false,
+  });
 
   @override
   String toString() {
-    return 'SessionModel{user: $user, isLogin: $isLogin, isJoining: $isJoining}';
+    return 'SessionModel{user: $user, isLogin: $isLogin, isJoining: $isJoining, isLoggingIn: $isLoggingIn}';
   }
 }

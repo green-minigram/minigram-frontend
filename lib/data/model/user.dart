@@ -1,24 +1,24 @@
 class User {
-  int id;
+  int userId;
   String username;
-  String imgUrl;
+  String roles;
   String? accessToken;
 
   User({
-    required this.id,
+    required this.userId,
     required this.username,
-    required this.imgUrl,
+    required this.roles,
     this.accessToken,
   });
 
   User.fromMap(Map<String, dynamic> data)
-      : id = data['id'],
-        username = data['username'],
-        imgUrl = data['imgUrl'],
-        accessToken = data['accessToken'];
+    : userId = data['userId'],
+      username = data['username'],
+      roles = data['roles'],
+      accessToken = data['accessToken'];
 
   @override
   String toString() {
-    return 'User(id: $id, username: $username, imgUrl: $imgUrl, accessToken: $accessToken)';
+    return 'User{userId: $userId, username: $username, roles: $roles, accessToken: $accessToken}';
   }
 }

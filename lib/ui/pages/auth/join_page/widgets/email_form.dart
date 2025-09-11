@@ -6,6 +6,8 @@ import 'package:minigram/ui/widgets/m_auth_text_form_field.dart';
 import 'package:minigram/ui/widgets/m_button.dart';
 
 class EmailForm extends ConsumerWidget {
+  const EmailForm({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     JoinFM fm = ref.read(joinProvider.notifier);
@@ -20,9 +22,7 @@ class EmailForm extends ConsumerWidget {
             hintText: "이메일을 입력해주세요",
             keyboardType: TextInputType.emailAddress,
             errorText: model.emailError,
-            onChanged: (value) {
-              fm.email(value);
-            },
+            onChanged: fm.email,
             isChecking: model.isEmailChecking,
             isAvailable: model.isEmailAvailable,
           ),
