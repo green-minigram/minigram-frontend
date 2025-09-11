@@ -9,7 +9,6 @@ class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   Widget build(BuildContext context) {
-    print('홈 페이지 렌더링됨!'); // 렌더링 확인용
     return Scaffold(
       appBar: _appBar(context),
       body: const HomeBody(),
@@ -25,6 +24,7 @@ class HomePage extends StatelessWidget {
 
   AppBar _appBar(BuildContext context) => AppBar(
     elevation: 0,
+    surfaceTintColor: Colors.transparent,
     leadingWidth: 150,
     leading: Padding(
       padding: EdgeInsets.only(left: MSize.kGap.m),
