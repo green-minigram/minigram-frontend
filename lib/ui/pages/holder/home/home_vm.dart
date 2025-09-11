@@ -5,17 +5,17 @@ import 'package:minigram/main.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// 1. 창고 관리자
-final postListProvider = AutoDisposeNotifierProvider<PostListVM, PostListModel?>(() {
-  return PostListVM();
+final postListProvider = AutoDisposeNotifierProvider<HomeVM, HomeModel?>(() {
+  return HomeVM();
 });
 
 /// 2. 창고
-class PostListVM extends AutoDisposeNotifier<PostListModel?> {
+class HomeVM extends AutoDisposeNotifier<HomeModel?> {
   final mContext = navigatorKey.currentContext!;
   final refreshCtrl = RefreshController();
 
   @override
-  PostListModel? build() {
+  HomeModel? build() {
     init();
 
     ref.onDispose(() {
@@ -34,7 +34,7 @@ class PostListVM extends AutoDisposeNotifier<PostListModel?> {
       );
       return;
     }
-    state = PostListModel.fromMap(body["response"]);
+    state = HomeModel.fromMap(body["response"]);
 
     refreshCtrl.refreshCompleted();
   }
@@ -46,7 +46,7 @@ class PostListVM extends AutoDisposeNotifier<PostListModel?> {
   }
 
   void notifyDeleteOne(int postId) {
-    PostListModel model = state!;
+    HomeModel model = state!;
 
     model.posts = model.posts.where((p) => p.id != postId).toList();
 
@@ -80,7 +80,7 @@ class PostListVM extends AutoDisposeNotifier<PostListModel?> {
   }
 
   Future<void> nextList() async {
-    PostListModel prevModel = state!;
+    HomeModel prevModel = state!;
 
     if (prevModel.isLast) {
       await Future.delayed(Duration(milliseconds: 500));
@@ -97,7 +97,7 @@ class PostListVM extends AutoDisposeNotifier<PostListModel?> {
       return;
     }
 
-    PostListModel nextModel = PostListModel.fromMap(body["response"]);
+    HomeModel nextModel = HomeModel.fromMap(body["response"]);
 
     state = nextModel.copyWith(posts: [...prevModel.posts, ...nextModel.posts]);
     refreshCtrl.loadComplete();
@@ -105,7 +105,7 @@ class PostListVM extends AutoDisposeNotifier<PostListModel?> {
 }
 
 /// 3. 창고 데이터 타입
-class PostListModel {
+class HomeModel {
   bool isFirst;
   bool isLast;
   int pageNumber;
@@ -113,7 +113,7 @@ class PostListModel {
   int totalPage;
   List<Post> posts;
 
-  PostListModel({
+  HomeModel({
     required this.isFirst,
     required this.isLast,
     required this.pageNumber,
@@ -122,7 +122,7 @@ class PostListModel {
     required this.posts,
   });
 
-  PostListModel.fromMap(Map<String, dynamic> data)
+  HomeModel.fromMap(Map<String, dynamic> data)
     : isFirst = data['isFirst'],
       isLast = data['isLast'],
       pageNumber = data['pageNumber'],
@@ -130,7 +130,7 @@ class PostListModel {
       totalPage = data['totalPage'],
       posts = (data['posts'] as List).map((e) => Post.fromMap(e)).toList();
 
-  PostListModel copyWith({
+  HomeModel copyWith({
     bool? isFirst,
     bool? isLast,
     int? pageNumber,
@@ -138,7 +138,7 @@ class PostListModel {
     int? totalPage,
     List<Post>? posts,
   }) {
-    return PostListModel(
+    return HomeModel(
       isFirst: isFirst ?? this.isFirst,
       isLast: isLast ?? this.isLast,
       pageNumber: pageNumber ?? this.pageNumber,
@@ -146,10 +146,5 @@ class PostListModel {
       totalPage: totalPage ?? this.totalPage,
       posts: posts ?? this.posts,
     );
-  }
-
-  @override
-  String toString() {
-    return 'PostListModel{isFirst: $isFirst, isLast: $isLast, pageNumber: $pageNumber, size: $size, totalPage: $totalPage, posts: $posts}';
   }
 }
