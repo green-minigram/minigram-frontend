@@ -4,11 +4,17 @@ import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/ui/pages/post/widgets/post_form_footer.dart';
 import 'package:minigram/ui/pages/post/widgets/post_form_header.dart';
 import 'package:minigram/ui/pages/post/widgets/post_form_image.dart';
+import 'package:minigram/ui/pages/post/write/widgets/post_date_picker.dart';
 
 class PostWritePage extends StatefulWidget {
   final List<String> imagePaths;
+  final bool isAdmin;
 
-  const PostWritePage({super.key, required this.imagePaths});
+  const PostWritePage({
+    super.key,
+    required this.imagePaths,
+    this.isAdmin = true,
+  });
 
   @override
   State<PostWritePage> createState() => _PostWritePageState();
@@ -18,6 +24,9 @@ class _PostWritePageState extends State<PostWritePage> {
   final TextEditingController _textController = TextEditingController();
   late List<String> _limitedImages;
 
+  DateTime? _startDate;
+  DateTime? _endDate;
+
   @override
   void initState() {
     super.initState();
@@ -25,8 +34,6 @@ class _PostWritePageState extends State<PostWritePage> {
     if (widget.imagePaths.length > 10) {
       _limitedImages = widget.imagePaths.take(10).toList();
 
-      // 프레임 빌드 끝난 뒤 팝업 띄우기
-      print('팝업창이 뜬다!!');
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
           context: context,
@@ -39,15 +46,13 @@ class _PostWritePageState extends State<PostWritePage> {
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(ctx),
-                child: Text("확인"),
+                child: const Text("확인"),
               ),
             ],
           ),
         );
       });
-      print('팝업창이 안 뜬다!!');
     } else {
-      print('이미지 정상');
       _limitedImages = widget.imagePaths;
     }
   }
@@ -60,10 +65,27 @@ class _PostWritePageState extends State<PostWritePage> {
         children: [
           PostFormHeader(username: 'username'),
           PostFormImage(imagePaths: _limitedImages),
+
+          if (widget.isAdmin) ...[
+            PostDatePicker(
+              label: "시작일",
+              selectedDate: _startDate,
+              onDateChanged: (date) => setState(() => _startDate = date),
+            ),
+            PostDatePicker(
+              label: "종료일",
+              selectedDate: _endDate,
+              onDateChanged: (date) => setState(() => _endDate = date),
+            ),
+            const Divider(),
+          ],
+
           PostFormFooter(
             controller: _textController,
             onSubmit: () {
               print("입력한 내용: ${_textController.text}");
+              print("시작날짜: $_startDate");
+              print("끝날짜: $_endDate");
             },
           ),
         ],
@@ -83,12 +105,14 @@ class _PostWritePageState extends State<PostWritePage> {
           ),
         ),
       ),
-      title: Text('업로드'),
+      title: const Text('업로드'),
       actions: [
         TextButton(
           onPressed: () {
             print("등록 클릭됨");
             print("내용: ${_textController.text}");
+            print("시작날짜: $_startDate");
+            print("끝날짜: $_endDate");
           },
           child: Text(
             "등록",
