@@ -16,7 +16,7 @@ class User {
   User.fromMap(Map<String, dynamic> data)
     : userId = data['userId'],
       username = data['username'],
-      imgUrl = data['profileImageUrl'],
+      imgUrl = data['profileImageUrl'] ?? "",
       roles = data['roles'] ?? "",
       accessToken = data['accessToken'];
 
