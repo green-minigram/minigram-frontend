@@ -17,8 +17,9 @@ class PasswordForm extends ConsumerWidget {
     JoinModel model = ref.watch(joinProvider);
 
     // 세션 상태에서 로딩 여부 watch
-    final session = ref.watch(sessionProvider);
-    final isJoining = session.isJoining ?? false;
+    SessionGVM sessionGvm = ref.read(sessionProvider.notifier);
+    SessionModel session = ref.watch(sessionProvider);
+    bool isJoining = session.isJoining ?? false;
 
     return Form(
       child: ListView(
@@ -30,9 +31,7 @@ class PasswordForm extends ConsumerWidget {
             keyboardType: TextInputType.visiblePassword,
             obscureText: true,
             errorText: model.passwordError,
-            onChanged: (value) {
-              fm.password(value);
-            },
+            onChanged: fm.password,
           ),
           SizedBox(height: MSize.kGap.l),
           MAuthTextFormField(
@@ -40,16 +39,14 @@ class PasswordForm extends ConsumerWidget {
             keyboardType: TextInputType.visiblePassword,
             obscureText: true,
             errorText: model.passwordConfirmError,
-            onChanged: (value) {
-              fm.passwordConfirm(value);
-            },
+            onChanged: fm.passwordConfirm,
           ),
           SizedBox(height: MSize.kGap.l),
           // 완료 버튼: 로딩 시 스피너 표시 + 비활성화
           MButton(
             text: "완료",
             isLoading: isJoining,
-            onPressed: isJoining ? null : ref.read(sessionProvider.notifier).join,
+            onPressed: sessionGvm.join,
           ),
         ],
       ),
