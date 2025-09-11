@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class MDate {
@@ -9,7 +8,7 @@ class MDate {
 
   static String timeAgo(String dateTimeStr) {
     try {
-      final createdAt = DateFormat("yyyy-MM-dd HH:mm:ss").parse(dateTimeStr);
+      final createdAt = DateTime.parse(dateTimeStr);
       return timeago.format(createdAt, locale: 'ko'); // 한국어 지정
     } catch (e) {
       return dateTimeStr;

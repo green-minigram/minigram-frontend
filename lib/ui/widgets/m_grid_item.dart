@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 
 class MGridItem extends StatelessWidget {
+  final String imageUrl;
+  final VoidCallback onTap;
+
   const MGridItem({
     super.key,
+    required this.imageUrl,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        print("이미지 클릭됨");
-      },
+      onTap: onTap,
       child: Image.network(
-        "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+        imageUrl,
         fit: BoxFit.cover,
       ),
     );

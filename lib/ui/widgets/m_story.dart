@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
-import 'package:minigram/ui/pages/story/detail/story_detail_page.dart';
+import 'package:minigram/ui/pages/story/list/story_list_page.dart';
 
 class MStory extends StatelessWidget {
   final double size;
@@ -24,7 +24,7 @@ class MStory extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const StoryDetailPage(),
+            builder: (context) => const StoryListPage(),
           ),
         );
       },

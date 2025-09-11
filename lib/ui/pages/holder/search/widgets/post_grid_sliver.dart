@@ -9,7 +9,10 @@ class PostGridSliver extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverGrid(
       delegate: SliverChildBuilderDelegate(
-        (context, index) => MGridItem(),
+        (context, index) => MGridItem(
+          imageUrl: "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+          onTap: () {},
+        ),
         childCount: 30,
       ),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
