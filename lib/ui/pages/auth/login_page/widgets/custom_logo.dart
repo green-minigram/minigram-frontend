@@ -12,7 +12,7 @@ class CustomLogo extends StatelessWidget {
       color: MColor.kBackGround.normal,
       height: 300,
       child: Image.asset(
-        "assets/logos/free-icon-instagram.png",
+        "assets/logo/instagram.png",
       ),
     );
   }
