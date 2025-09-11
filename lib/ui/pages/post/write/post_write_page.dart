@@ -8,7 +8,7 @@ import 'package:minigram/ui/pages/post/write/widgets/post_date_picker.dart';
 
 class PostWritePage extends StatefulWidget {
   final List<String> imagePaths;
-  final bool isAdmin;
+  final bool isAdmin; // TODO userRole로 교체해야 합니다
 
   const PostWritePage({
     super.key,
