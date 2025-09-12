@@ -6,6 +6,7 @@ import 'package:minigram/_core/util/m_date.dart';
 import 'package:minigram/m_route.dart';
 import 'package:minigram/ui/pages/abusereport/abuse_report_page.dart';
 import 'package:minigram/ui/pages/abusereport/complete/report_complete_page.dart';
+import 'package:minigram/ui/pages/abusereport/reason/abuse_report_reason_page.dart';
 import 'package:minigram/ui/pages/auth/join_page/email_page.dart';
 import 'package:minigram/ui/pages/auth/join_page/password_page.dart';
 import 'package:minigram/ui/pages/auth/join_page/username_page.dart';
@@ -67,6 +68,7 @@ class MyApp extends StatelessWidget {
         MRoute.abuseReport: (context) => const AbuseReportPage(),
         MRoute.reportComplete: (context) => ReportCompletePage(),
         MRoute.notification: (context) => const NotificationPage(),
+        MRoute.reportReason: (context) => AbuseReportReasonPage(),
       },
     );
   }
