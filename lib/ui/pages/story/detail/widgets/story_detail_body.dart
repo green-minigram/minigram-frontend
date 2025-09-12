@@ -100,9 +100,7 @@ class _StoryDetailBodyState extends ConsumerState<StoryDetailBody> {
 
                 // 좋아요 버튼 (UI 전용 토글)
                 IconButton(
-                  onPressed: () {
-                    ref.read(storyDetailProvider(widget.storyId).notifier).toggleLike(storyState.story.storyId);
-                  },
+                  onPressed: () {},
                   icon: Icon(
                     storyState.isLiked ? Icons.favorite : Icons.favorite_border,
                     color: storyState.isLiked ? MColor.kButton.like : MColor.kIcon.white,
@@ -137,13 +135,7 @@ class _StoryDetailBodyState extends ConsumerState<StoryDetailBody> {
                                     onFail: () {
                                       print("삭제 취소됨");
                                     },
-                                    onSuccess: () {
-                                      final vm = ref.read(storyDetailProvider(widget.storyId).notifier);
-                                      vm.deleteStory(widget.storyId);
-                                      // TODO 스토리 목록에서 지금 스토리 없애기 나중에 스토리 목록 만들고 나서 추가
-                                      //  ref.read(storyListProvider.notifier).removeStory(widget.storyId);
-                                      Navigator.pop(context);
-                                    },
+                                    onSuccess: () {},
                                   );
                                 },
                               ),
