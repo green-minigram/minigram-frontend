@@ -27,27 +27,36 @@ class StoryRecentVM extends AutoDisposeFamilyNotifier<StoryResentModel?, int> {
     state = StoryResentModel.fromMap(body);
   }
 
-  // 삭제
-  Future<void> deleteStory(int storyId) async {
+  // 팔롱 토글
+  Timer? _debounce;
+
+  Future<void> toggleFollowDebounced(int userId) async {
     if (state == null) return;
 
-    final data = await StoryRepository().delete(storyId);
-    if (data["status"] == 200) {
-      final updatedList = state!.storyList.where((item) => item.story.storyId != storyId).toList();
+    final prevList = state!.storyList;
+    final isFollowing = prevList.first.isFollowing;
 
-      if (updatedList.isEmpty) {
-        state = null;
-      } else {
-        state = StoryResentModel(
-          user: state!.user,
-          storyList: updatedList,
-        );
+    // UI 즉시 반영
+    state = StoryResentModel(
+      user: state!.user,
+      storyList: prevList.map((item) => item.copyWith(isFollowing: !isFollowing)).toList(),
+    );
+
+    // 이전 타이머 취소 → 마지막 동작만 남김
+    _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () async {
+      try {
+        if (!isFollowing) {
+          // 마지막 동작이 팔로우라면 → 등록
+          await StoryRepository().follow(userId);
+        } else {
+          // 마지막 동작이 언팔로우라면 → 취소
+          await StoryRepository().unfollow(userId);
+        }
+      } catch (e) {
+        Logger().e("팔로우 통신 실패: $e");
       }
-
-      Logger().d("스토리 삭제 성공: $data");
-    } else {
-      Logger().e("스토리 삭제 실패: ${data["msg"]}");
-    }
+    });
   }
 
   // 좋아요 토글 상태 변경 함수 -> 좋아요 통신코드 적용해야됨 좋아요 등록/삭제
@@ -71,43 +80,27 @@ class StoryRecentVM extends AutoDisposeFamilyNotifier<StoryResentModel?, int> {
     }
   }
 
-  // 팔롱 토글
-  Timer? _debounce;
-  int a = 1;
-
-  Future<void> toggleFollowDebounced(int userId) async {
+  // 삭제
+  Future<void> deleteStory(int storyId) async {
     if (state == null) return;
 
-    final prevList = state!.storyList;
-    final isFollowing = prevList.first.isFollowing;
+    final data = await StoryRepository().delete(storyId);
+    if (data["status"] == 200) {
+      final updatedList = state!.storyList.where((item) => item.story.storyId != storyId).toList();
 
-    // UI 즉시 반영
-    state = StoryResentModel(
-      user: state!.user,
-      storyList: prevList.map((item) => item.copyWith(isFollowing: !isFollowing)).toList(),
-    );
-    Logger().e("상태변경 : $a");
-    a++;
-
-    // 이전 타이머 취소 → 마지막 동작만 남김
-    _debounce?.cancel();
-    _debounce = Timer(const Duration(milliseconds: 500), () async {
-      try {
-        if (!isFollowing) {
-          // 마지막 동작이 팔로우라면 → 등록
-          Logger().e("팔로우 통신 시작!");
-          await StoryRepository().follow(userId);
-          Logger().e("팔로우 통신 끝!");
-        } else {
-          // 마지막 동작이 언팔로우라면 → 취소
-          Logger().e("팔로잉 통신 시작!");
-          await StoryRepository().unfollow(userId);
-          Logger().e("팔로잉 통신 끝!");
-        }
-      } catch (e) {
-        Logger().e("팔로우 통신 실패: $e");
+      if (updatedList.isEmpty) {
+        state = null;
+      } else {
+        state = StoryResentModel(
+          user: state!.user,
+          storyList: updatedList,
+        );
       }
-    });
+
+      Logger().d("스토리 삭제 성공: $data");
+    } else {
+      Logger().e("스토리 삭제 실패: ${data["msg"]}");
+    }
   }
 }
 
