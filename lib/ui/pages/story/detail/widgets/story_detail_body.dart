@@ -24,6 +24,7 @@ class _StoryDetailBodyState extends ConsumerState<StoryDetailBody> {
   @override
   Widget build(BuildContext context) {
     final storyState = ref.watch(storyDetailProvider(widget.storyId));
+    final vm = ref.read(storyDetailProvider(widget.storyId).notifier);
 
     if (storyState == null) {
       return const Center(child: CircularProgressIndicator());
@@ -84,7 +85,7 @@ class _StoryDetailBodyState extends ConsumerState<StoryDetailBody> {
                   MButton.outline(
                     text: storyState.isFollowing ? "팔로잉" : "팔로우",
                     onPressed: () {
-                      ref.read(storyDetailProvider(widget.storyId).notifier).toggleFollow(storyState.user.userId);
+                      vm.toggleFollow(storyState.user.userId);
                     },
                     borderSide: storyState.isFollowing ? BorderSide.none : BorderSide(color: MColor.kIcon.white),
                     textColor: MColor.kText.white,
@@ -100,7 +101,9 @@ class _StoryDetailBodyState extends ConsumerState<StoryDetailBody> {
 
                 // 좋아요 버튼 (UI 전용 토글)
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    vm.toggleLike(storyState.story.storyId);
+                  },
                   icon: Icon(
                     storyState.isLiked ? Icons.favorite : Icons.favorite_border,
                     color: storyState.isLiked ? MColor.kButton.like : MColor.kIcon.white,
