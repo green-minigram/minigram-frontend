@@ -2,22 +2,25 @@ class User {
   int userId;
   String username;
   String? profileImageUrl;
-  String roles;
+  String? roles;
   String? accessToken;
+  bool? isFollowing;
 
   User({
     required this.userId,
     required this.username,
-    required this.roles,
+    this.roles,
     this.profileImageUrl,
     this.accessToken,
+    this.isFollowing,
   });
 
   User.fromMap(Map<String, dynamic> data)
     : userId = data['userId'],
       username = data['username'],
-      roles = data['roles'],
+      roles = data['roles'] ?? "",
       profileImageUrl = data['profileImageUrl'] ?? "",
+      isFollowing = data['isFollowing'] ?? "",
       accessToken = data['accessToken'] ?? "";
 
   @override

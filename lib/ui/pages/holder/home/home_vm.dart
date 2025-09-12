@@ -14,14 +14,14 @@ final homeProvider = AutoDisposeNotifierProvider<HomeVM, HomeModel?>(() {
 /// 2. 창고
 class HomeVM extends AutoDisposeNotifier<HomeModel?> {
   final mContext = navigatorKey.currentContext!;
-  final refreshCtrlPost = RefreshController();
+  final refreshCtrl = RefreshController();
 
   @override
   HomeModel? build() {
     init();
 
     ref.onDispose(() {
-      refreshCtrlPost.dispose();
+      refreshCtrl.dispose();
       Logger().d("HomeVM 파괴됨");
     });
 
@@ -38,7 +38,7 @@ class HomeVM extends AutoDisposeNotifier<HomeModel?> {
     }
     state = HomeModel.fromMap(postBody["body"]);
 
-    refreshCtrlPost.refreshCompleted();
+    refreshCtrl.refreshCompleted();
   }
 
   // void notifyUpdateOne(Post post) {
@@ -81,28 +81,37 @@ class HomeVM extends AutoDisposeNotifier<HomeModel?> {
   //   Navigator.pop(mContext);
   // }
   //
-  Future<void> nextList() async {
+  Future<void> nextPostList() async {
     HomeModel prevModel = state!;
 
     if (prevModel.postObject.isLast) {
       await Future.delayed(Duration(milliseconds: 500));
-      refreshCtrlPost.loadComplete();
+      refreshCtrl.loadComplete();
       return;
     }
 
-    Map<String, dynamic> body = await PostRepository().getList(page: prevModel.postObject.next);
+    Map<String, dynamic> body = await PostRepository().getList(
+      page: prevModel.postObject.next,
+    );
     if (body["status"] != 200) {
       ScaffoldMessenger.of(mContext).showSnackBar(
         SnackBar(content: Text("게시글 로딩 실패 : ${body["msg"]}")),
       );
-      refreshCtrlPost.loadComplete();
+      refreshCtrl.loadComplete();
       return;
     }
 
-    HomeModel nextModel = HomeModel.fromMap(body["response"]);
+    HomeModel nextModel = HomeModel.fromMap(body["body"]);
 
-    state = nextModel.copyWith(posts: [...prevModel.posts, ...nextModel.posts]);
-    refreshCtrlPost.loadComplete();
+    state = nextModel.copyWith(
+      postObject: nextModel.postObject.copyWith(
+        postList: [
+          ...prevModel.postObject.postList,
+          ...nextModel.postObject.postList,
+        ],
+      ),
+    );
+    refreshCtrl.loadComplete();
   }
 }
 
@@ -116,7 +125,8 @@ class HomeModel {
     required this.postObject,
   });
 
-  HomeModel.fromMap(Map<String, dynamic> postObject) : postObject = PostObject.fromMap(postObject);
+  HomeModel.fromMap(Map<String, dynamic> postObject)
+    : postObject = PostObject.fromMap(postObject);
 
   HomeModel copyWith({
     // Object? storyObject,
@@ -160,5 +170,31 @@ class PostObject {
       next = data['next'],
       isFirst = data['isFirst'],
       isLast = data['isLast'],
-      postList = (data['postList'] as List).map((data) => Post.fromMap(data)).toList();
+      postList = (data['postList'] as List)
+          .map((data) => Post.fromMap(data))
+          .toList();
+
+  PostObject copyWith({
+    int? current,
+    int? size,
+    int? totalCount,
+    int? totalPage,
+    int? prev,
+    int? next,
+    bool? isFirst,
+    bool? isLast,
+    List<Post>? postList,
+  }) {
+    return PostObject(
+      current: current ?? this.current,
+      size: size ?? this.size,
+      totalCount: totalCount ?? this.totalCount,
+      totalPage: totalPage ?? this.totalPage,
+      prev: prev ?? this.prev,
+      next: next ?? this.next,
+      isFirst: isFirst ?? this.isFirst,
+      isLast: isLast ?? this.isLast,
+      postList: postList ?? this.postList,
+    );
+  }
 }

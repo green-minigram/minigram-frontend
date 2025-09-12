@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/data/model/post.dart';
 
 class PostImage extends StatelessWidget {
-  PostImage({super.key});
+  final Post post;
+
+  const PostImage({
+    super.key,
+    required this.post,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +34,10 @@ class PostImage extends StatelessWidget {
                 aspectRatio: MSize.kRatio.aspect34,
                 child: PageView.builder(
                   controller: pageController,
-                  itemCount: imageUrls.length,
+                  itemCount: post.postImageList.length,
                   itemBuilder: (context, index) {
                     return Image.network(
-                      imageUrls[index],
+                      post.postImageList[index].url,
                       fit: BoxFit.cover,
                     );
                   },
@@ -51,7 +57,9 @@ class PostImage extends StatelessWidget {
                   height: MSize.kGap.xs,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: currentPage == index ? MColor.kIndicator.active : MColor.kIndicator.inactive,
+                    color: currentPage == index
+                        ? MColor.kIndicator.active
+                        : MColor.kIndicator.inactive,
                   ),
                 ),
               ),

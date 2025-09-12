@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/data/model/post.dart';
 import 'package:minigram/ui/pages/post/reply/post_comment_page.dart';
 
 class PostFooter extends StatefulWidget {
-  PostFooter({
+  final Post post;
+
+  const PostFooter({
     super.key,
+    required this.post,
   });
 
   @override
@@ -22,7 +26,10 @@ class _PostFooterState extends State<PostFooter> {
         "여기서 내용이 길어지면 더보기 버튼을 눌러야 전체가 보이게 됩니다.";
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: MSize.kGap.l, vertical: MSize.kGap.xs),
+      padding: EdgeInsets.symmetric(
+        horizontal: MSize.kGap.l,
+        vertical: MSize.kGap.xs,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -54,7 +61,10 @@ class _PostFooterState extends State<PostFooter> {
               TextButton.icon(
                 onPressed: () {
                   print("댓글 버튼 클릭됨");
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => PostCommentPage()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => PostCommentPage()),
+                  );
                 },
                 icon: Icon(
                   Icons.mode_comment_outlined,
@@ -82,7 +92,10 @@ class _PostFooterState extends State<PostFooter> {
               // 아이디
               Text(
                 "아이디입니다",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: MSize.kFont.m),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: MSize.kFont.m,
+                ),
               ),
               SizedBox(height: MSize.kGap.xxs),
 
@@ -92,7 +105,11 @@ class _PostFooterState extends State<PostFooter> {
                 children: [
                   Expanded(
                     child: Text(
-                      _expanded ? content : (content.length > 30 ? content.substring(0, 30) + "..." : content),
+                      _expanded
+                          ? content
+                          : (content.length > 30
+                                ? content.substring(0, 30) + "..."
+                                : content),
                     ),
                   ),
                   if (!_expanded && content.length > 30)
@@ -109,7 +126,10 @@ class _PostFooterState extends State<PostFooter> {
           // 날짜
           Text(
             "8월 20일",
-            style: TextStyle(fontSize: MSize.kFont.s, color: MColor.kText.secondary),
+            style: TextStyle(
+              fontSize: MSize.kFont.s,
+              color: MColor.kText.secondary,
+            ),
           ),
         ],
       ),

@@ -8,7 +8,7 @@ class Post {
   final int commentCount;
   final String createdAt;
   final User user;
-  final List<PostImage> postImageList;
+  final List<_PostImage> postImageList;
 
   Post({
     required this.postId,
@@ -29,7 +29,9 @@ class Post {
       commentCount = data['commentCount'],
       createdAt = data['createdAt'],
       user = User.fromMap(data['user']),
-      postImageList = (data['postImageList'] as List).map((data) => PostImage.fromMap(data)).toList();
+      postImageList = (data['postImageList'] as List)
+          .map((data) => _PostImage.fromMap(data))
+          .toList();
 
   /// 좋아요 누를때 사용할 것 같음
   Post copyWith({
@@ -40,7 +42,7 @@ class Post {
     int? commentCount,
     String? createdAt,
     User? user,
-    List<PostImage>? postImageList,
+    List<_PostImage>? postImageList,
   }) {
     return Post(
       postId: postId ?? this.postId,
@@ -55,14 +57,16 @@ class Post {
   }
 }
 
-class PostImage {
+class _PostImage {
   final int postImageId;
   final String url;
 
-  PostImage({
+  _PostImage({
     required this.postImageId,
     required this.url,
   });
 
-  PostImage.fromMap(Map<String, dynamic> data) : postImageId = data['postImageId'], url = data['url'];
+  _PostImage.fromMap(Map<String, dynamic> data)
+    : postImageId = data['postImageId'],
+      url = data['url'];
 }

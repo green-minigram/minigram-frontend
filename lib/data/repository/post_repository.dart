@@ -40,15 +40,22 @@ final Map<String, dynamic> _mockGetListResponse = {
         "likesCount": 1,
         "commentCount": 0,
         "createdAt": "2025-09-11T03:16:03",
-        "user": {"userId": 8, "username": "luna", "profileImageUrl": null},
+        "user": {
+          "userId": 8,
+          "username": "luna",
+          "profileImageUrl": null,
+          "isFollowing": true,
+        },
         "postImageList": [
           {
             "postImageId": 45,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
           {
             "postImageId": 46,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
         ],
       },
@@ -59,11 +66,17 @@ final Map<String, dynamic> _mockGetListResponse = {
         "likesCount": 1,
         "commentCount": 0,
         "createdAt": "2025-09-11T03:16:03",
-        "user": {"userId": 8, "username": "luna", "profileImageUrl": null},
+        "user": {
+          "userId": 8,
+          "username": "luna",
+          "profileImageUrl": null,
+          "isFollowing": false,
+        },
         "postImageList": [
           {
             "postImageId": 44,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
         ],
       },
@@ -74,11 +87,17 @@ final Map<String, dynamic> _mockGetListResponse = {
         "likesCount": 1,
         "commentCount": 0,
         "createdAt": "2025-09-11T03:16:03",
-        "user": {"userId": 8, "username": "luna", "profileImageUrl": null},
+        "user": {
+          "userId": 8,
+          "username": "luna",
+          "profileImageUrl": null,
+          "isFollowing": true,
+        },
         "postImageList": [
           {
             "postImageId": 43,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
         ],
       },
@@ -89,15 +108,22 @@ final Map<String, dynamic> _mockGetListResponse = {
         "likesCount": 1,
         "commentCount": 0,
         "createdAt": "2025-09-11T03:16:03",
-        "user": {"userId": 8, "username": "luna", "profileImageUrl": null},
+        "user": {
+          "userId": 8,
+          "username": "luna",
+          "profileImageUrl": null,
+          "isFollowing": false,
+        },
         "postImageList": [
           {
             "postImageId": 41,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
           {
             "postImageId": 42,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
         ],
       },
@@ -108,11 +134,17 @@ final Map<String, dynamic> _mockGetListResponse = {
         "likesCount": 1,
         "commentCount": 0,
         "createdAt": "2025-09-11T03:16:03",
-        "user": {"userId": 8, "username": "luna", "profileImageUrl": null},
+        "user": {
+          "userId": 8,
+          "username": "luna",
+          "profileImageUrl": null,
+          "isFollowing": true,
+        },
         "postImageList": [
           {
             "postImageId": 40,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
         ],
       },
@@ -123,47 +155,62 @@ final Map<String, dynamic> _mockGetListResponse = {
         "likesCount": 8,
         "commentCount": 15,
         "createdAt": "2025-09-11T03:16:03",
-        "user": {"userId": 8, "username": "luna", "profileImageUrl": null},
+        "user": {
+          "userId": 8,
+          "username": "luna",
+          "profileImageUrl": null,
+          "isFollowing": false,
+        },
         "postImageList": [
           {
             "postImageId": 30,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
           {
             "postImageId": 31,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
           {
             "postImageId": 32,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
           {
             "postImageId": 33,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
           {
             "postImageId": 34,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
           {
             "postImageId": 35,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
           {
             "postImageId": 36,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
           {
             "postImageId": 37,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
           {
             "postImageId": 38,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
           {
             "postImageId": 39,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
         ],
       },
@@ -174,11 +221,17 @@ final Map<String, dynamic> _mockGetListResponse = {
         "likesCount": 1,
         "commentCount": 0,
         "createdAt": "2025-09-11T03:16:03",
-        "user": {"userId": 8, "username": "luna", "profileImageUrl": null},
+        "user": {
+          "userId": 8,
+          "username": "luna",
+          "profileImageUrl": null,
+          "isFollowing": true,
+        },
         "postImageList": [
           {
             "postImageId": 29,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
         ],
       },
@@ -189,11 +242,17 @@ final Map<String, dynamic> _mockGetListResponse = {
         "likesCount": 1,
         "commentCount": 0,
         "createdAt": "2025-09-11T03:16:03",
-        "user": {"userId": 8, "username": "luna", "profileImageUrl": null},
+        "user": {
+          "userId": 8,
+          "username": "luna",
+          "profileImageUrl": null,
+          "isFollowing": false,
+        },
         "postImageList": [
           {
             "postImageId": 28,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
         ],
       },
@@ -204,27 +263,37 @@ final Map<String, dynamic> _mockGetListResponse = {
         "likesCount": 1,
         "commentCount": 0,
         "createdAt": "2025-09-11T03:16:03",
-        "user": {"userId": 8, "username": "luna", "profileImageUrl": null},
+        "user": {
+          "userId": 8,
+          "username": "luna",
+          "profileImageUrl": null,
+          "isFollowing": true,
+        },
         "postImageList": [
           {
             "postImageId": 23,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
           {
             "postImageId": 24,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
           {
             "postImageId": 25,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
           {
             "postImageId": 26,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
           {
             "postImageId": 27,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
         ],
       },
@@ -235,11 +304,17 @@ final Map<String, dynamic> _mockGetListResponse = {
         "likesCount": 1,
         "commentCount": 0,
         "createdAt": "2025-09-11T03:16:03",
-        "user": {"userId": 8, "username": "luna", "profileImageUrl": null},
+        "user": {
+          "userId": 8,
+          "username": "luna",
+          "profileImageUrl": null,
+          "isFollowing": false,
+        },
         "postImageList": [
           {
             "postImageId": 22,
-            "url": "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
+            "url":
+                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
           },
         ],
       },
