@@ -30,15 +30,26 @@ class UserRepository {
   }
 
   Future<Map<String, dynamic>> login(String username, String password) async {
-    final requestBody = {
-      "username": username,
-      "password": password,
-    };
+    // final requestBody = {
+    //   "username": username,
+    //   "password": password,
+    // };
+    //
+    // Response response = await dio.post("/login", data: requestBody);
+    // Map<String, dynamic> responseBody = response.data;
+    // Logger().d(responseBody);
+    // return responseBody;
 
-    Response response = await dio.post("/login", data: requestBody);
-    Map<String, dynamic> responseBody = response.data;
-    Logger().d(responseBody);
-    return responseBody;
+    // 1. 통신 코드
+    final response = await Future.delayed(
+      Duration(seconds: 2),
+      () {
+        return _mockLoginResponse;
+      },
+    );
+
+    // 2. 리턴
+    return response;
   }
 
   Future<Map<String, dynamic>> autoLogin(String accessToken) async {
@@ -72,4 +83,16 @@ final Map<String, dynamic> _mockJoinResponse = {
   "status": 200,
   "msg": "성공",
   "body": {"userId": 11, "username": "test", "roles": "USER"},
+};
+
+final Map<String, dynamic> _mockLoginResponse = {
+  "status": 200,
+  "msg": "성공",
+  "body": {
+    "accessToken":
+        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtaW5pZ3JhbSIsInJvbGVzIjoiQURNSU4sIFVTRVIiLCJpZCI6MSwiZXhwIjoxNzU4MzM3NTg3fQ.51dGvjfz0IFBOqOimk-1fKDKxsRV4-W7AdqxNzMOB9uTAutvB9nM2zVET19sXuTKhsc4y7lYzLDdx0je12Fm1w",
+    "userId": 1,
+    "username": "minigram",
+    "roles": "ADMIN, USER",
+  },
 };

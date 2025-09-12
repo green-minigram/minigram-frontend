@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: mTheme(),
-      home: LoginPage(),
+      home: const MainHolder(),
       routes: {
         MRoute.mainHolder: (context) => const MainHolder(),
         MRoute.joinEmail: (context) => const EmailPage(),

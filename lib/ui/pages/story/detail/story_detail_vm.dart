@@ -21,9 +21,7 @@ class StoryDetailVM extends AutoDisposeFamilyNotifier<StoryDetailModel?, int> {
   }
 
   Future<void> init(int storyId) async {
-    Logger().d("init 시작");
     final data = await StoryRepository().getOne(storyId);
-    Logger().d("data 반환 : $data");
 
     if (data["status"] != 200) {
       Logger().e("스토리 조회 실패: ${data["msg"]}");
@@ -32,7 +30,6 @@ class StoryDetailVM extends AutoDisposeFamilyNotifier<StoryDetailModel?, int> {
 
     final body = data["body"] as Map<String, dynamic>;
     state = StoryDetailModel.fromMap(body);
-    Logger().d("fromMap 성공 : $state");
   }
 
   // 삭제
