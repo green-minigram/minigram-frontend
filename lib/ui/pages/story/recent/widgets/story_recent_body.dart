@@ -139,9 +139,6 @@ class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
                         text: storyItem.isFollowing ? "팔로잉" : "팔로우",
                         onPressed: () {
                           print("팔로우 클릭: ${state.user.userId}");
-                          ref
-                              .read(storyRecentProvider(widget.userId).notifier)
-                              .toggleFollowDebounced(state.user.userId);
                         },
                         borderSide: storyItem.isFollowing ? BorderSide.none : BorderSide(color: MColor.kIcon.white),
                         textColor: MColor.kText.white,
@@ -161,8 +158,6 @@ class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
                     IconButton(
                       onPressed: () => {
                         print("좋아요 클릭: ${story.storyId}"),
-                        ref.read(storyRecentProvider(widget.userId).notifier).toggleLike(story.storyId),
-                        // storyId 활용 TODO 좋아요 통신 처리 해야함
                       },
                       icon: Icon(
                         storyItem.isLiked ? Icons.favorite : Icons.favorite_border,
