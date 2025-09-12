@@ -26,7 +26,7 @@ class StoryRepository {
           "createdAt": "2025-09-08T03:06:29",
         },
         "isFollowing": false,
-        "isOwner": false,
+        "isOwner": true,
         "isLiked": true,
         "likeCount": 5,
       },
