@@ -24,7 +24,10 @@ class _FollowerCardItemState extends State<FollowerCardItem> {
       child: Row(
         children: [
           // 프로필
-          MStory(size: MSize.kStory.m),
+          MStory(
+            size: MSize.kStory.m,
+            userId: 2, // TODO userId 필요
+          ),
           SizedBox(width: MSize.kGap.m),
 
           // 닉네임 + 이름

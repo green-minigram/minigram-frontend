@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
-import 'package:minigram/ui/pages/story/list/story_list_page.dart';
+import 'package:minigram/ui/pages/story/recent/story_recent_page.dart';
 
 class MStory extends StatelessWidget {
   final double size;
   final String imageUrl;
   final bool isGradient;
+  final int userId;
 
   const MStory({
     super.key,
     required this.size,
+    required this.userId,
     this.imageUrl = 'https://cdn.pixabay.com/photo/2025/08/12/08/49/cat-9769723_1280.jpg',
     this.isGradient = true,
   });
@@ -24,7 +26,7 @@ class MStory extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const StoryListPage(),
+            builder: (context) => StoryRecentPage(userId: userId),
           ),
         );
       },

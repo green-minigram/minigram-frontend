@@ -19,6 +19,7 @@ class NotificationCommentItem extends StatelessWidget {
         size: MSize.kStory.s,
         imageUrl: user["profileImageUrl"],
         isGradient: false,
+        userId: 2, // TODO userId 필요
       ),
       title: RichText(
         text: TextSpan(
