@@ -60,10 +60,3 @@ class StoryRepository {
     return responseBody;
   }
 }
-
-// 가짜 데이터
-final Map<String, dynamic> _mockJoinResponse = {
-  "status": 200,
-  "msg": "성공",
-  "body": {"userId": 11, "username": "test", "roles": "USER"},
-};

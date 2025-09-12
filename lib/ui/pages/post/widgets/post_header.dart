@@ -62,7 +62,7 @@ class PostHeader extends StatelessWidget {
             onPressed: () {
               MBottomSheet.show(
                 context,
-                items: isOwner
+                items: post.isOwner
                     ? [
                         MSheetItem(
                           text: "수정",

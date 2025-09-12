@@ -24,312 +24,54 @@ final Map<String, dynamic> _mockGetListResponse = {
   "status": 200,
   "msg": "성공",
   "body": {
-    "current": 0,
-    "size": 10,
-    "totalCount": 17,
-    "totalPage": 2,
-    "prev": 0,
-    "next": 1,
-    "isFirst": true,
-    "isLast": false,
+    "current": 2,
+    "size": 2,
+    "totalCount": 18,
+    "totalPage": 3,
+    "prev": 1,
+    "next": 2,
+    "isFirst": false,
+    "isLast": true,
     "postList": [
       {
-        "postId": 23,
-        "content": "팔로워 1만 명 감사합니다 🎉",
+        "isAdvertisement": false,
+        "postId": 4,
+        "content": "Spring Boot + JPA 연동 성공! 🚀",
+        "isOwner": true,
         "isLiked": false,
-        "likesCount": 1,
+        "likesCount": 2,
         "commentCount": 0,
-        "createdAt": "2025-09-11T03:16:03",
+        "createdAt": "2025-09-12T14:41:44",
         "user": {
-          "userId": 8,
-          "username": "luna",
-          "profileImageUrl": null,
-          "isFollowing": true,
-        },
-        "postImageList": [
-          {
-            "postImageId": 45,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-          {
-            "postImageId": 46,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-        ],
-      },
-      {
-        "postId": 22,
-        "content": "촬영 장소 비하인드 공개 🏞️",
-        "isLiked": false,
-        "likesCount": 1,
-        "commentCount": 0,
-        "createdAt": "2025-09-11T03:16:03",
-        "user": {
-          "userId": 8,
-          "username": "luna",
-          "profileImageUrl": null,
+          "userId": 2,
+          "username": "ssar",
+          "profileImageUrl": "https://picsum.photos/seed/ssar/200",
           "isFollowing": false,
         },
         "postImageList": [
-          {
-            "postImageId": 44,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
+          {"postImageId": 6, "url": "https://picsum.photos/seed/ssar2_a/800/600"},
         ],
       },
       {
-        "postId": 21,
-        "content": "오늘의 추천 음악 🎶",
+        "isAdvertisement": false,
+        "postId": 3,
+        "content": "오늘은 DB 설계 공부 중 📚",
+        "isOwner": true,
         "isLiked": false,
-        "likesCount": 1,
-        "commentCount": 0,
-        "createdAt": "2025-09-11T03:16:03",
+        "likesCount": 3,
+        "commentCount": 5,
+        "createdAt": "2025-09-12T14:41:44",
         "user": {
-          "userId": 8,
-          "username": "luna",
-          "profileImageUrl": null,
-          "isFollowing": true,
-        },
-        "postImageList": [
-          {
-            "postImageId": 43,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-        ],
-      },
-      {
-        "postId": 20,
-        "content": "댓글 이벤트 진행 중 🎁",
-        "isLiked": false,
-        "likesCount": 1,
-        "commentCount": 0,
-        "createdAt": "2025-09-11T03:16:03",
-        "user": {
-          "userId": 8,
-          "username": "luna",
-          "profileImageUrl": null,
+          "userId": 2,
+          "username": "ssar",
+          "profileImageUrl": "https://picsum.photos/seed/ssar/200",
           "isFollowing": false,
         },
         "postImageList": [
-          {
-            "postImageId": 41,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-          {
-            "postImageId": 42,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-        ],
-      },
-      {
-        "postId": 19,
-        "content": "여행 브이로그 준비 중 ✈️",
-        "isLiked": true,
-        "likesCount": 1,
-        "commentCount": 0,
-        "createdAt": "2025-09-11T03:16:03",
-        "user": {
-          "userId": 8,
-          "username": "luna",
-          "profileImageUrl": null,
-          "isFollowing": true,
-        },
-        "postImageList": [
-          {
-            "postImageId": 40,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-        ],
-      },
-      {
-        "postId": 18,
-        "content": "브이로그: 하루 일상 ☀️",
-        "isLiked": true,
-        "likesCount": 8,
-        "commentCount": 15,
-        "createdAt": "2025-09-11T03:16:03",
-        "user": {
-          "userId": 8,
-          "username": "luna",
-          "profileImageUrl": null,
-          "isFollowing": false,
-        },
-        "postImageList": [
-          {
-            "postImageId": 30,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-          {
-            "postImageId": 31,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-          {
-            "postImageId": 32,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-          {
-            "postImageId": 33,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-          {
-            "postImageId": 34,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-          {
-            "postImageId": 35,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-          {
-            "postImageId": 36,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-          {
-            "postImageId": 37,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-          {
-            "postImageId": 38,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-          {
-            "postImageId": 39,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-        ],
-      },
-      {
-        "postId": 17,
-        "content": "오늘도 구독해주셔서 감사합니다 🙏",
-        "isLiked": false,
-        "likesCount": 1,
-        "commentCount": 0,
-        "createdAt": "2025-09-11T03:16:03",
-        "user": {
-          "userId": 8,
-          "username": "luna",
-          "profileImageUrl": null,
-          "isFollowing": true,
-        },
-        "postImageList": [
-          {
-            "postImageId": 29,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-        ],
-      },
-      {
-        "postId": 16,
-        "content": "내가 쓰는 장비 소개 🎥",
-        "isLiked": false,
-        "likesCount": 1,
-        "commentCount": 0,
-        "createdAt": "2025-09-11T03:16:03",
-        "user": {
-          "userId": 8,
-          "username": "luna",
-          "profileImageUrl": null,
-          "isFollowing": false,
-        },
-        "postImageList": [
-          {
-            "postImageId": 28,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-        ],
-      },
-      {
-        "postId": 15,
-        "content": "편집하다가 밤샜다 😵",
-        "isLiked": false,
-        "likesCount": 1,
-        "commentCount": 0,
-        "createdAt": "2025-09-11T03:16:03",
-        "user": {
-          "userId": 8,
-          "username": "luna",
-          "profileImageUrl": null,
-          "isFollowing": true,
-        },
-        "postImageList": [
-          {
-            "postImageId": 23,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-          {
-            "postImageId": 24,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-          {
-            "postImageId": 25,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-          {
-            "postImageId": 26,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-          {
-            "postImageId": 27,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
-        ],
-      },
-      {
-        "postId": 14,
-        "content": "팬들과 함께하는 라이브 Q&A 🎤",
-        "isLiked": false,
-        "likesCount": 1,
-        "commentCount": 0,
-        "createdAt": "2025-09-11T03:16:03",
-        "user": {
-          "userId": 8,
-          "username": "luna",
-          "profileImageUrl": null,
-          "isFollowing": false,
-        },
-        "postImageList": [
-          {
-            "postImageId": 22,
-            "url":
-                "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg",
-          },
+          {"postImageId": 4, "url": "https://picsum.photos/seed/ssar1_a/800/600"},
+          {"postImageId": 5, "url": "https://picsum.photos/seed/ssar1_b/800/600"},
         ],
       },
     ],
-  },
-};
-
-final Map<String, dynamic> _mockLoginResponse = {
-  "status": 200,
-  "msg": "성공",
-  "body": {
-    "accessToken":
-        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtaW5pZ3JhbSIsInJvbGVzIjoiQURNSU4sIFVTRVIiLCJpZCI6MSwiZXhwIjoxNzU4MzM3NTg3fQ.51dGvjfz0IFBOqOimk-1fKDKxsRV4-W7AdqxNzMOB9uTAutvB9nM2zVET19sXuTKhsc4y7lYzLDdx0je12Fm1w",
-    "userId": 1,
-    "username": "minigram",
-    "roles": "ADMIN, USER",
   },
 };

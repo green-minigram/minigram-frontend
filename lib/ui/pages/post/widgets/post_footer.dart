@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/_core/util/m_date.dart';
 import 'package:minigram/data/model/post.dart';
 import 'package:minigram/ui/pages/post/reply/post_comment_page.dart';
 
@@ -21,6 +22,7 @@ class _PostFooterState extends State<PostFooter> {
 
   @override
   Widget build(BuildContext context) {
+    Post post = widget.post;
     String content =
         "실연 당한 남성에게 “하늘 날 수 있다” 조언 긴 텍스트 예시입니다. "
         "여기서 내용이 길어지면 더보기 버튼을 눌러야 전체가 보이게 됩니다.";
@@ -52,7 +54,7 @@ class _PostFooterState extends State<PostFooter> {
                   ),
                   SizedBox(width: MSize.kGap.xxs),
                   Text(
-                    "3.2만",
+                    "${post.likesCount}",
                     style: TextStyle(color: MColor.kText.title),
                   ),
                 ],
@@ -72,7 +74,7 @@ class _PostFooterState extends State<PostFooter> {
                   color: MColor.kIcon.normal,
                 ),
                 label: Text(
-                  "301",
+                  "${post.commentCount}",
                   style: TextStyle(color: MColor.kText.title),
                 ),
                 style: TextButton.styleFrom(
@@ -91,7 +93,7 @@ class _PostFooterState extends State<PostFooter> {
             children: [
               // 아이디
               Text(
-                "아이디입니다",
+                "${post.user.username}",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: MSize.kFont.m,
@@ -106,13 +108,11 @@ class _PostFooterState extends State<PostFooter> {
                   Expanded(
                     child: Text(
                       _expanded
-                          ? content
-                          : (content.length > 30
-                                ? content.substring(0, 30) + "..."
-                                : content),
+                          ? post.content
+                          : (post.content.length > 30 ? post.content.substring(0, 30) + "..." : post.content),
                     ),
                   ),
-                  if (!_expanded && content.length > 30)
+                  if (!_expanded && post.content.length > 30)
                     GestureDetector(
                       onTap: () => setState(() => _expanded = true),
                       child: Text(" 더 보기"),
@@ -125,7 +125,7 @@ class _PostFooterState extends State<PostFooter> {
 
           // 날짜
           Text(
-            "8월 20일",
+            "${MDate.timeAgo(post.createdAt)}",
             style: TextStyle(
               fontSize: MSize.kFont.s,
               color: MColor.kText.secondary,

@@ -16,12 +16,6 @@ class PostImage extends StatelessWidget {
     final PageController pageController = PageController();
     int currentPage = 0;
 
-    final List<String> imageUrls = [
-      "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_1280.jpg",
-      "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_1280.jpg",
-      "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_1280.jpg",
-    ];
-
     return StatefulBuilder(
       builder: (context, setState) {
         return Column(
@@ -50,16 +44,14 @@ class PostImage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
-                imageUrls.length,
+                post.postImageList.length,
                 (index) => Container(
                   margin: EdgeInsets.symmetric(horizontal: MSize.kGap.xxs),
                   width: MSize.kGap.xs,
                   height: MSize.kGap.xs,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: currentPage == index
-                        ? MColor.kIndicator.active
-                        : MColor.kIndicator.inactive,
+                    color: currentPage == index ? MColor.kIndicator.active : MColor.kIndicator.inactive,
                   ),
                 ),
               ),

@@ -20,7 +20,7 @@ class User {
       username = data['username'],
       roles = data['roles'] ?? "",
       profileImageUrl = data['profileImageUrl'] ?? "",
-      isFollowing = data['isFollowing'] ?? "",
+      isFollowing = data['isFollowing'] ?? false,
       accessToken = data['accessToken'] ?? "";
 
   @override

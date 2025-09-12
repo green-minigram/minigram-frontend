@@ -19,7 +19,6 @@ import 'package:minigram/ui/pages/holder/profile/edit/profile_edit_name_page.dar
 import 'package:minigram/ui/pages/holder/profile/edit/profile_edit_page.dart';
 import 'package:minigram/ui/pages/holder/profile/setting/profile_setting_page.dart';
 import 'package:minigram/ui/pages/notification/notification_page.dart';
-import 'package:minigram/ui/pages/splash/splash_page.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -50,7 +49,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: mTheme(),
-      home: const SplashPage(),
+      home: const MainHolder(),
       routes: {
         MRoute.mainHolder: (context) => const MainHolder(),
         MRoute.joinEmail: (context) => const EmailPage(),
@@ -60,8 +59,7 @@ class MyApp extends StatelessWidget {
         MRoute.profileEdit: (context) => const ProfileEditPage(),
         MRoute.profileEditName: (context) => const ProfileEditNamePage(),
         MRoute.profileEditBio: (context) => const ProfileEditBioPage(),
-        MRoute.profileEditBirthDate: (context) =>
-            const ProfileEditBirthDatePage(),
+        MRoute.profileEditBirthDate: (context) => const ProfileEditBirthDatePage(),
         MRoute.profileEditGender: (context) => ProfileEditGenderPage(),
         MRoute.profileSetting: (context) => ProfileSettingPage(),
         MRoute.follower: (context) => const FollowPage(),
