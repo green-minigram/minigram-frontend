@@ -21,9 +21,6 @@ class StoryDetailBody extends ConsumerStatefulWidget {
 }
 
 class _StoryDetailBodyState extends ConsumerState<StoryDetailBody> {
-  bool isLiked = false; // 좋아요 로컬 상태
-  bool isFollowing = false; // 팔로우 로컬 상태
-
   @override
   Widget build(BuildContext context) {
     final storyState = ref.watch(storyDetailProvider(widget.storyId));
@@ -31,10 +28,6 @@ class _StoryDetailBodyState extends ConsumerState<StoryDetailBody> {
     if (storyState == null) {
       return const Center(child: CircularProgressIndicator());
     }
-
-    // 최초 빌드 시 provider 값으로 초기화
-    isLiked = storyState.isLiked;
-    isFollowing = storyState.isFollowing;
 
     final user = storyState.user;
     final story = storyState.story;
