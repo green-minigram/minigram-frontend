@@ -139,6 +139,9 @@ class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
                         text: storyItem.isFollowing ? "팔로잉" : "팔로우",
                         onPressed: () {
                           print("팔로우 클릭: ${state.user.userId}");
+                          ref
+                              .read(storyRecentProvider(widget.userId).notifier)
+                              .toggleFollowDebounced(state.user.userId);
                         },
                         borderSide: storyItem.isFollowing ? BorderSide.none : BorderSide(color: MColor.kIcon.white),
                         textColor: MColor.kText.white,
