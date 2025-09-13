@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:minigram/data/model/post.dart';
+import 'package:minigram/data/model/story.dart';
 import 'package:minigram/data/repository/post_repository.dart';
+import 'package:minigram/data/repository/story_repository.dart';
 import 'package:minigram/main.dart';
+import 'package:minigram/ui/pages/story/write/widget/story_preview.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// 1. 창고 관리자
@@ -14,14 +17,16 @@ final homeProvider = AutoDisposeNotifierProvider<HomeVM, HomeModel?>(() {
 /// 2. 창고
 class HomeVM extends AutoDisposeNotifier<HomeModel?> {
   final mContext = navigatorKey.currentContext!;
-  final refreshCtrl = RefreshController();
+  final verticalScrollController = RefreshController();
+  final horizontalScrollController = RefreshController();
 
   @override
   HomeModel? build() {
     init();
 
     ref.onDispose(() {
-      refreshCtrl.dispose();
+      verticalScrollController.dispose();
+      horizontalScrollController.dispose();
       Logger().d("HomeVM 파괴됨");
     });
 
@@ -29,6 +34,7 @@ class HomeVM extends AutoDisposeNotifier<HomeModel?> {
   }
 
   Future<void> init({int page = 0}) async {
+    /// 게시글 목록 조회
     Map<String, dynamic> postBody = await PostRepository().getList(page: page);
     if (postBody["status"] != 200) {
       ScaffoldMessenger.of(mContext).showSnackBar(
@@ -36,9 +42,24 @@ class HomeVM extends AutoDisposeNotifier<HomeModel?> {
       );
       return;
     }
-    state = HomeModel.fromMap(postBody["body"]);
 
-    refreshCtrl.refreshCompleted();
+    /// 스토리 프리뷰 조회
+    Map<String, dynamic> storyPreview = await StoryRepository().getPreviewList(
+      page: page,
+    );
+    if (storyPreview["status"] != 200) {
+      ScaffoldMessenger.of(mContext).showSnackBar(
+        SnackBar(content: Text("스토리 프리뷰 목록보기 실패 : ${storyPreview["msg"]}")),
+      );
+      return;
+    }
+
+    state = HomeModel.fromMap(
+      postObject: postBody["body"],
+      storyObject: storyPreview["body"],
+    );
+
+    verticalScrollController.refreshCompleted();
   }
 
   // void notifyUpdateOne(Post post) {
@@ -86,7 +107,7 @@ class HomeVM extends AutoDisposeNotifier<HomeModel?> {
 
     if (prevModel.postObject.isLast) {
       await Future.delayed(Duration(milliseconds: 500));
-      refreshCtrl.loadComplete();
+      verticalScrollController.loadComplete();
       return;
     }
 
@@ -97,48 +118,101 @@ class HomeVM extends AutoDisposeNotifier<HomeModel?> {
       ScaffoldMessenger.of(mContext).showSnackBar(
         SnackBar(content: Text("게시글 로딩 실패 : ${body["msg"]}")),
       );
-      refreshCtrl.loadComplete();
+      verticalScrollController.loadComplete();
       return;
     }
 
-    HomeModel nextModel = HomeModel.fromMap(body["body"]);
+    _PostObject nextPostObject = _PostObject.fromMap(body['body']);
 
-    state = nextModel.copyWith(
-      postObject: nextModel.postObject.copyWith(
+    state = prevModel.copyWith(
+      postObject: prevModel.postObject.copyWith(
+        current: nextPostObject.current,
+        size: nextPostObject.size,
+        totalCount: nextPostObject.totalCount,
+        totalPage: nextPostObject.totalPage,
+        prev: nextPostObject.prev,
+        next: nextPostObject.next,
+        isFirst: nextPostObject.isFirst,
+        isLast: nextPostObject.isLast,
         postList: [
           ...prevModel.postObject.postList,
-          ...nextModel.postObject.postList,
+          ...nextPostObject.postList,
         ],
       ),
     );
-    refreshCtrl.loadComplete();
+    verticalScrollController.loadComplete();
+  }
+
+  Future<void> nextPreviewList() async {
+    HomeModel prevModel = state!;
+
+    if (prevModel.storyObject.isLast) {
+      await Future.delayed(Duration(milliseconds: 500));
+      horizontalScrollController.loadComplete();
+      return;
+    }
+
+    Map<String, dynamic> body = await StoryRepository().getPreviewList(
+      page: prevModel.storyObject.next,
+    );
+    if (body["status"] != 200) {
+      ScaffoldMessenger.of(mContext).showSnackBar(
+        SnackBar(content: Text("프리뷰 로딩 실패 : ${body["msg"]}")),
+      );
+      horizontalScrollController.loadComplete();
+      return;
+    }
+
+    _StoryObject nextStoryObject = _StoryObject.fromMap(body['body']);
+
+    state = prevModel.copyWith(
+      storyObject: prevModel.storyObject.copyWith(
+        current: nextStoryObject.current,
+        size: nextStoryObject.size,
+        totalCount: nextStoryObject.totalCount,
+        totalPage: nextStoryObject.totalPage,
+        prev: nextStoryObject.prev,
+        next: nextStoryObject.next,
+        isFirst: nextStoryObject.isFirst,
+        isLast: nextStoryObject.isLast,
+        previewList: [
+          ...prevModel.storyObject.previewList,
+          ...nextStoryObject.previewList,
+        ],
+      ),
+    );
+    horizontalScrollController.loadComplete();
   }
 }
 
 /// 3. 창고 데이터 타입
 class HomeModel {
-  // final Object? storyObject; -> 스토리 오브젝트 자리
-  final PostObject postObject;
+  final _StoryObject storyObject;
+  final _PostObject postObject;
 
   HomeModel({
-    // this.storyObject,
+    required this.storyObject,
     required this.postObject,
   });
 
-  HomeModel.fromMap(Map<String, dynamic> postObject)
-    : postObject = PostObject.fromMap(postObject);
+  HomeModel.fromMap({
+    required Map<String, dynamic> postObject,
+    required Map<String, dynamic> storyObject,
+  }) : postObject = _PostObject.fromMap(postObject),
+       storyObject = _StoryObject.fromMap(storyObject);
 
   HomeModel copyWith({
-    // Object? storyObject,
-    PostObject? postObject,
+    _StoryObject? storyObject,
+    _PostObject? postObject,
   }) {
     return HomeModel(
       postObject: postObject ?? this.postObject,
+      storyObject: storyObject ?? this.storyObject,
     );
   }
 }
 
-class PostObject {
+class _PostObject {
   final int current;
   final int size;
   final int totalCount;
@@ -149,7 +223,7 @@ class PostObject {
   final bool isLast;
   final List<Post> postList;
 
-  PostObject({
+  _PostObject({
     required this.current,
     required this.size,
     required this.totalCount,
@@ -161,7 +235,7 @@ class PostObject {
     required this.postList,
   });
 
-  PostObject.fromMap(Map<String, dynamic> data)
+  _PostObject.fromMap(Map<String, dynamic> data)
     : current = data['current'],
       size = data['size'],
       totalCount = data['totalCount'],
@@ -174,7 +248,7 @@ class PostObject {
           .map((data) => Post.fromMap(data))
           .toList();
 
-  PostObject copyWith({
+  _PostObject copyWith({
     int? current,
     int? size,
     int? totalCount,
@@ -185,7 +259,7 @@ class PostObject {
     bool? isLast,
     List<Post>? postList,
   }) {
-    return PostObject(
+    return _PostObject(
       current: current ?? this.current,
       size: size ?? this.size,
       totalCount: totalCount ?? this.totalCount,
@@ -195,6 +269,101 @@ class PostObject {
       isFirst: isFirst ?? this.isFirst,
       isLast: isLast ?? this.isLast,
       postList: postList ?? this.postList,
+    );
+  }
+}
+
+class _StoryObject {
+  final int current;
+  final int size;
+  final int totalCount;
+  final int totalPage;
+  final int prev;
+  final int next;
+  final bool isFirst;
+  final bool isLast;
+  final List<_Preview> previewList;
+
+  _StoryObject({
+    required this.current,
+    required this.size,
+    required this.totalCount,
+    required this.totalPage,
+    required this.prev,
+    required this.next,
+    required this.isFirst,
+    required this.isLast,
+    required this.previewList,
+  });
+
+  _StoryObject.fromMap(Map<String, dynamic> data)
+    : current = data['current'],
+      size = data['size'],
+      totalCount = data['totalCount'],
+      totalPage = data['totalPage'],
+      prev = data['prev'],
+      next = data['next'],
+      isFirst = data['isFirst'],
+      isLast = data['isLast'],
+      previewList = (data['previewList'] as List)
+          .map((data) => _Preview.fromMap(data))
+          .toList();
+
+  _StoryObject copyWith({
+    int? current,
+    int? size,
+    int? totalCount,
+    int? totalPage,
+    int? prev,
+    int? next,
+    bool? isFirst,
+    bool? isLast,
+    List<_Preview>? previewList,
+  }) {
+    return _StoryObject(
+      current: current ?? this.current,
+      size: size ?? this.size,
+      totalCount: totalCount ?? this.totalCount,
+      totalPage: totalPage ?? this.totalPage,
+      prev: prev ?? this.prev,
+      next: next ?? this.next,
+      isFirst: isFirst ?? this.isFirst,
+      isLast: isLast ?? this.isLast,
+      previewList: previewList ?? this.previewList,
+    );
+  }
+}
+
+class _Preview {
+  final int userId;
+  final String username;
+  final String? profileImageUrl;
+  final bool hasUnseen;
+
+  _Preview({
+    required this.userId,
+    required this.username,
+    this.profileImageUrl,
+    required this.hasUnseen,
+  });
+
+  _Preview.fromMap(Map<String, dynamic> data)
+    : userId = data['userId'],
+      username = data['username'],
+      profileImageUrl = data['profileImageUrl'],
+      hasUnseen = data['hasUnseen'];
+
+  _Preview copyWith({
+    int? userId,
+    String? username,
+    String? profileImageUrl,
+    bool? hasUnseen,
+  }) {
+    return _Preview(
+      userId: userId ?? this.userId,
+      username: username ?? this.username,
+      profileImageUrl: profileImageUrl ?? this.profileImageUrl,
+      hasUnseen: hasUnseen ?? this.hasUnseen,
     );
   }
 }

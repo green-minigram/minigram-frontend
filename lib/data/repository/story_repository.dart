@@ -14,7 +14,11 @@ class StoryRepository {
       "status": 200,
       "msg": "성공",
       "body": {
-        "user": {"userId": 2, "username": "ssar", "profileImageUrl": "https://picsum.photos/seed/ssar/200"},
+        "user": {
+          "userId": 2,
+          "username": "ssar",
+          "profileImageUrl": "https://picsum.photos/seed/ssar/200",
+        },
         "story": {
           "storyId": 1,
           "videoUrl": "https://www.pexels.com/ko-kr/download/video/32332683/",
@@ -50,7 +54,8 @@ class StoryRepository {
       "body": {
         "storyId": storyId,
         "userId": 2,
-        "videoUrl": "https://cdn.pixabay.com/video/2015/08/08/125-135736646_large.mp4",
+        "videoUrl":
+            "https://cdn.pixabay.com/video/2015/08/08/125-135736646_large.mp4",
         "thumbnailUrl": "https://picsum.photos/seed/story01/400/300",
         "status": "DELETED",
         "createdAt": "2025-09-08T04:26:54",
@@ -59,4 +64,64 @@ class StoryRepository {
     };
     return responseBody;
   }
+
+  /// 프리뷰 스토리 조회
+  Future<Map<String, dynamic>> getPreviewList({int page = 0}) async {
+    // Response response = await dio.get("/s/api/feed/story-previews", queryParameters: {"page": page});
+    // final responseBody = response.data;
+    // Logger().d(responseBody);
+    // return responseBody;
+
+    // 1. 통신 코드
+    final response = await Future.delayed(
+      Duration(seconds: 2),
+      () {
+        return _mockPreviewListResponse;
+      },
+    );
+
+    // 2. 리턴
+    return response;
+  }
 }
+
+final Map<String, dynamic> _mockPreviewListResponse = {
+  "status": 200,
+  "msg": "성공",
+  "body": {
+    "current": 0,
+    "size": 10,
+    "totalCount": 4,
+    "totalPage": 1,
+    "prev": 0,
+    "next": 0,
+    "isFirst": true,
+    "isLast": false,
+    "previewList": [
+      {
+        "userId": 8,
+        "username": "luna",
+        "profileImageUrl": null,
+        "hasUnseen": true,
+      },
+      {
+        "userId": 5,
+        "username": "mango",
+        "profileImageUrl": "https://picsum.photos/seed/mango/200",
+        "hasUnseen": true,
+      },
+      {
+        "userId": 4,
+        "username": "love",
+        "profileImageUrl": null,
+        "hasUnseen": true,
+      },
+      {
+        "userId": 3,
+        "username": "cos",
+        "profileImageUrl": "https://picsum.photos/seed/cos/200",
+        "hasUnseen": true,
+      },
+    ],
+  },
+};

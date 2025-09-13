@@ -24,15 +24,11 @@ class HomeBody extends ConsumerWidget {
       );
     } else {
       return SmartRefresher(
-        controller: vm.refreshCtrl,
+        controller: vm.verticalScrollController,
         enablePullDown: true,
         enablePullUp: true,
-        onRefresh: () {
-          vm.init();
-        },
-        onLoading: () {
-          vm.nextPostList();
-        },
+        onRefresh: vm.init,
+        onLoading: vm.nextPostList,
         footer: const ClassicFooter(loadStyle: LoadStyle.ShowWhenLoading),
         child: CustomScrollView(
           slivers: [
@@ -51,8 +47,8 @@ class HomeBody extends ConsumerWidget {
       elevation: 0,
       surfaceTintColor: Colors.transparent,
       pinned: false, // 상단 고정
-      floating: true, // 스크롤 조금 내려도 나타나게 하려면 true
-      snap: true, // floating과 함께 snap 사용 가능
+      floating: false, // 스크롤 조금 내려도 나타나게 하려면 true
+      snap: false, // floating과 함께 snap 사용 가능
       leadingWidth: 150,
       leading: Padding(
         padding: EdgeInsets.only(left: MSize.kGap.m),

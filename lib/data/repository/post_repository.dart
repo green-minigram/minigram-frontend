@@ -31,7 +31,7 @@ final Map<String, dynamic> _mockGetListResponse = {
     "prev": 1,
     "next": 2,
     "isFirst": false,
-    "isLast": true,
+    "isLast": false,
     "postList": [
       {
         "isAdvertisement": false,
@@ -49,7 +49,10 @@ final Map<String, dynamic> _mockGetListResponse = {
           "isFollowing": false,
         },
         "postImageList": [
-          {"postImageId": 6, "url": "https://picsum.photos/seed/ssar2_a/800/600"},
+          {
+            "postImageId": 6,
+            "url": "https://picsum.photos/seed/ssar2_a/800/600",
+          },
         ],
       },
       {
@@ -68,8 +71,14 @@ final Map<String, dynamic> _mockGetListResponse = {
           "isFollowing": false,
         },
         "postImageList": [
-          {"postImageId": 4, "url": "https://picsum.photos/seed/ssar1_a/800/600"},
-          {"postImageId": 5, "url": "https://picsum.photos/seed/ssar1_b/800/600"},
+          {
+            "postImageId": 4,
+            "url": "https://picsum.photos/seed/ssar1_a/800/600",
+          },
+          {
+            "postImageId": 5,
+            "url": "https://picsum.photos/seed/ssar1_b/800/600",
+          },
         ],
       },
     ],
