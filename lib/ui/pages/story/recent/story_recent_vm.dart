@@ -63,6 +63,27 @@ class StoryRecentVM extends AutoDisposeFamilyNotifier<StoryResentModel?, int> {
       }
     });
   }
+
+  // 좋아요 토글 상태 변경 함수 -> 좋아요 통신코드 적용해야됨 좋아요 등록/삭제
+  Future<void> toggleLike(int storyId) async {
+    if (state == null) return;
+
+    final data = await StoryRepository().toggleLike(storyId);
+    if (data["status"] == 200) {
+      final body = data["body"] as Map<String, dynamic>;
+      final updatedList = state!.storyList.map((item) {
+        if (item.story.storyId == storyId) {
+          return item.copyWith(
+            isLiked: body["isLiked"] ?? item.isLiked,
+            likeCount: body["likeCount"] ?? item.likeCount,
+          );
+        }
+        return item;
+      }).toList();
+
+      state = StoryResentModel(user: state!.user, storyList: updatedList);
+    }
+  }
 }
 
 class StoryResentModel {
