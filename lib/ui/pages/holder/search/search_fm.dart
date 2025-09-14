@@ -23,32 +23,61 @@ class SearchFM extends AutoDisposeNotifier<SearchFormModel> {
       Logger().d("SearchFM 파괴됨");
     });
 
-    return SearchFormModel(isSearchBarFocused: false, currentSearchKeyword: "");
+    return SearchFormModel(
+      isSearchBarFocused: false,
+      currentSearchKeyword: "",
+      isSearchMode: false, // ✅ 초기값
+    );
   }
 
+  /// 검색어 상태 변경 메서드
   void keword(String keyword) {
-    print(textEditingController.value.text);
-    state = state.copyWith(currentSearchKeyword: keyword);
+    state = state.copyWith(
+      currentSearchKeyword: keyword,
+    );
   }
 
   void searchBarFocused(bool isFocused) {
-    state = state.copyWith(isSearchBarFocused: isFocused);
+    state = state.copyWith(
+      isSearchBarFocused: isFocused,
+      isSearchMode: isFocused
+          ? true
+          : state.isSearchMode, // ✅ 포커스 시에만 검색 모드 활성화
+    );
   }
 
-  // 검색 제출
-  void submitSearch() {
-    if (state.currentSearchKeyword.isEmpty) {
-      // 여기서 실제 검색 API 호출 등을 수행
+  // 받을 수도 있고 안 받을 수도 있게 수정
+  void submitSearch([String? value]) {
+    String keyword;
+    if (value != null && value.isNotEmpty) {
+      keyword = value;
+    } else {
+      keyword = state.currentSearchKeyword;
+    }
+    if (keyword.isNotEmpty) {
+      // 검색 실행 후 검색 모드 해제
+      state = state.copyWith(isSearchMode: false);
+      // 실제 검색 API 호출
     }
   }
 
-  // 검색 취소/클리어
   void clearSearch() {
     state = state.copyWith(
       currentSearchKeyword: '',
       isSearchBarFocused: false,
+      isSearchMode: false, // ✅ 검색 모드 해제
     );
     textEditingController.clear();
+  }
+
+  // ✅ 최근 검색어 선택 시 호출할 메서드 추가
+  void selectRecentSearch(String keyword) {
+    textEditingController.text = keyword;
+    state = state.copyWith(
+      currentSearchKeyword: keyword,
+      isSearchMode: false, // ✅ 검색 모드 해제하여 결과 화면으로 전환
+    );
+    // 실제 검색 실행
   }
 }
 
@@ -56,19 +85,23 @@ class SearchFM extends AutoDisposeNotifier<SearchFormModel> {
 class SearchFormModel {
   final bool isSearchBarFocused;
   final String currentSearchKeyword;
+  final bool isSearchMode; // ✅ 검색 모드 상태 추가
 
   SearchFormModel({
     required this.isSearchBarFocused,
     required this.currentSearchKeyword,
+    this.isSearchMode = false, // ✅ 기본값 false
   });
 
   SearchFormModel copyWith({
     bool? isSearchBarFocused,
     String? currentSearchKeyword,
+    bool? isSearchMode,
   }) {
     return SearchFormModel(
       isSearchBarFocused: isSearchBarFocused ?? this.isSearchBarFocused,
       currentSearchKeyword: currentSearchKeyword ?? this.currentSearchKeyword,
+      isSearchMode: isSearchMode ?? this.isSearchMode,
     );
   }
 }

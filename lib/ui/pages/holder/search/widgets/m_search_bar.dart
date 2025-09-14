@@ -38,9 +38,7 @@ class _MSearchBarState extends ConsumerState<MSearchBar> {
   void _onSubmitted(String value) {
     if (value.trim().isNotEmpty) {
       final SearchFM fm = ref.read(searchFormProvider.notifier);
-      // 검색 실행 및 최근 검색어 저장
       fm.submitSearch();
-      // 포커스 해제
       _focusNode.unfocus();
     }
   }
@@ -78,7 +76,7 @@ class _MSearchBarState extends ConsumerState<MSearchBar> {
                   controller: fm.textEditingController,
                   onChanged: fm.keword,
                   focusNode: _focusNode,
-                  onSubmitted: _onSubmitted, // 제출 시에만 검색
+                  onSubmitted: _onSubmitted,
                   onTap: _onTap,
                   style: TextStyle(
                     fontSize: MSize.kFont.l,
@@ -100,13 +98,11 @@ class _MSearchBarState extends ConsumerState<MSearchBar> {
                       fontWeight: FontWeight.bold,
                       color: MColor.kText.secondary,
                     ),
-                    prefixIcon: Icon(
-                      Icons.search,
-                    ),
+                    prefixIcon: Icon(Icons.search),
                   ),
                 ),
               ),
-              if (searchFormModel.isSearchBarFocused)
+              if (searchFormModel.isSearchMode)
                 InkWell(
                   onTap: _onCancel,
                   child: Container(

@@ -16,7 +16,6 @@ class SearchBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     SearchVM vm = ref.read(searchProvider.notifier);
-    SearchFormModel searchFormModel = ref.watch(searchFormProvider);
 
     return SmartRefresher(
       controller: vm.verticalScrollController,
@@ -35,12 +34,24 @@ class SearchBody extends ConsumerWidget {
             surfaceTintColor: Colors.transparent,
             bottom: const MAppBarBottomLine(),
           ),
-          if (searchFormModel.isSearchBarFocused)
-            RecentSearchesSliver()
-          else
-            PostGridSliver(),
+          const ContentSwitcher(),
         ],
       ),
     );
+  }
+}
+
+class ContentSwitcher extends ConsumerWidget {
+  const ContentSwitcher({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    SearchFormModel searchFormModel = ref.watch(searchFormProvider);
+
+    if (searchFormModel.isSearchMode) {
+      return RecentSearchesSliver();
+    } else {
+      return PostGridSliver();
+    }
   }
 }

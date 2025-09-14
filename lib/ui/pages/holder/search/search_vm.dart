@@ -8,23 +8,17 @@ import 'package:minigram/main.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// 1. 창고 관리자
-final searchProvider = AutoDisposeNotifierProvider<SearchVM, SearchModel?>(() {
+final searchProvider = NotifierProvider<SearchVM, SearchModel?>(() {
   return SearchVM();
 });
 
 /// 2. 창고
-class SearchVM extends AutoDisposeNotifier<SearchModel?> {
+class SearchVM extends Notifier<SearchModel?> {
   final mContext = navigatorKey.currentContext!;
   final verticalScrollController = RefreshController();
 
   @override
   SearchModel? build() {
-    // 🔥 핵심: AutoDispose 방지 -> 포커스 상태에 따라 계속 디스포즈되는 것을 막는다 auto를 뺄까 싶다
-    final link = ref.keepAlive();
-
-    // 📱 선택사항: 5분 후 dispose 재활성화
-    // Timer(Duration(minutes: 5), () => link.close());
-
     init();
 
     ref.onDispose(() {
