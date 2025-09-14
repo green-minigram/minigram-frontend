@@ -23,9 +23,6 @@ class _PostFooterState extends State<PostFooter> {
   @override
   Widget build(BuildContext context) {
     Post post = widget.post;
-    String content =
-        "실연 당한 남성에게 “하늘 날 수 있다” 조언 긴 텍스트 예시입니다. "
-        "여기서 내용이 길어지면 더보기 버튼을 눌러야 전체가 보이게 됩니다.";
 
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -108,11 +105,13 @@ class _PostFooterState extends State<PostFooter> {
                   Expanded(
                     child: Text(
                       _expanded
-                          ? post.content
-                          : (post.content.length > 30 ? post.content.substring(0, 30) + "..." : post.content),
+                          ? (post.content ?? "")
+                          : ((post.content ?? "").length > 30
+                                ? (post.content ?? "").substring(0, 30) + "..."
+                                : (post.content ?? "")),
                     ),
                   ),
-                  if (!_expanded && post.content.length > 30)
+                  if (!_expanded && (post.content ?? "").length > 30)
                     GestureDetector(
                       onTap: () => setState(() => _expanded = true),
                       child: Text(" 더 보기"),
