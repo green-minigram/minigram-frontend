@@ -28,7 +28,8 @@ class _FollowingBodyState extends ConsumerState<FollowingBody> {
 
   @override
   Widget build(BuildContext context) {
-    final userId = 2; // TODO: 현재 프로필 기준 userId 넘기기
+    final userId =
+        2; // TODO: 현재 프로필 기준 userId 넘기기 -> 페이지 넘어올 때 userId 같이 받아와야 함
     final followingState = ref.watch(followingProvider(userId));
 
     if (followingState == null) {
