@@ -84,6 +84,29 @@ class StoryRecentVM extends AutoDisposeFamilyNotifier<StoryResentModel?, int> {
       state = StoryResentModel(user: state!.user, storyList: updatedList);
     }
   }
+
+  // 삭제
+  Future<void> deleteStory(int storyId) async {
+    if (state == null) return;
+
+    final data = await StoryRepository().delete(storyId);
+    if (data["status"] == 200) {
+      final updatedList = state!.storyList.where((item) => item.story.storyId != storyId).toList();
+
+      if (updatedList.isEmpty) {
+        state = null;
+      } else {
+        state = StoryResentModel(
+          user: state!.user,
+          storyList: updatedList,
+        );
+      }
+
+      Logger().d("스토리 삭제 성공: $data");
+    } else {
+      Logger().e("스토리 삭제 실패: ${data["msg"]}");
+    }
+  }
 }
 
 class StoryResentModel {

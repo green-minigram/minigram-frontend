@@ -45,6 +45,7 @@ class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(storyRecentProvider(widget.userId));
+    final vm = ref.read(storyRecentProvider(widget.userId).notifier);
 
     if (state == null) {
       return const Center(child: CircularProgressIndicator());
@@ -208,9 +209,14 @@ class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
                                         failText: "취소",
                                         successText: "삭제",
                                         onFail: () => print("삭제 취소됨"),
-                                        onSuccess: () => {
-                                          print("삭제 실행됨: ${story.storyId}"),
-                                        }, //TODO 스토리 삭제
+                                        onSuccess: () async {
+                                          print("삭제 실행됨: ${story.storyId}");
+                                          await vm.deleteStory(story.storyId);
+
+                                          if (vm.state == null && Navigator.canPop(context)) {
+                                            Navigator.pop(context);
+                                          }
+                                        },
                                       );
                                     },
                                   ),
