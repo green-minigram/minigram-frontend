@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/ui/pages/follow/follow_vm.dart';
 import 'package:minigram/ui/widgets/m_button.dart';
-import 'package:minigram/ui/widgets/m_story.dart';
 
 class FollowingCardItem extends StatefulWidget {
-  const FollowingCardItem({super.key});
+  final FollowUser user;
+  const FollowingCardItem({super.key, required this.user});
 
   @override
   State<FollowingCardItem> createState() => _FollowingCardItemState();
 }
 
 class _FollowingCardItemState extends State<FollowingCardItem> {
-  bool isFollowing = true;
+  late bool isFollowing;
+
+  @override
+  void initState() {
+    super.initState();
+    isFollowing = widget.user.isFollowing;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +30,15 @@ class _FollowingCardItemState extends State<FollowingCardItem> {
       ),
       child: Row(
         children: [
-          // 프로필
-          MStory(
-            size: MSize.kStory.m,
-            userId: 2, // TODO userId 필요
+          // 프로필 이미지
+          CircleAvatar(
+            radius: 20,
+            backgroundImage: widget.user.profileImageUrl != null
+                ? NetworkImage(widget.user.profileImageUrl!)
+                : null,
+            child: widget.user.profileImageUrl == null
+                ? Text(widget.user.username[0].toUpperCase())
+                : null,
           ),
           SizedBox(width: MSize.kGap.m),
 
@@ -36,7 +48,7 @@ class _FollowingCardItemState extends State<FollowingCardItem> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "jay_Ong",
+                  widget.user.username,
                   style: TextStyle(
                     fontSize: MSize.kFont.m,
                     fontWeight: FontWeight.bold,
@@ -44,7 +56,7 @@ class _FollowingCardItemState extends State<FollowingCardItem> {
                   ),
                 ),
                 Text(
-                  "정재용",
+                  widget.user.name,
                   style: TextStyle(
                     fontSize: MSize.kFont.s,
                     color: MColor.kText.secondary,
@@ -54,19 +66,22 @@ class _FollowingCardItemState extends State<FollowingCardItem> {
             ),
           ),
 
-          // 팔로우 버튼
-          MButton(
-            onPressed: () {
-              setState(() {
-                isFollowing = !isFollowing;
-              });
-            },
-            text: isFollowing ? '팔로잉' : '팔로우',
-            padding: EdgeInsets.symmetric(horizontal: MSize.kGap.xxl),
-            borderRadius: MSize.kBorderRadius.s,
-            backgroundColor: isFollowing ? MColor.kButton.disabled : MColor.kButton.primary,
-            textColor: isFollowing ? MColor.kText.normal : MColor.kText.white,
-          ),
+          // 팔로우 버튼 (본인은 표시 X)
+          if (!widget.user.isMe)
+            MButton(
+              onPressed: () {
+                setState(() {
+                  isFollowing = !isFollowing;
+                });
+              },
+              text: isFollowing ? '팔로잉' : '팔로우',
+              padding: EdgeInsets.symmetric(horizontal: MSize.kGap.xxl),
+              borderRadius: MSize.kBorderRadius.s,
+              backgroundColor: isFollowing
+                  ? MColor.kButton.disabled
+                  : MColor.kButton.primary,
+              textColor: isFollowing ? MColor.kText.normal : MColor.kText.white,
+            ),
         ],
       ),
     );
