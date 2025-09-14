@@ -87,10 +87,14 @@ class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
                     (index) {
                       return Expanded(
                         child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: MSize.kGap.xxxxs),
+                          margin: EdgeInsets.symmetric(
+                            horizontal: MSize.kGap.xxxxs,
+                          ),
                           height: 3,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(MSize.kBorderRadius.xxs),
+                            borderRadius: BorderRadius.circular(
+                              MSize.kBorderRadius.xxs,
+                            ),
                             color: index == currentIndex
                                 ? MColor.kNormal.white
                                 : MColor.kNormal.white.withValues(alpha: 0.3),
@@ -107,7 +111,10 @@ class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
                   children: [
                     CircleAvatar(
                       radius: MSize.kBorderRadius.l,
-                      backgroundImage: NetworkImage(state.user.imgUrl),
+                      backgroundImage: state.user.profileImageUrl != null
+                          ? NetworkImage(state.user.profileImageUrl!)
+                          : const AssetImage('assets/base_profile.png')
+                                as ImageProvider,
                     ),
                     SizedBox(width: MSize.kGap.xs),
 
@@ -140,7 +147,9 @@ class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
                         onPressed: () {
                           print("팔로우 클릭: ${state.user.userId}");
                         },
-                        borderSide: storyItem.isFollowing ? BorderSide.none : BorderSide(color: MColor.kIcon.white),
+                        borderSide: storyItem.isFollowing
+                            ? BorderSide.none
+                            : BorderSide(color: MColor.kIcon.white),
                         textColor: MColor.kText.white,
                         backgroundColor: storyItem.isFollowing
                             ? Colors.black.withValues(alpha: 0.3)
@@ -160,8 +169,12 @@ class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
                         print("좋아요 클릭: ${story.storyId}"),
                       },
                       icon: Icon(
-                        storyItem.isLiked ? Icons.favorite : Icons.favorite_border,
-                        color: storyItem.isLiked ? MColor.kIcon.red : MColor.kIcon.white,
+                        storyItem.isLiked
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: storyItem.isLiked
+                            ? MColor.kIcon.red
+                            : MColor.kIcon.white,
                       ),
                       style: IconButton.styleFrom(
                         backgroundColor: Colors.transparent,

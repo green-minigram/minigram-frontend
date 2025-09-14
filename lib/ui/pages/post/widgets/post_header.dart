@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/data/model/post.dart';
 import 'package:minigram/ui/widgets/m_bottom_sheet.dart';
 import 'package:minigram/ui/widgets/m_bottom_sheet_item.dart';
 import 'package:minigram/ui/widgets/m_button.dart';
@@ -10,11 +11,13 @@ import 'package:minigram/ui/widgets/m_story.dart';
 class PostHeader extends StatelessWidget {
   final bool showFollowButton;
   bool isOwner;
+  final Post post;
 
   PostHeader({
     super.key,
     this.showFollowButton = true,
     this.isOwner = false,
+    required this.post,
   });
 
   @override
@@ -33,8 +36,11 @@ class PostHeader extends StatelessWidget {
           // 아이디 + 이름 자리
           Expanded(
             child: Text(
-              "아이디 자리",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: MSize.kFont.normal),
+              post.user.username,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: MSize.kFont.normal,
+              ),
             ),
           ),
 
@@ -57,7 +63,7 @@ class PostHeader extends StatelessWidget {
             onPressed: () {
               MBottomSheet.show(
                 context,
-                items: isOwner
+                items: post.isOwner
                     ? [
                         MSheetItem(
                           text: "수정",
