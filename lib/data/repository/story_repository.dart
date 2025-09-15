@@ -68,8 +68,8 @@ class StoryRepository {
   Future<Map<String, dynamic>> getRecent(int userId) async {
     Logger().d('getRecent 호출');
     // 실제 통신
-    // final response = await dio.delete(
-    //   /s/api/users/$userId/stories
+    // final response = await dio.get(
+    //   /s/api/feed/users/$userId/stories
     // );
     // if (response.statusCode == 200) {
     //   return response.data as Map<String, dynamic>;
