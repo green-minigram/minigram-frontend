@@ -71,7 +71,9 @@ class _MainHolderState extends State<MainHolder> {
         // 추가 탭 (아이콘 변경)
         BottomNavigationBarItem(
           label: '',
-          icon: Icon(selectedIndex == 2 ? Icons.add_circle : Icons.add_circle_outline),
+          icon: Icon(
+            selectedIndex == 2 ? Icons.add_circle : Icons.add_circle_outline,
+          ),
         ),
 
         // 프로필 탭 (아이콘 변경 + 빨간 점)
@@ -80,7 +82,9 @@ class _MainHolderState extends State<MainHolder> {
           icon: Badge(
             smallSize: 8,
             backgroundColor: Colors.red,
-            child: Icon(selectedIndex == 3 ? Icons.person : Icons.person_outline),
+            child: Icon(
+              selectedIndex == 3 ? Icons.person : Icons.person_outline,
+            ),
           ),
         ),
       ],

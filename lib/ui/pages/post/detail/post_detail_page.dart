@@ -6,11 +6,15 @@ import 'package:minigram/ui/widgets/m_app_bar_bottom_line.dart';
 import 'package:minigram/ui/widgets/m_button.dart';
 
 class PostDetailPage extends StatelessWidget {
-  const PostDetailPage({super.key});
+  final int postId;
+  const PostDetailPage({
+    super.key,
+    required this.postId,
+  });
 
   @override
   Widget build(BuildContext context) {
-    print('게시글 상세 페이지 렌더링됨!'); // 렌더링 확인용
+    print('게시글 상세 페이지 렌더링됨! ${postId} 포스트 아이디'); // 렌더링 확인용
     return Scaffold(
       appBar: _appBar(context),
       body: PostDetailBody(),
