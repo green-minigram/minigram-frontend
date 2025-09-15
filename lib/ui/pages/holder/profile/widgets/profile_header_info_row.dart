@@ -1,31 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/ui/pages/follow/widgets/follow_body.dart';
+import 'package:minigram/ui/pages/holder/profile/profile_vm.dart';
 
 class ProfileHeaderInfoRow extends StatelessWidget {
+  final ProfileModel profileModel;
   const ProfileHeaderInfoRow({
     super.key,
+    required this.profileModel,
   });
 
   @override
   Widget build(BuildContext context) {
+    final profile = profileModel.profile;
+
     return Row(
       spacing: MSize.kGap.huge,
       children: [
         _buildInkWell(
           context: context,
-          count: 1,
+          count: profile.postCount,
           text: "게시물",
         ),
         _buildInkWell(
           context: context,
-          count: 5,
+          count: profile.followerCount,
           text: "팔로워",
           url: "follower",
         ),
         _buildInkWell(
           context: context,
-          count: 9,
+          count: profile.followingCount,
           text: "팔로잉",
           url: "following",
         ),
@@ -50,6 +55,12 @@ class ProfileHeaderInfoRow extends StatelessWidget {
                 initialIndex: url == "follower" ? 0 : 1,
                 child: Scaffold(
                   appBar: AppBar(
+                    leading: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.arrow_back_ios),
+                    ),
                     title: Text(text),
                     bottom: const TabBar(
                       tabs: [
