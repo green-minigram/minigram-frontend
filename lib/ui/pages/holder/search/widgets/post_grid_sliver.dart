@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/ui/pages/holder/search/search_fm.dart';
 import 'package:minigram/ui/pages/holder/search/search_vm.dart';
+import 'package:minigram/ui/pages/post/detail/post_detail_page.dart';
 import 'package:minigram/ui/widgets/m_grid_item.dart';
 
 class PostGridSliver extends ConsumerWidget {
@@ -27,6 +28,14 @@ class PostGridSliver extends ConsumerWidget {
             imageUrl: model.postObject.postList[index].postImageUrl,
             onTap: () {
               print("아이템 클릭");
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PostDetailPage(
+                    postId: model.postObject.postList[index].postId,
+                  ),
+                ),
+              );
             },
           ),
           childCount: model.postObject.postList.length,
