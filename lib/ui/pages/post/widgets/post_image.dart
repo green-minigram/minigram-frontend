@@ -28,6 +28,11 @@ class PostImage extends StatelessWidget {
                 aspectRatio: MSize.kRatio.aspect34,
                 child: PageView.builder(
                   controller: pageController,
+                  onPageChanged: (index) {
+                    setState(() {
+                      currentPage = index;
+                    });
+                  },
                   itemCount: post.postImageList.length,
                   itemBuilder: (context, index) {
                     return Image.network(
@@ -51,7 +56,9 @@ class PostImage extends StatelessWidget {
                   height: MSize.kGap.xs,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: currentPage == index ? MColor.kIndicator.active : MColor.kIndicator.inactive,
+                    color: currentPage == index
+                        ? MColor.kIndicator.active
+                        : MColor.kIndicator.inactive,
                   ),
                 ),
               ),
