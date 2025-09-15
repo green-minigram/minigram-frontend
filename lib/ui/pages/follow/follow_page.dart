@@ -21,7 +21,7 @@ class FollowPage extends StatelessWidget {
       length: 2, // 팔로워, 팔로잉
       child: Scaffold(
         appBar: _appbar(context),
-        body: FollowBody(),
+        body: FollowBody(userId: userId),
       ),
     );
   }
