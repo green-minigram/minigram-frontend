@@ -71,6 +71,38 @@ class StoryDetailVM extends AutoDisposeFamilyNotifier<StoryDetailModel?, int> {
       }
     });
   }
+
+  // 좋아요 토글
+  Future<void> toggleLike(int storyId) async {
+    if (state == null) return;
+
+    final prevState = state!;
+    final newIsLiked = !prevState.isLiked;
+    final newLikeCount = newIsLiked ? prevState.likeCount + 1 : prevState.likeCount - 1;
+
+    // 1) UI 먼저 토글
+    state = StoryDetailModel(
+      user: prevState.user,
+      story: prevState.story,
+      isFollowing: prevState.isFollowing,
+      isOwner: prevState.isOwner,
+      isLiked: newIsLiked,
+      likeCount: newLikeCount,
+    );
+    Logger().d("좋아요 상태 변경 (UI 반영): $newIsLiked, likeCount=$newLikeCount");
+
+    // 2) 디바운스 → 마지막 액션만 서버로 반영
+    _likeDebounce?.cancel();
+    _likeDebounce = Timer(const Duration(milliseconds: 500), () async {
+      try {
+        Logger().d("좋아요 통신 시작 (storyId=$storyId)");
+        final data = await StoryRepository().toggleLike(storyId);
+        Logger().d("좋아요 통신 끝: $data");
+      } catch (e) {
+        Logger().e("좋아요 통신 오류: $e");
+      }
+    });
+  }
 }
 
 class StoryDetailModel {
