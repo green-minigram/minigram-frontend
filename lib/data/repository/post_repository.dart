@@ -17,6 +17,36 @@ class PostRepository {
     // 2. 리턴
     return response;
   }
+
+  Future<Map<String, dynamic>> getSearchResultList({
+    int page = 0,
+    String keyword = "",
+  }) async {
+    print(keyword);
+    // final query = {
+    //   "page": page,
+    //   if (keyword.isNotEmpty) "keyword": keyword, // 빈 문자열이면 아예 제외됨
+    // };
+
+    // Response response = await dio.get(
+    //   "/s/api/search/posts",
+    //   queryParameters: query,
+    // );
+    // final responseBody = response.data;
+    // Logger().d(responseBody);
+    // return responseBody;
+
+    // 1. 통신 코드
+    final response = await Future.delayed(
+      Duration(seconds: 2),
+      () {
+        return _mockGetSearchResultListResponse;
+      },
+    );
+
+    // 2. 리턴
+    return response;
+  }
 }
 
 // 가짜 데이터
@@ -80,6 +110,43 @@ final Map<String, dynamic> _mockGetListResponse = {
             "url": "https://picsum.photos/seed/ssar1_b/800/600",
           },
         ],
+      },
+    ],
+  },
+};
+
+final Map<String, dynamic> _mockGetSearchResultListResponse = {
+  "status": 200,
+  "msg": "성공",
+  "body": {
+    "current": 0,
+    "size": 12,
+    "totalCount": 4,
+    "totalPage": 1,
+    "prev": 0,
+    "next": 0,
+    "isFirst": true,
+    "isLast": false,
+    "postList": [
+      {
+        "postId": 21,
+        "postImageUrl": "https://picsum.photos/seed/luna11_a/800/600",
+        "content": "오늘의 추천 음악 🎶",
+      },
+      {
+        "postId": 17,
+        "postImageUrl": "https://picsum.photos/seed/luna7_a/800/600",
+        "content": "오늘도 구독해주셔서 감사합니다 🙏",
+      },
+      {
+        "postId": 11,
+        "postImageUrl": "https://picsum.photos/seed/luna1_a/800/600",
+        "content": "오늘 업로드한 영상 봐주세요 🎥",
+      },
+      {
+        "postId": 3,
+        "postImageUrl": "https://picsum.photos/seed/ssar1_a/800/600",
+        "content": "오늘은 DB 설계 공부 중 📚",
       },
     ],
   },

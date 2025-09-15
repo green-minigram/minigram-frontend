@@ -24,7 +24,8 @@ class ProfileGridBuilder extends StatelessWidget {
       ),
       itemCount: 9,
       itemBuilder: (context, index) {
-        final imageUrl = "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg";
+        final imageUrl =
+            "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg";
 
         if (index == 8) {
           return _AddBox();
@@ -43,7 +44,9 @@ class ProfileGridBuilder extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => PostDetailPage(),
+                    builder: (_) => PostDetailPage(
+                      postId: 1,
+                    ),
                   ),
                 );
               }

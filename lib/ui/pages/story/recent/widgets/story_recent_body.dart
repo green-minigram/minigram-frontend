@@ -112,7 +112,9 @@ class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
                   children: [
                     CircleAvatar(
                       radius: MSize.kBorderRadius.l,
-                      backgroundImage: NetworkImage(state.user.profileImageUrl!),
+                      backgroundImage: state.user.profileImageUrl != null
+                          ? NetworkImage(state.user.profileImageUrl!)
+                          : const AssetImage('assets/base_profile.png') as ImageProvider,
                     ),
                     SizedBox(width: MSize.kGap.xs),
 
