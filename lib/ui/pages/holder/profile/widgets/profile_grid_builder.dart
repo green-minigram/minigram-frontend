@@ -22,60 +22,73 @@ class ProfileGridBuilder extends StatelessWidget {
     final postList = profileModel.postListObject.postList;
 
     if (isStoryTab) {
-      return GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          childAspectRatio: MSize.kRatio.aspect34,
-          crossAxisSpacing: MSize.kGap.xxxs,
-          mainAxisSpacing: MSize.kGap.xxxs,
-        ),
-        itemCount: storyList.length + 1,
-        itemBuilder: (context, index) {
-          if (index == storyList.length) {
-            return _AddBox();
-          } else {
-            final item = storyList[index];
-            return MGridItem(
-              imageUrl: item.thumbnailUrl,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => StoryDetailPage(storyId: item.storyId),
-                  ),
-                );
+      return CustomScrollView(
+        slivers: [
+          SliverGrid(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                if (index == storyList.length) {
+                  return _AddBox();
+                } else {
+                  final item = storyList[index];
+                  return MGridItem(
+                    imageUrl: item.thumbnailUrl,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              StoryDetailPage(storyId: item.storyId),
+                        ),
+                      );
+                    },
+                  );
+                }
               },
-            );
-          }
-        },
+              childCount: storyList.length + 1,
+            ),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              childAspectRatio: MSize.kRatio.aspect34,
+              crossAxisSpacing: MSize.kGap.xxxs,
+              mainAxisSpacing: MSize.kGap.xxxs,
+            ),
+          ),
+        ],
       );
     } else {
-      return GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          childAspectRatio: MSize.kRatio.aspect34,
-          crossAxisSpacing: MSize.kGap.xxxs,
-          mainAxisSpacing: MSize.kGap.xxxs,
-        ),
-        itemCount: postList.length + 1,
-        itemBuilder: (context, index) {
-          if (index == postList.length) {
-            return _AddBox();
-          } else {
-            final item = postList[index];
-            return MGridItem(
-              imageUrl: item.postImageUrl,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => PostDetailPage(postId: item.postId),
-                  ),
-                );
+      return CustomScrollView(
+        slivers: [
+          SliverGrid(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                if (index == postList.length) {
+                  return _AddBox();
+                } else {
+                  final item = postList[index];
+                  return MGridItem(
+                    imageUrl: item.postImageUrl,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => PostDetailPage(postId: item.postId),
+                        ),
+                      );
+                    },
+                  );
+                }
               },
-            );
-          }
-        },
+              childCount: postList.length + 1,
+            ),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              childAspectRatio: MSize.kRatio.aspect34,
+              crossAxisSpacing: MSize.kGap.xxxs,
+              mainAxisSpacing: MSize.kGap.xxxs,
+            ),
+          ),
+        ],
       );
     }
   }
