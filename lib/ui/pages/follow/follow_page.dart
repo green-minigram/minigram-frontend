@@ -35,6 +35,7 @@ class FollowPage extends StatelessWidget {
         labelColor: Colors.black,
         unselectedLabelColor: Colors.grey,
         tabs: [
+          // TODO 팔로워 팔로잉 숫자는 상세페이지에서 가져와야 할 듯
           Tab(text: "팔로워 283"),
           Tab(text: "팔로잉 278"),
         ],
