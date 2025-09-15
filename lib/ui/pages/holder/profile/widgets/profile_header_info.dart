@@ -16,6 +16,7 @@ class ProfileHeaderInfo extends StatelessWidget {
         MStory(
           imageUrl: "https://cdn.pixabay.com/photo/2025/08/12/08/49/cat-9769723_1280.jpg",
           size: 100,
+          userId: 2, // TODO userId 필요
         ),
         ProfileHeaderInfoRow(),
       ],

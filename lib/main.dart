@@ -6,6 +6,7 @@ import 'package:minigram/_core/util/m_date.dart';
 import 'package:minigram/m_route.dart';
 import 'package:minigram/ui/pages/abusereport/abuse_report_page.dart';
 import 'package:minigram/ui/pages/abusereport/complete/report_complete_page.dart';
+import 'package:minigram/ui/pages/abusereport/reason/abuse_report_reason_page.dart';
 import 'package:minigram/ui/pages/auth/join_page/email_page.dart';
 import 'package:minigram/ui/pages/auth/join_page/password_page.dart';
 import 'package:minigram/ui/pages/auth/join_page/username_page.dart';
@@ -17,6 +18,7 @@ import 'package:minigram/ui/pages/holder/profile/edit/profile_edit_birth_date_pa
 import 'package:minigram/ui/pages/holder/profile/edit/profile_edit_gender_page.dart';
 import 'package:minigram/ui/pages/holder/profile/edit/profile_edit_name_page.dart';
 import 'package:minigram/ui/pages/holder/profile/edit/profile_edit_page.dart';
+import 'package:minigram/ui/pages/holder/profile/profile_page.dart';
 import 'package:minigram/ui/pages/holder/profile/setting/profile_setting_page.dart';
 import 'package:minigram/ui/pages/notification/notification_page.dart';
 
@@ -49,7 +51,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: mTheme(),
-      home: const MainHolder(),
+      home: const ProfilePage(),
       routes: {
         MRoute.mainHolder: (context) => const MainHolder(),
         MRoute.joinEmail: (context) => const EmailPage(),
@@ -67,6 +69,7 @@ class MyApp extends StatelessWidget {
         MRoute.abuseReport: (context) => const AbuseReportPage(),
         MRoute.reportComplete: (context) => ReportCompletePage(),
         MRoute.notification: (context) => const NotificationPage(),
+        MRoute.reportReason: (context) => AbuseReportReasonPage(),
       },
     );
   }

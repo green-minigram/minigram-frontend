@@ -24,6 +24,7 @@ class PostFormHeader extends StatelessWidget {
             size: MSize.kStory.s,
             // imageUrl: profileImageUrl,
             isGradient: false,
+            userId: 2, // TODO userId 필요
           ),
           SizedBox(width: MSize.kGap.s),
 

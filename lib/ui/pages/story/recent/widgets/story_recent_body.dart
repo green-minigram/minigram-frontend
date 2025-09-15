@@ -1,77 +1,75 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/_core/util/m_date.dart';
+import 'package:minigram/ui/pages/story/recent/story_recent_vm.dart';
 import 'package:minigram/ui/pages/story/write/widget/story_preview.dart';
 import 'package:minigram/ui/widgets/m_bottom_sheet.dart';
 import 'package:minigram/ui/widgets/m_bottom_sheet_item.dart';
 import 'package:minigram/ui/widgets/m_button.dart';
 import 'package:minigram/ui/widgets/m_show_alert_dialog.dart';
 
-class StoryListBody extends StatefulWidget {
-  bool isOwner;
+class StoryRecentBody extends ConsumerStatefulWidget {
+  final int userId;
 
-  StoryListBody({
+  const StoryRecentBody({
     super.key,
-    this.isOwner = true,
+    required this.userId,
   });
 
   @override
-  State<StoryListBody> createState() => _StoryDetailBodyState();
+  ConsumerState<StoryRecentBody> createState() => _StoryResentBodyState();
 }
 
-class _StoryDetailBodyState extends State<StoryListBody> {
-  final List<String> videoUrls = [
-    "https://www.pexels.com/ko-kr/download/video/32332683/",
-    "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-    "https://www.pexels.com/ko-kr/download/video/32332683/",
-  ];
+class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
+  int currentIndex = 0; // 현재 스토리 인덱스
 
-  // 배경 영상
-  // StoryPreview(videoPath: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"),
-
-  int currentIndex = 0;
-
-  void _goToNextStory() {
-    if (currentIndex < videoUrls.length - 1) {
-      setState(() {
-        currentIndex++;
-      });
+  void _goToNextStory(int length) {
+    if (currentIndex < length - 1) {
+      setState(() => currentIndex++);
     } else {
-      // 마지막 스토리면 닫기
       Navigator.pop(context);
     }
   }
 
   void _goToPreviousStory() {
     if (currentIndex > 0) {
-      setState(() {
-        currentIndex--;
-      });
+      setState(() => currentIndex--);
     } else {
-      // 첫 번째 스토리에서 왼쪽 클릭 시 닫기
       Navigator.pop(context);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(storyRecentProvider(widget.userId));
+    final vm = ref.read(storyRecentProvider(widget.userId).notifier);
+
+    if (state == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    final storyItem = state.storyList[currentIndex]; // 현재 스토리 선택
+    final story = storyItem.story;
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Stack(
         children: [
-          // 배경 영상 (GestureDetector로 감싸기)
+          // 배경 영상
           GestureDetector(
             onTapUp: (details) {
               final screenWidth = MediaQuery.of(context).size.width;
               if (details.localPosition.dx < screenWidth / 2) {
                 _goToPreviousStory();
               } else {
-                _goToNextStory();
+                _goToNextStory(state.storyList.length);
               }
             },
             child: StoryPreview(
-              videoPath: videoUrls[currentIndex],
+              videoPath: story.videoUrl,
             ),
           ),
 
@@ -83,17 +81,21 @@ class _StoryDetailBodyState extends State<StoryListBody> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // 인디케이터 (스토리 진행바 위치)
+                // 인디케이터
                 Row(
                   children: List.generate(
-                    videoUrls.length.clamp(0, 5), // 최대 5개
+                    state.storyList.length.clamp(0, 5), // 인디케이터 수
                     (index) {
                       return Expanded(
                         child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: MSize.kGap.xxxxs),
+                          margin: EdgeInsets.symmetric(
+                            horizontal: MSize.kGap.xxxxs,
+                          ),
                           height: 3,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(MSize.kBorderRadius.xxs),
+                            borderRadius: BorderRadius.circular(
+                              MSize.kBorderRadius.xxs,
+                            ),
                             color: index == currentIndex
                                 ? MColor.kNormal.white
                                 : MColor.kNormal.white.withValues(alpha: 0.3),
@@ -105,24 +107,20 @@ class _StoryDetailBodyState extends State<StoryListBody> {
                 ),
                 SizedBox(height: MSize.kGap.s),
 
-                // 프로필 + 아이디 + 시간 + 버튼들
+                // 프로필 + 아이디 + 버튼들
                 Row(
                   children: [
-                    // 프로필 아바타
                     CircleAvatar(
                       radius: MSize.kBorderRadius.l,
-                      backgroundImage: NetworkImage(
-                        "https://picsum.photos/200/200",
-                      ),
+                      backgroundImage: NetworkImage(state.user.imgUrl),
                     ),
                     SizedBox(width: MSize.kGap.xs),
 
-                    // 아이디 + 시간
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "jo_messi_",
+                          state.user.username,
                           style: TextStyle(
                             color: MColor.kText.white,
                             fontSize: MSize.kFont.m,
@@ -130,7 +128,7 @@ class _StoryDetailBodyState extends State<StoryListBody> {
                           ),
                         ),
                         Text(
-                          "17시간 전",
+                          MDate.timeAgo(story.createdAt),
                           style: TextStyle(
                             color: Colors.white70,
                             fontSize: MSize.kFont.s,
@@ -140,26 +138,52 @@ class _StoryDetailBodyState extends State<StoryListBody> {
                     ),
                     Spacer(),
 
-                    // 팔로우 버튼 (outline 사용)
-                    MButton.outline(
-                      text: "팔로우",
-                      onPressed: () => print("팔로우 클릭"),
-                      borderSide: BorderSide(color: MColor.kIcon.white),
-                      textColor: MColor.kText.white,
-                      backgroundColor: Colors.transparent,
-                      padding: EdgeInsets.symmetric(horizontal: MSize.kGap.m, vertical: MSize.kGap.xs),
-                      textSize: MSize.kFont.s,
-                      borderRadius: 9,
-                    ),
+                    // 팔로우 버튼
+                    if (!storyItem.isOwner)
+                      MButton.outline(
+                        text: storyItem.isFollowing ? "팔로잉" : "팔로우",
+                        onPressed: () {
+                          print("팔로우 클릭: ${state.user.userId}");
+                          ref
+                              .read(storyRecentProvider(widget.userId).notifier)
+                              .toggleFollowDebounced(state.user.userId);
+                        },
+                        borderSide: storyItem.isFollowing
+                            ? BorderSide.none
+                            : BorderSide(color: MColor.kIcon.white),
+                        textColor: MColor.kText.white,
+                        backgroundColor: storyItem.isFollowing
+                            ? Colors.black.withValues(alpha: 0.3)
+                            : Colors.transparent,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: MSize.kGap.m,
+                          vertical: MSize.kGap.xs,
+                        ),
+                        textSize: MSize.kFont.s,
+                        borderRadius: 9,
+                      ),
                     SizedBox(width: MSize.kGap.xs),
 
                     // 좋아요 버튼
                     IconButton(
-                      onPressed: () => print("좋아요 클릭"),
-                      icon: Icon(Icons.favorite_border, color: MColor.kIcon.white),
+                      onPressed: () => {
+                        print("좋아요 클릭: ${story.storyId}"),
+                        ref
+                            .read(storyRecentProvider(widget.userId).notifier)
+                            .toggleLike(story.storyId),
+                        // storyId 활용 TODO 좋아요 통신 처리 해야함
+                      },
+                      icon: Icon(
+                        storyItem.isLiked
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: storyItem.isLiked
+                            ? MColor.kIcon.red
+                            : MColor.kIcon.white,
+                      ),
                       style: IconButton.styleFrom(
                         backgroundColor: Colors.transparent,
-                        shape: CircleBorder(),
+                        shape: const CircleBorder(),
                         fixedSize: Size(MSize.kIcon.xxl, MSize.kIcon.xxl),
                       ),
                     ),
@@ -170,26 +194,28 @@ class _StoryDetailBodyState extends State<StoryListBody> {
                       onPressed: () {
                         MBottomSheet.show(
                           context,
-                          items: widget.isOwner
+                          items: storyItem.isOwner
                               ? [
                                   MSheetItem(
                                     text: "삭제",
                                     icon: Icons.delete_outline,
                                     color: MColor.kIcon.red,
                                     onTap: () {
-                                      Navigator.pop(context); // 먼저 BottomSheet 닫기
+                                      Navigator.pop(context);
                                       MShowAlertDialog.show(
                                         context,
                                         title: "스토리를 삭제하시겠어요?",
                                         content: "삭제 선택 시 스토리가 영구적으로 삭제됩니다.",
                                         failText: "취소",
                                         successText: "삭제",
-                                        onFail: () {
-                                          print("삭제 취소됨");
-                                        },
-                                        onSuccess: () {
-                                          print("삭제 실행됨");
-                                          // 실제 삭제 로직 호출
+                                        onFail: () => print("삭제 취소됨"),
+                                        onSuccess: () async {
+                                          print("삭제 실행됨: ${story.storyId}");
+                                          await vm.deleteStory(story.storyId);
+
+                                          if (vm.state == null && Navigator.canPop(context)) {
+                                            Navigator.pop(context);
+                                          }
                                         },
                                       );
                                     },
@@ -198,10 +224,7 @@ class _StoryDetailBodyState extends State<StoryListBody> {
                                     text: "취소",
                                     icon: Icons.close,
                                     color: MColor.kIcon.normal,
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                      print("신고 클릭됨");
-                                    },
+                                    onTap: () => Navigator.pop(context),
                                   ),
                                 ]
                               : [
@@ -211,17 +234,22 @@ class _StoryDetailBodyState extends State<StoryListBody> {
                                     color: MColor.kIcon.red,
                                     onTap: () {
                                       Navigator.pop(context);
-                                      print("신고 클릭됨");
+                                      print("신고 실행됨: ${story.storyId}");
+                                      Navigator.pushNamed(
+                                        context,
+                                        "/abuse-report/reason",
+                                        arguments: {
+                                          "storyId": story.storyId,
+                                          "userId": state.user.userId,
+                                        },
+                                      );
                                     },
                                   ),
                                   MSheetItem(
                                     text: "취소",
                                     icon: Icons.close,
                                     color: MColor.kIcon.normal,
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                      print("신고 클릭됨");
-                                    },
+                                    onTap: () => Navigator.pop(context),
                                   ),
                                 ],
                         );
@@ -229,7 +257,7 @@ class _StoryDetailBodyState extends State<StoryListBody> {
                       icon: Icon(Icons.more_horiz, color: MColor.kIcon.white),
                       style: IconButton.styleFrom(
                         backgroundColor: Colors.transparent,
-                        shape: CircleBorder(),
+                        shape: const CircleBorder(),
                         fixedSize: Size(MSize.kIcon.xxl, MSize.kIcon.xxl),
                       ),
                     ),
@@ -241,7 +269,7 @@ class _StoryDetailBodyState extends State<StoryListBody> {
                       icon: Icon(Icons.close, color: MColor.kIcon.white),
                       style: IconButton.styleFrom(
                         backgroundColor: Colors.transparent,
-                        shape: CircleBorder(),
+                        shape: const CircleBorder(),
                         fixedSize: Size(MSize.kIcon.xxl, MSize.kIcon.xxl),
                       ),
                     ),

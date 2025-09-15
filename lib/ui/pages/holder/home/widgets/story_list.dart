@@ -48,6 +48,7 @@ class StoryList extends StatelessWidget {
                         size: MSize.kStory.m,
                         imageUrl: profileUrl,
                         isGradient: false,
+                        userId: 2, // TODO userId 필요
                       ),
                       Positioned(
                         bottom: 0,
@@ -91,6 +92,7 @@ class StoryList extends StatelessWidget {
                 child: MStory(
                   size: MSize.kStory.m,
                   imageUrl: profileUrl,
+                  userId: 2, // TODO userId 필요
                 ),
               ),
               SizedBox(height: MSize.kGap.xs),
