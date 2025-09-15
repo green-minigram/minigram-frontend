@@ -2,7 +2,7 @@ import 'package:minigram/data/model/user.dart';
 
 class Post {
   final int postId;
-  final String content;
+  final String? content;
   final bool isLiked;
   final bool isOwner;
   final int likesCount;
@@ -13,7 +13,7 @@ class Post {
 
   Post({
     required this.postId,
-    required this.content,
+    this.content,
     required this.isLiked,
     required this.isOwner,
     required this.likesCount,
@@ -32,7 +32,9 @@ class Post {
       commentCount = data['commentCount'],
       createdAt = data['createdAt'],
       user = User.fromMap(data['user']),
-      postImageList = (data['postImageList'] as List).map((data) => _PostImage.fromMap(data)).toList();
+      postImageList = (data['postImageList'] as List)
+          .map((data) => _PostImage.fromMap(data))
+          .toList();
 
   /// 좋아요 누를때 사용할 것 같음
   Post copyWith({
@@ -69,5 +71,7 @@ class _PostImage {
     required this.url,
   });
 
-  _PostImage.fromMap(Map<String, dynamic> data) : postImageId = data['postImageId'], url = data['url'];
+  _PostImage.fromMap(Map<String, dynamic> data)
+    : postImageId = data['postImageId'],
+      url = data['url'];
 }
