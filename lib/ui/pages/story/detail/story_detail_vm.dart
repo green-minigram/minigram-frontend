@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:minigram/data/model/story.dart';
 import 'package:minigram/data/model/user.dart';
+import 'package:minigram/data/repository/follow_repository.dart';
 import 'package:minigram/data/repository/story_repository.dart';
 
 final storyDetailProvider = AutoDisposeNotifierProvider.family<StoryDetailVM, StoryDetailModel?, int>(() {
@@ -61,9 +62,9 @@ class StoryDetailVM extends AutoDisposeFamilyNotifier<StoryDetailModel?, int> {
         Logger().d("팔로우 통신 시작 (userId=$userId)");
         Map<String, dynamic> data;
         if (newIsFollowing) {
-          data = await StoryRepository().follow(userId);
+          data = await FollowRepository().follow(userId);
         } else {
-          data = await StoryRepository().unfollow(userId);
+          data = await FollowRepository().unfollow(userId);
         }
         Logger().d("팔로우 통신 끝: $data");
       } catch (e) {

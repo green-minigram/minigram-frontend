@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:minigram/data/model/story.dart';
 import 'package:minigram/data/model/user.dart';
+import 'package:minigram/data/repository/follow_repository.dart';
 import 'package:minigram/data/repository/story_repository.dart';
 
 final storyRecentProvider = AutoDisposeNotifierProvider.family<StoryRecentVM, StoryResentModel?, int>(
@@ -50,10 +51,10 @@ class StoryRecentVM extends AutoDisposeFamilyNotifier<StoryResentModel?, int> {
       try {
         if (!isFollowing) {
           // 마지막 동작이 팔로우라면 → 등록
-          await StoryRepository().follow(userId);
+          await FollowRepository().follow(userId);
         } else {
           // 마지막 동작이 언팔로우라면 → 취소
-          await StoryRepository().unfollow(userId);
+          await FollowRepository().unfollow(userId);
         }
       } catch (e) {
         Logger().e("팔로우 통신 실패: $e");

@@ -114,8 +114,7 @@ class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
                       radius: MSize.kBorderRadius.l,
                       backgroundImage: state.user.profileImageUrl != null
                           ? NetworkImage(state.user.profileImageUrl!)
-                          : const AssetImage('assets/base_profile.png')
-                                as ImageProvider,
+                          : const AssetImage('assets/base_profile.png') as ImageProvider,
                     ),
                     SizedBox(width: MSize.kGap.xs),
 
@@ -151,9 +150,7 @@ class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
                               .read(storyRecentProvider(widget.userId).notifier)
                               .toggleFollowDebounced(state.user.userId);
                         },
-                        borderSide: storyItem.isFollowing
-                            ? BorderSide.none
-                            : BorderSide(color: MColor.kIcon.white),
+                        borderSide: storyItem.isFollowing ? BorderSide.none : BorderSide(color: MColor.kIcon.white),
                         textColor: MColor.kText.white,
                         backgroundColor: storyItem.isFollowing
                             ? Colors.black.withValues(alpha: 0.3)
@@ -171,18 +168,12 @@ class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
                     IconButton(
                       onPressed: () => {
                         print("좋아요 클릭: ${story.storyId}"),
-                        ref
-                            .read(storyRecentProvider(widget.userId).notifier)
-                            .toggleLike(story.storyId),
+                        ref.read(storyRecentProvider(widget.userId).notifier).toggleLike(story.storyId),
                         // storyId 활용 TODO 좋아요 통신 처리 해야함
                       },
                       icon: Icon(
-                        storyItem.isLiked
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        color: storyItem.isLiked
-                            ? MColor.kIcon.red
-                            : MColor.kIcon.white,
+                        storyItem.isLiked ? Icons.favorite : Icons.favorite_border,
+                        color: storyItem.isLiked ? MColor.kIcon.red : MColor.kIcon.white,
                       ),
                       style: IconButton.styleFrom(
                         backgroundColor: Colors.transparent,
@@ -216,8 +207,7 @@ class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
                                           print("삭제 실행됨: ${story.storyId}");
                                           await vm.deleteStory(story.storyId);
 
-                                          if (vm.state == null &&
-                                              Navigator.canPop(context)) {
+                                          if (vm.state == null && Navigator.canPop(context)) {
                                             Navigator.pop(context);
                                           }
                                         },
