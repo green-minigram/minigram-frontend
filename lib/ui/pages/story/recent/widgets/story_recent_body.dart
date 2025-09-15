@@ -112,7 +112,10 @@ class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
                   children: [
                     CircleAvatar(
                       radius: MSize.kBorderRadius.l,
-                      backgroundImage: NetworkImage(state.user.imgUrl),
+                      backgroundImage: (state.user.profileImageUrl != null)
+                          ? NetworkImage(state.user.profileImageUrl!)
+                          : AssetImage('assets/base_profile.png')
+                                as ImageProvider,
                     ),
                     SizedBox(width: MSize.kGap.xs),
 
@@ -213,7 +216,8 @@ class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
                                           print("삭제 실행됨: ${story.storyId}");
                                           await vm.deleteStory(story.storyId);
 
-                                          if (vm.state == null && Navigator.canPop(context)) {
+                                          if (vm.state == null &&
+                                              Navigator.canPop(context)) {
                                             Navigator.pop(context);
                                           }
                                         },
