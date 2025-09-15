@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_size.dart';
-import 'package:minigram/ui/pages/post/widgets/post_footer.dart';
-import 'package:minigram/ui/pages/post/widgets/post_header.dart';
-import 'package:minigram/ui/pages/post/widgets/post_image.dart';
 
 class PostDetailBody extends StatelessWidget {
   const PostDetailBody({super.key});
@@ -12,14 +9,14 @@ class PostDetailBody extends StatelessWidget {
     return ListView(
       children: [
         SizedBox(height: MSize.kGap.xs),
-        PostHeader(
-          showFollowButton: false,
-          isOwner: true,
-        ),
-        SizedBox(height: MSize.kGap.xs),
-        PostImage(),
-        SizedBox(height: MSize.kGap.xs),
-        PostFooter(),
+        // PostHeader(
+        //   showFollowButton: false,
+        //   isOwner: true,
+        // ),
+        // SizedBox(height: MSize.kGap.xs),
+        // PostImage(),
+        // SizedBox(height: MSize.kGap.xs),
+        // PostFooter(),
       ],
     );
   }

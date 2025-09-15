@@ -52,7 +52,9 @@ class _StoryDetailBodyState extends ConsumerState<StoryDetailBody> {
                   onTap: () {},
                   child: CircleAvatar(
                     radius: 20,
-                    backgroundImage: NetworkImage(user.imgUrl),
+                    backgroundImage: user.profileImageUrl != null && user.profileImageUrl!.isNotEmpty
+                        ? NetworkImage(user.profileImageUrl!)
+                        : const AssetImage('assets/images/base_profile.png') as ImageProvider,
                   ),
                 ),
                 SizedBox(width: MSize.kGap.xs),
