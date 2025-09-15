@@ -5,6 +5,7 @@ import 'package:minigram/ui/pages/holder/profile/profile_vm.dart';
 
 class ProfileHeaderInfoRow extends StatelessWidget {
   final ProfileModel profileModel;
+
   const ProfileHeaderInfoRow({
     super.key,
     required this.profileModel,
@@ -12,27 +13,28 @@ class ProfileHeaderInfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final profile = profileModel.profile;
-
     return Row(
       spacing: MSize.kGap.huge,
       children: [
         _buildInkWell(
           context: context,
-          count: profile.postCount,
+          count: profileModel.profile.postCount,
           text: "게시물",
+          profileModel: profileModel,
         ),
         _buildInkWell(
           context: context,
-          count: profile.followerCount,
+          count: profileModel.profile.followerCount,
           text: "팔로워",
           url: "follower",
+          profileModel: profileModel,
         ),
         _buildInkWell(
           context: context,
-          count: profile.followingCount,
+          count: profileModel.profile.followingCount,
           text: "팔로잉",
           url: "following",
+          profileModel: profileModel,
         ),
       ],
     );
@@ -42,6 +44,7 @@ class ProfileHeaderInfoRow extends StatelessWidget {
     required BuildContext context,
     required int count,
     required String text,
+    required ProfileModel profileModel,
     String url = "",
   }) {
     return InkWell(
@@ -62,14 +65,14 @@ class ProfileHeaderInfoRow extends StatelessWidget {
                       icon: Icon(Icons.arrow_back_ios),
                     ),
                     title: Text(text),
-                    bottom: const TabBar(
+                    bottom: TabBar(
                       tabs: [
-                        Tab(text: "팔로워"),
-                        Tab(text: "팔로잉"),
+                        Tab(text: "팔로워 ${profileModel.profile.followerCount}"),
+                        Tab(text: "팔로잉 ${profileModel.profile.followingCount}"),
                       ],
                     ),
                   ),
-                  body: const FollowBody(),
+                  body: FollowBody(userId: profileModel.profile.userId),
                 ),
               ),
             ),

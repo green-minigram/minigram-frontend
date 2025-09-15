@@ -7,7 +7,12 @@ import 'package:minigram/ui/pages/follow/following/following_card_item.dart';
 import 'package:minigram/ui/pages/follow/widgets/m_follow_search_bar.dart';
 
 class FollowingBody extends ConsumerStatefulWidget {
-  const FollowingBody({super.key});
+  final int userId;
+
+  FollowingBody({
+    super.key,
+    required this.userId,
+  });
 
   @override
   ConsumerState<FollowingBody> createState() => _FollowingBodyState();
@@ -28,8 +33,8 @@ class _FollowingBodyState extends ConsumerState<FollowingBody> {
 
   @override
   Widget build(BuildContext context) {
-    final userId =
-        2; // TODO: 현재 프로필 기준 userId 넘기기 -> 페이지 넘어올 때 userId 같이 받아와야 함
+    // TODO: 현재 프로필 기준 userId 넘기기 -> 페이지 넘어올 때 userId 같이 받아와야 함
+    final userId = widget.userId;
     final followingState = ref.watch(followingProvider(userId));
 
     if (followingState == null) {
