@@ -21,20 +21,14 @@ class StoryDetailBody extends ConsumerStatefulWidget {
 }
 
 class _StoryDetailBodyState extends ConsumerState<StoryDetailBody> {
-  bool isLiked = false; // 좋아요 로컬 상태
-  bool isFollowing = false; // 팔로우 로컬 상태
-
   @override
   Widget build(BuildContext context) {
     final storyState = ref.watch(storyDetailProvider(widget.storyId));
+    final vm = ref.read(storyDetailProvider(widget.storyId).notifier);
 
     if (storyState == null) {
       return const Center(child: CircularProgressIndicator());
     }
-
-    // 최초 빌드 시 provider 값으로 초기화
-    isLiked = storyState.isLiked;
-    isFollowing = storyState.isFollowing;
 
     final user = storyState.user;
     final story = storyState.story;
@@ -91,18 +85,13 @@ class _StoryDetailBodyState extends ConsumerState<StoryDetailBody> {
                 // 팔로우 버튼 (isOwner == false일 때만 보임)
                 if (!storyState.isOwner)
                   MButton.outline(
-                    text: isFollowing ? "팔로잉" : "팔로우",
+                    text: storyState.isFollowing ? "팔로잉" : "팔로우",
                     onPressed: () {
-                      setState(() {
-                        isFollowing = !isFollowing;
-                      });
-                      // TODO 여기다가 팔로우 팔로잉 통신
+                      vm.toggleFollow(storyState.user.userId);
                     },
-                    borderSide: BorderSide(
-                      color: isFollowing ? Colors.transparent : MColor.kIcon.white,
-                    ),
-                    textColor: isFollowing ? MColor.kText.white : MColor.kText.white,
-                    backgroundColor: isFollowing ? Colors.black.withValues(alpha: 0.3) : Colors.transparent,
+                    borderSide: storyState.isFollowing ? BorderSide.none : BorderSide(color: MColor.kIcon.white),
+                    textColor: MColor.kText.white,
+                    backgroundColor: storyState.isFollowing ? Colors.black.withValues(alpha: 0.3) : Colors.transparent,
                     padding: EdgeInsets.symmetric(
                       horizontal: MSize.kGap.m,
                       vertical: MSize.kGap.xs,
@@ -115,14 +104,11 @@ class _StoryDetailBodyState extends ConsumerState<StoryDetailBody> {
                 // 좋아요 버튼 (UI 전용 토글)
                 IconButton(
                   onPressed: () {
-                    setState(() {
-                      isLiked = !isLiked; // 색상만 토글
-                    });
-                    // TODO 여기다가 좋아요 통신
+                    vm.toggleLike(storyState.story.storyId);
                   },
                   icon: Icon(
-                    isLiked ? Icons.favorite : Icons.favorite_border,
-                    color: isLiked ? MColor.kButton.like : MColor.kIcon.white,
+                    storyState.isLiked ? Icons.favorite : Icons.favorite_border,
+                    color: storyState.isLiked ? MColor.kButton.like : MColor.kIcon.white,
                   ),
                   style: IconButton.styleFrom(
                     backgroundColor: Colors.transparent,
@@ -155,11 +141,8 @@ class _StoryDetailBodyState extends ConsumerState<StoryDetailBody> {
                                       print("삭제 취소됨");
                                     },
                                     onSuccess: () {
-                                      final vm = ref.read(storyDetailProvider(widget.storyId).notifier);
-                                      vm.deleteStory(widget.storyId);
-                                      // TODO 스토리 목록에서 지금 스토리 없애기 나중에 스토리 목록 만들고 나서 추가
-                                      //  ref.read(storyListProvider.notifier).removeStory(widget.storyId);
                                       Navigator.pop(context);
+                                      // TODO profile에 스토리 목록에 접근해서 해당 스토리 제거 해야 함.
                                     },
                                   );
                                 },

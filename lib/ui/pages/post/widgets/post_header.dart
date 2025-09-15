@@ -29,6 +29,7 @@ class PostHeader extends StatelessWidget {
           // 프로필 이미지 자리
           MStory(
             size: MSize.kStory.s,
+            userId: 2, // TODO userId 필요
           ),
           SizedBox(width: MSize.kGap.s),
 

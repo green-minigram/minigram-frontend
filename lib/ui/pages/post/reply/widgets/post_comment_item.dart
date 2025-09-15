@@ -39,6 +39,7 @@ class PostCommentItem extends StatelessWidget {
             size: isReply ? MSize.kStory.s * 0.8 : MSize.kStory.s,
             imageUrl: author["profileImageUrl"],
             isGradient: false,
+            userId: 2, // TODO userId 필요
           ),
           SizedBox(width: MSize.kGap.xs),
 
