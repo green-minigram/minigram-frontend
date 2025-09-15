@@ -96,4 +96,30 @@ class FollowRepository {
       return {"status": 500, "msg": "통신 실패"};
     }
   }
+
+  // 팔로우 등록
+  Future<Map<String, dynamic>> follow(int userId) async {
+    // final response = await dio.post("/s/api/users/$userId/follow");
+    // return response.data;
+
+    // Mock
+    return {
+      "status": 200,
+      "msg": "성공",
+      "body": {"followId": 29, "followerId": 2, "followeeId": userId},
+    };
+  }
+
+  // 팔로우 취소
+  Future<Map<String, dynamic>> unfollow(int userId) async {
+    // final response = await dio.delete("/s/api/users/$userId/follow");
+    // return response.data;
+
+    // Mock
+    return {
+      "status": 200,
+      "msg": "성공",
+      "body": {"followeeId": userId, "message": "해당 유저에 대한 팔로우를 취소했습니다"},
+    };
+  }
 }
