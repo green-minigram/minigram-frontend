@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:minigram/data/model/story.dart';
@@ -9,6 +11,8 @@ final storyDetailProvider = AutoDisposeNotifierProvider.family<StoryDetailVM, St
 });
 
 class StoryDetailVM extends AutoDisposeFamilyNotifier<StoryDetailModel?, int> {
+  Timer? _likeDebounce; // 좋아요 타이머
+  Timer? _followDebounce; // 팔로우 타이머
   @override
   StoryDetailModel? build(int storyId) {
     init(storyId);
@@ -32,16 +36,40 @@ class StoryDetailVM extends AutoDisposeFamilyNotifier<StoryDetailModel?, int> {
     state = StoryDetailModel.fromMap(body);
   }
 
-  // 삭제
-  Future<void> deleteStory(int storyId) async {
-    final data = await StoryRepository().delete(storyId);
-    if (data["status"] == 200) {
-      // 삭제 성공 시 상태 null로 바꿔서 UI에서 스토리 사라지도록
-      state = null;
-      Logger().d("스토리 삭제 성공: $data");
-    } else {
-      Logger().e("스토리 삭제 실패: ${data["msg"]}");
-    }
+  // 팔로우 토글
+  Future<void> toggleFollow(int userId) async {
+    if (state == null) return;
+
+    final prevState = state!;
+    final newIsFollowing = !prevState.isFollowing;
+
+    // 1) UI 먼저 토글
+    state = StoryDetailModel(
+      user: prevState.user,
+      story: prevState.story,
+      isFollowing: newIsFollowing,
+      isOwner: prevState.isOwner,
+      isLiked: prevState.isLiked,
+      likeCount: prevState.likeCount,
+    );
+    Logger().d("팔로우 상태 변경 (UI 반영): $newIsFollowing");
+
+    // 2) 디바운스 → 마지막 액션만 서버로 반영
+    _followDebounce?.cancel();
+    _followDebounce = Timer(const Duration(milliseconds: 500), () async {
+      try {
+        Logger().d("팔로우 통신 시작 (userId=$userId)");
+        Map<String, dynamic> data;
+        if (newIsFollowing) {
+          data = await StoryRepository().follow(userId);
+        } else {
+          data = await StoryRepository().unfollow(userId);
+        }
+        Logger().d("팔로우 통신 끝: $data");
+      } catch (e) {
+        Logger().e("팔로우 통신 오류: $e");
+      }
+    });
   }
 }
 
