@@ -5,7 +5,7 @@ import 'package:minigram/ui/pages/story/recent/story_recent_page.dart';
 
 class MStory extends StatelessWidget {
   final double size;
-  final String imageUrl;
+  final String? imageUrl;
   final bool isGradient;
   final int userId;
 
@@ -13,7 +13,8 @@ class MStory extends StatelessWidget {
     super.key,
     required this.size,
     required this.userId,
-    this.imageUrl = 'https://cdn.pixabay.com/photo/2025/08/12/08/49/cat-9769723_1280.jpg',
+    this.imageUrl =
+        'https://cdn.pixabay.com/photo/2025/08/12/08/49/cat-9769723_1280.jpg',
     this.isGradient = true,
   });
 
@@ -59,7 +60,10 @@ class MStory extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.all(MSize.kGap.xxs),
               child: CircleAvatar(
-                backgroundImage: NetworkImage(imageUrl),
+                backgroundImage: imageUrl != null && imageUrl!.isNotEmpty
+                    ? NetworkImage(imageUrl!)
+                    : const AssetImage('assets/images/base_profile.png')
+                          as ImageProvider,
                 radius: size / 2,
               ),
             ),

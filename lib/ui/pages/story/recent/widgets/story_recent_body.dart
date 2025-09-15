@@ -45,6 +45,7 @@ class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(storyRecentProvider(widget.userId));
+    final vm = ref.read(storyRecentProvider(widget.userId).notifier);
 
     if (state == null) {
       return const Center(child: CircularProgressIndicator());
@@ -87,10 +88,14 @@ class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
                     (index) {
                       return Expanded(
                         child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: MSize.kGap.xxxxs),
+                          margin: EdgeInsets.symmetric(
+                            horizontal: MSize.kGap.xxxxs,
+                          ),
                           height: 3,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(MSize.kBorderRadius.xxs),
+                            borderRadius: BorderRadius.circular(
+                              MSize.kBorderRadius.xxs,
+                            ),
                             color: index == currentIndex
                                 ? MColor.kNormal.white
                                 : MColor.kNormal.white.withValues(alpha: 0.3),
@@ -139,8 +144,13 @@ class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
                         text: storyItem.isFollowing ? "팔로잉" : "팔로우",
                         onPressed: () {
                           print("팔로우 클릭: ${state.user.userId}");
+                          ref
+                              .read(storyRecentProvider(widget.userId).notifier)
+                              .toggleFollowDebounced(state.user.userId);
                         },
-                        borderSide: storyItem.isFollowing ? BorderSide.none : BorderSide(color: MColor.kIcon.white),
+                        borderSide: storyItem.isFollowing
+                            ? BorderSide.none
+                            : BorderSide(color: MColor.kIcon.white),
                         textColor: MColor.kText.white,
                         backgroundColor: storyItem.isFollowing
                             ? Colors.black.withValues(alpha: 0.3)
@@ -158,10 +168,18 @@ class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
                     IconButton(
                       onPressed: () => {
                         print("좋아요 클릭: ${story.storyId}"),
+                        ref
+                            .read(storyRecentProvider(widget.userId).notifier)
+                            .toggleLike(story.storyId),
+                        // storyId 활용 TODO 좋아요 통신 처리 해야함
                       },
                       icon: Icon(
-                        storyItem.isLiked ? Icons.favorite : Icons.favorite_border,
-                        color: storyItem.isLiked ? MColor.kIcon.red : MColor.kIcon.white,
+                        storyItem.isLiked
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: storyItem.isLiked
+                            ? MColor.kIcon.red
+                            : MColor.kIcon.white,
                       ),
                       style: IconButton.styleFrom(
                         backgroundColor: Colors.transparent,
@@ -191,9 +209,14 @@ class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
                                         failText: "취소",
                                         successText: "삭제",
                                         onFail: () => print("삭제 취소됨"),
-                                        onSuccess: () => {
-                                          print("삭제 실행됨: ${story.storyId}"),
-                                        }, //TODO 스토리 삭제
+                                        onSuccess: () async {
+                                          print("삭제 실행됨: ${story.storyId}");
+                                          await vm.deleteStory(story.storyId);
+
+                                          if (vm.state == null && Navigator.canPop(context)) {
+                                            Navigator.pop(context);
+                                          }
+                                        },
                                       );
                                     },
                                   ),
