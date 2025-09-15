@@ -11,7 +11,6 @@ import 'package:minigram/ui/pages/auth/join_page/email_page.dart';
 import 'package:minigram/ui/pages/auth/join_page/password_page.dart';
 import 'package:minigram/ui/pages/auth/join_page/username_page.dart';
 import 'package:minigram/ui/pages/auth/login_page/login_page.dart';
-import 'package:minigram/ui/pages/follow/follow_page.dart';
 import 'package:minigram/ui/pages/holder/main_holder.dart';
 import 'package:minigram/ui/pages/holder/profile/edit/profile_edit_bio_page.dart';
 import 'package:minigram/ui/pages/holder/profile/edit/profile_edit_birth_date_page.dart';
@@ -64,8 +63,8 @@ class MyApp extends StatelessWidget {
             const ProfileEditBirthDatePage(),
         MRoute.profileEditGender: (context) => ProfileEditGenderPage(),
         MRoute.profileSetting: (context) => ProfileSettingPage(),
-        MRoute.follower: (context) => const FollowPage(),
-        MRoute.following: (context) => const FollowPage(),
+        // MRoute.follower: (context) => const FollowPage(),
+        // MRoute.following: (context) => const FollowPage(),
         MRoute.abuseReport: (context) => const AbuseReportPage(),
         MRoute.reportComplete: (context) => ReportCompletePage(),
         MRoute.notification: (context) => const NotificationPage(),

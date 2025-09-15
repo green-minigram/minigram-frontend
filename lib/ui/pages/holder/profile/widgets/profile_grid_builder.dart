@@ -1,60 +1,96 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/ui/pages/holder/profile/profile_vm.dart';
 import 'package:minigram/ui/pages/post/detail/post_detail_page.dart';
 import 'package:minigram/ui/pages/story/detail/story_detail_page.dart';
 import 'package:minigram/ui/widgets/m_grid_item.dart';
 
 class ProfileGridBuilder extends StatelessWidget {
   final bool isStoryTab;
+  final ProfileModel profileModel;
 
   const ProfileGridBuilder({
     super.key,
     this.isStoryTab = false,
+    required this.profileModel,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        childAspectRatio: MSize.kRatio.aspect34,
-        crossAxisSpacing: MSize.kGap.xxxs,
-        mainAxisSpacing: MSize.kGap.xxxs,
-      ),
-      itemCount: 9,
-      itemBuilder: (context, index) {
-        final imageUrl =
-            "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg";
+    final storyList = profileModel.storyListObject.storyList;
+    final postList = profileModel.postListObject.postList;
 
-        if (index == 8) {
-          return _AddBox();
-        } else {
-          return MGridItem(
-            imageUrl: imageUrl,
-            onTap: () {
-              if (isStoryTab) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => StoryDetailPage(storyId: 1), // TODO id 할당
-                  ),
-                );
-              } else {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => PostDetailPage(
-                      postId: 1,
-                    ),
-                  ),
-                );
-              }
-            },
-          );
-        }
-      },
-    );
+    if (isStoryTab) {
+      return CustomScrollView(
+        slivers: [
+          SliverGrid(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                if (index == storyList.length) {
+                  return _AddBox();
+                } else {
+                  final item = storyList[index];
+                  return MGridItem(
+                    imageUrl: item.thumbnailUrl,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              StoryDetailPage(storyId: item.storyId),
+                        ),
+                      );
+                    },
+                  );
+                }
+              },
+              childCount: storyList.length + 1,
+            ),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              childAspectRatio: MSize.kRatio.aspect34,
+              crossAxisSpacing: MSize.kGap.xxxs,
+              mainAxisSpacing: MSize.kGap.xxxs,
+            ),
+          ),
+        ],
+      );
+    } else {
+      return CustomScrollView(
+        slivers: [
+          SliverGrid(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                if (index == postList.length) {
+                  return _AddBox();
+                } else {
+                  final item = postList[index];
+                  return MGridItem(
+                    imageUrl: item.postImageUrl,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => PostDetailPage(postId: item.postId),
+                        ),
+                      );
+                    },
+                  );
+                }
+              },
+              childCount: postList.length + 1,
+            ),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              childAspectRatio: MSize.kRatio.aspect34,
+              crossAxisSpacing: MSize.kGap.xxxs,
+              mainAxisSpacing: MSize.kGap.xxxs,
+            ),
+          ),
+        ],
+      );
+    }
   }
 
   Material _AddBox() {
