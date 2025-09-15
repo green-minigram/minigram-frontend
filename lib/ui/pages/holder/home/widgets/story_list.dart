@@ -31,7 +31,7 @@ class StoryList extends ConsumerWidget {
             itemCount: model!.storyObject.previewList.length,
             separatorBuilder: (_, __) => SizedBox(width: MSize.kGap.s),
             itemBuilder: (context, index) {
-              final story = model!.storyObject.previewList[index];
+              final story = model.storyObject.previewList[index];
               final username = story.username;
               final profileUrl = story.profileImageUrl;
 
@@ -49,7 +49,7 @@ class StoryList extends ConsumerWidget {
                             size: MSize.kStory.m,
                             imageUrl: profileUrl,
                             isGradient: false,
-                            userId: 2,
+                            userId: story.userId,
                           ),
                           Positioned(
                             bottom: 0,
@@ -93,7 +93,7 @@ class StoryList extends ConsumerWidget {
                     child: MStory(
                       size: MSize.kStory.m,
                       imageUrl: profileUrl,
-                      userId: 2,
+                      userId: story.userId,
                     ),
                   ),
                   SizedBox(height: MSize.kGap.xs),

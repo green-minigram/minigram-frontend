@@ -30,7 +30,7 @@ class StoryRepository {
           "createdAt": "2025-09-08T03:06:29",
         },
         "isFollowing": false,
-        "isOwner": true,
+        "isOwner": false,
         "isLiked": true,
         "likeCount": 5,
       },
@@ -69,12 +69,31 @@ class StoryRepository {
     return responseBody;
   }
 
+  /// 프리뷰 스토리 조회
+  Future<Map<String, dynamic>> getPreviewList({int page = 0}) async {
+    // Response response = await dio.get("/s/api/feed/story-previews", queryParameters: {"page": page});
+    // final responseBody = response.data;
+    // Logger().d(responseBody);
+    // return responseBody;
+
+    // 1. 통신 코드
+    final response = await Future.delayed(
+      Duration(seconds: 2),
+      () {
+        return _mockPreviewListResponse;
+      },
+    );
+
+    // 2. 리턴
+    return response;
+  }
+
   /// 스토리 최근 5건 조회
   Future<Map<String, dynamic>> getRecent(int userId) async {
     Logger().d('getRecent 호출');
     // 실제 통신
-    // final response = await dio.delete(
-    //   /s/api/users/$userId/stories
+    // final response = await dio.get(
+    //   /s/api/feed/users/$userId/stories
     // );
     // if (response.statusCode == 200) {
     //   return response.data as Map<String, dynamic>;
@@ -176,25 +195,6 @@ class StoryRepository {
       "msg": "성공",
       "body": {"followeeId": userId, "message": "해당 유저에 대한 팔로우를 취소했습니다"},
     };
-  }
-
-  /// 프리뷰 스토리 조회
-  Future<Map<String, dynamic>> getPreviewList({int page = 0}) async {
-    // Response response = await dio.get("/s/api/feed/story-previews", queryParameters: {"page": page});
-    // final responseBody = response.data;
-    // Logger().d(responseBody);
-    // return responseBody;
-
-    // 1. 통신 코드
-    final response = await Future.delayed(
-      Duration(seconds: 2),
-      () {
-        return _mockPreviewListResponse;
-      },
-    );
-
-    // 2. 리턴
-    return response;
   }
 }
 

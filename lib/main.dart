@@ -60,7 +60,8 @@ class MyApp extends StatelessWidget {
         MRoute.profileEdit: (context) => const ProfileEditPage(),
         MRoute.profileEditName: (context) => const ProfileEditNamePage(),
         MRoute.profileEditBio: (context) => const ProfileEditBioPage(),
-        MRoute.profileEditBirthDate: (context) => const ProfileEditBirthDatePage(),
+        MRoute.profileEditBirthDate: (context) =>
+            const ProfileEditBirthDatePage(),
         MRoute.profileEditGender: (context) => ProfileEditGenderPage(),
         MRoute.profileSetting: (context) => ProfileSettingPage(),
         MRoute.follower: (context) => const FollowPage(),
