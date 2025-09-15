@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/ui/pages/holder/search/search_fm.dart';
 import 'package:minigram/ui/pages/holder/search/search_vm.dart';
 import 'package:minigram/ui/widgets/m_grid_item.dart';
 
@@ -10,8 +11,9 @@ class PostGridSliver extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     SearchModel? model = ref.watch(searchProvider);
+    SearchFormModel formModel = ref.watch(searchFormProvider);
 
-    if (model == null) {
+    if (model == null || formModel.isLoading) {
       return SliverFillRemaining(
         hasScrollBody: false,
         child: Center(

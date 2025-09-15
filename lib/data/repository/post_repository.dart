@@ -22,7 +22,16 @@ class PostRepository {
     int page = 0,
     String keyword = "",
   }) async {
-    // Response response = await dio.get("/s/api/search/posts", queryParameters: {"page": page, "keyword":keword});
+    print(keyword);
+    // final query = {
+    //   "page": page,
+    //   if (keyword.isNotEmpty) "keyword": keyword, // 빈 문자열이면 아예 제외됨
+    // };
+
+    // Response response = await dio.get(
+    //   "/s/api/search/posts",
+    //   queryParameters: query,
+    // );
     // final responseBody = response.data;
     // Logger().d(responseBody);
     // return responseBody;

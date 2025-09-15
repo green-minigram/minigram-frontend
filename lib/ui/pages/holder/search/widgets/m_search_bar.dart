@@ -14,44 +14,37 @@ class MSearchBar extends ConsumerStatefulWidget {
 }
 
 class _MSearchBarState extends ConsumerState<MSearchBar> {
-  late FocusNode _focusNode;
-
   @override
   void initState() {
     super.initState();
-    _focusNode = FocusNode();
-    _focusNode.addListener(_onFocusChange);
+    final SearchFM fm = ref.read(searchFormProvider.notifier);
+    fm.focusNode.addListener(_onFocusChange);
   }
 
   @override
   void dispose() {
-    _focusNode.removeListener(_onFocusChange);
-    _focusNode.dispose();
+    final SearchFM fm = ref.read(searchFormProvider.notifier);
+    fm.focusNode.removeListener(_onFocusChange);
     super.dispose();
   }
 
   void _onFocusChange() {
     final SearchFM fm = ref.read(searchFormProvider.notifier);
-    fm.searchBarFocused(_focusNode.hasFocus);
+    fm.searchBarFocused(fm.focusNode.hasFocus);
   }
 
   void _onSubmitted(String value) {
-    if (value.trim().isNotEmpty) {
-      final SearchFM fm = ref.read(searchFormProvider.notifier);
-      fm.submitSearch();
-      _focusNode.unfocus();
-    }
+    final SearchFM fm = ref.read(searchFormProvider.notifier);
+    fm.submitSearch(value: value);
   }
 
   void _onTap() {
-    if (!_focusNode.hasFocus) {
-      _focusNode.requestFocus();
-    }
+    final SearchFM fm = ref.read(searchFormProvider.notifier);
+    fm.requestFocus();
   }
 
   void _onCancel() {
     final SearchFM fm = ref.read(searchFormProvider.notifier);
-    _focusNode.unfocus();
     fm.clearSearch();
   }
 
@@ -75,7 +68,7 @@ class _MSearchBarState extends ConsumerState<MSearchBar> {
                 child: TextField(
                   controller: fm.textEditingController,
                   onChanged: fm.keword,
-                  focusNode: _focusNode,
+                  focusNode: fm.focusNode,
                   onSubmitted: _onSubmitted,
                   onTap: _onTap,
                   style: TextStyle(

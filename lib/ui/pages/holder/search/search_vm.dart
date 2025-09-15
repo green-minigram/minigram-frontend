@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:minigram/data/repository/post_repository.dart';
 import 'package:minigram/main.dart';
+import 'package:minigram/ui/pages/holder/search/search_fm.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// 1. 창고 관리자
@@ -29,10 +30,10 @@ class SearchVM extends Notifier<SearchModel?> {
     return null;
   }
 
-  Future<void> init({int page = 0}) async {
+  Future<void> init({int page = 0, String keyword = ""}) async {
     /// 게시글 목록 조회
     Map<String, dynamic> searchResultPostBody = await PostRepository()
-        .getSearchResultList(page: page);
+        .getSearchResultList(page: page, keyword: keyword);
     if (searchResultPostBody["status"] != 200) {
       ScaffoldMessenger.of(mContext).showSnackBar(
         SnackBar(
@@ -60,6 +61,7 @@ class SearchVM extends Notifier<SearchModel?> {
 
     Map<String, dynamic> body = await PostRepository().getSearchResultList(
       page: prevModel.postObject.next,
+      keyword: ref.read(searchFormProvider).currentSearchKeyword,
     );
     if (body["status"] != 200) {
       ScaffoldMessenger.of(mContext).showSnackBar(
