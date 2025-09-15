@@ -138,7 +138,10 @@ class _StoryDetailBodyState extends ConsumerState<StoryDetailBody> {
                                     onFail: () {
                                       print("삭제 취소됨");
                                     },
-                                    onSuccess: () {},
+                                    onSuccess: () {
+                                      Navigator.pop(context);
+                                      // TODO profile에 스토리 목록에 접근해서 해당 스토리 제거 해야 함.
+                                    },
                                   );
                                 },
                               ),

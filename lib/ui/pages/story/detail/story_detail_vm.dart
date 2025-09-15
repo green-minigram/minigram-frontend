@@ -103,6 +103,17 @@ class StoryDetailVM extends AutoDisposeFamilyNotifier<StoryDetailModel?, int> {
       }
     });
   }
+
+  // 삭제
+  Future<void> deleteStory(int storyId) async {
+    final data = await StoryRepository().delete(storyId);
+    if (data["status"] == 200) {
+      state = null;
+      Logger().d("스토리 삭제 성공: $data");
+    } else {
+      Logger().e("스토리 삭제 실패: ${data["msg"]}");
+    }
+  }
 }
 
 class StoryDetailModel {
