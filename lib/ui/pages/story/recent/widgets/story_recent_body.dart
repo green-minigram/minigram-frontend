@@ -167,6 +167,10 @@ class _StoryResentBodyState extends ConsumerState<StoryRecentBody> {
                     IconButton(
                       onPressed: () => {
                         print("좋아요 클릭: ${story.storyId}"),
+                        ref
+                            .read(storyRecentProvider(widget.userId).notifier)
+                            .toggleLike(story.storyId),
+                        // storyId 활용 TODO 좋아요 통신 처리 해야함
                       },
                       icon: Icon(
                         storyItem.isLiked
