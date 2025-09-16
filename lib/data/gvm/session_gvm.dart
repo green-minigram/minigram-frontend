@@ -58,7 +58,11 @@ class SessionGVM extends Notifier<SessionModel> {
       }
 
       // 5) 성공 → 로그인으로 스택 초기화 이동
-      Navigator.pushNamedAndRemoveUntil(mContext, MRoute.login, (route) => false);
+      Navigator.pushNamedAndRemoveUntil(
+        mContext,
+        MRoute.login,
+        (route) => false,
+      );
     } catch (e) {
       ScaffoldMessenger.of(mContext).showSnackBar(
         const SnackBar(content: Text("일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.")),
@@ -105,10 +109,14 @@ class SessionGVM extends Notifier<SessionModel> {
     // 5. dio의 header에 토큰 세팅 [Bearer <- 이거 들어가 있음]
     dio.options.headers["Authorization"] = user.accessToken;
 
-    Logger().d(state.user);
+    Logger().d("로그인 성공");
 
     // 6. 게시글 목록 페이지 이동
-    Navigator.pushNamedAndRemoveUntil(mContext, MRoute.mainHolder, (route) => false);
+    Navigator.pushNamedAndRemoveUntil(
+      mContext,
+      MRoute.mainHolder,
+      (route) => false,
+    );
   }
 
   Future<void> logout() async {
@@ -121,6 +129,8 @@ class SessionGVM extends Notifier<SessionModel> {
     // 3. dio 세팅 제거
     dio.options.headers.remove("Authorization");
 
+    Logger().d("로그아웃 성공");
+
     // 4. login 페이지 이동
     Navigator.pushNamedAndRemoveUntil(mContext, MRoute.login, (route) => false);
   }
@@ -130,7 +140,10 @@ class SessionGVM extends Notifier<SessionModel> {
     String? accessToken = await secureStorage.read(key: "accessToken");
 
     if (accessToken == null) {
-      Navigator.pushReplacement(mContext, MaterialPageRoute(builder: (_) => LoginPage()));
+      Navigator.pushReplacement(
+        mContext,
+        MaterialPageRoute(builder: (_) => LoginPage()),
+      );
       return;
     }
 
@@ -141,7 +154,10 @@ class SessionGVM extends Notifier<SessionModel> {
       ScaffoldMessenger.of(mContext).showSnackBar(
         SnackBar(content: Text("${body["errorMessage"]}")),
       );
-      Navigator.pushReplacement(mContext, MaterialPageRoute(builder: (_) => LoginPage()));
+      Navigator.pushReplacement(
+        mContext,
+        MaterialPageRoute(builder: (_) => LoginPage()),
+      );
       return;
     }
 
@@ -155,7 +171,11 @@ class SessionGVM extends Notifier<SessionModel> {
     dio.options.headers["Authorization"] = user.accessToken;
 
     // 6. 게시글 목록 페이지 이동
-    Navigator.pushNamedAndRemoveUntil(mContext, MRoute.mainHolder, (route) => route.isFirst);
+    Navigator.pushNamedAndRemoveUntil(
+      mContext,
+      MRoute.mainHolder,
+      (route) => route.isFirst,
+    );
   }
 }
 

@@ -27,9 +27,7 @@ class ProfilePage extends ConsumerWidget {
     } else {
       return Scaffold(
         appBar: _appBar(context, profileModel),
-        body: ProfileBody(
-          profileModel: profileModel,
-        ),
+        body: ProfileBody(userId: targetUserId),
       );
     }
   }

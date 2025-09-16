@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/data/model/post.dart';
+import 'package:minigram/ui/pages/holder/home/home_vm.dart';
 import 'package:minigram/ui/widgets/m_bottom_sheet.dart';
 import 'package:minigram/ui/widgets/m_bottom_sheet_item.dart';
 import 'package:minigram/ui/widgets/m_button.dart';
 import 'package:minigram/ui/widgets/m_show_alert_dialog.dart';
 import 'package:minigram/ui/widgets/m_story.dart';
 
-class PostHeader extends StatelessWidget {
+class PostHeader extends ConsumerWidget {
   final bool showFollowButton;
-  bool isOwner;
+  final bool isOwner;
   final Post post;
 
   PostHeader({
@@ -21,7 +23,24 @@ class PostHeader extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    HomeVM vm = ref.read(homeProvider.notifier);
+    // 팔로잉 여부만 선택적으로 구독하여 최신 상태를 그리게 함
+    final isFollowing = ref.watch(
+      homeProvider.select((m) {
+        try {
+          final posts = m?.postObject.postList ?? const [];
+          final p = posts.firstWhere(
+            (e) => e.user.userId == post.user.userId,
+            orElse: () => post,
+          );
+          return p.user.isFollowing == true;
+        } catch (_) {
+          return post.user.isFollowing == true;
+        }
+      }),
+    );
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: MSize.kGap.l),
       child: Row(
@@ -29,7 +48,7 @@ class PostHeader extends StatelessWidget {
           // 프로필 이미지 자리
           MStory(
             size: MSize.kStory.s,
-            userId: 2, // TODO userId 필요
+            userId: post.user.userId, // TODO userId 필요
           ),
           SizedBox(width: MSize.kGap.s),
 
@@ -49,8 +68,9 @@ class PostHeader extends StatelessWidget {
             MButton(
               onPressed: () {
                 print("팔로우 버튼 클릭됨");
+                vm.toggleFollow(post.user.userId);
               },
-              text: "팔로우",
+              text: isFollowing ? "팔로잉" : "팔로우",
               textColor: MColor.kText.normal,
               borderRadius: MSize.kBorderRadius.s,
               backgroundColor: MColor.kButton.disabled,

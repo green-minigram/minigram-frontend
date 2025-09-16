@@ -101,6 +101,48 @@ class UserRepository {
     // 2. 리턴
     return response;
   }
+
+  Future<Map<String, dynamic>> getUserProfilePostList({
+    required int userId,
+    required int page,
+  }) async {
+    // Response response = await dio.get('/s/api/users/${userId}/posts',queryParameters: {"page": page});
+    // final responseBody = response.data;
+    // Logger().d(responseBody);
+    // return responseBody;
+
+    // 1. 통신 코드
+    final response = await Future.delayed(
+      Duration(seconds: 2),
+      () {
+        return _mockUserProfilePostListResponse;
+      },
+    );
+
+    // 2. 리턴
+    return response;
+  }
+
+  Future<Map<String, dynamic>> getUserProfileStoryList({
+    required int userId,
+    required int page,
+  }) async {
+    // Response response = await dio.get('/s/api/users/${userId}/stories', queryParameters: {"page": page});
+    // final responseBody = response.data;
+    // Logger().d(responseBody);
+    // return responseBody;
+
+    // 1. 통신 코드
+    final response = await Future.delayed(
+      Duration(seconds: 2),
+      () {
+        return _mockUserProfileStoryListResponse;
+      },
+    );
+
+    // 2. 리턴
+    return response;
+  }
 }
 
 // 가짜 데이터
@@ -147,7 +189,7 @@ final Map<String, dynamic> _mockUserProfileResponse = {
       "prev": 0,
       "next": 0,
       "isFirst": true,
-      "isLast": true,
+      "isLast": false,
       "postList": [
         {
           "postId": 4,
@@ -167,7 +209,7 @@ final Map<String, dynamic> _mockUserProfileResponse = {
       "prev": 0,
       "next": 0,
       "isFirst": true,
-      "isLast": true,
+      "isLast": false,
       "storyList": [
         {
           "storyId": 14,
@@ -200,5 +242,66 @@ final Map<String, dynamic> _mockUserProfileResponse = {
         },
       ],
     },
+  },
+};
+
+final Map<String, dynamic> _mockUserProfilePostListResponse = {
+  "status": 200,
+  "msg": "성공",
+  "body": {
+    "current": 0,
+    "size": 12,
+    "totalCount": 2,
+    "totalPage": 1,
+    "prev": 0,
+    "next": 0,
+    "isFirst": true,
+    "isLast": false,
+    "postList": [
+      {
+        "postId": 4,
+        "postImageUrl": "https://picsum.photos/seed/ssar2_a/800/600",
+      },
+      {
+        "postId": 3,
+        "postImageUrl": "https://picsum.photos/seed/ssar1_a/800/600",
+      },
+    ],
+  },
+};
+
+final Map<String, dynamic> _mockUserProfileStoryListResponse = {
+  "status": 200,
+  "msg": "성공",
+  "body": {
+    "current": 0,
+    "size": 12,
+    "totalCount": 4,
+    "totalPage": 1,
+    "prev": 0,
+    "next": 0,
+    "isFirst": true,
+    "isLast": false,
+    "storyList": [
+      {
+        "storyId": 18,
+        "thumbnailUrl":
+            "https://cdn.pixabay.com/video/2019/02/01/21116-315137080_tiny.jpg",
+      },
+      {
+        "storyId": 16,
+        "thumbnailUrl":
+            "https://cdn.pixabay.com/video/2016/09/14/5278-182817488_tiny.jpg",
+      },
+      {
+        "storyId": 15,
+        "thumbnailUrl":
+            "https://cdn.pixabay.com/video/2018/02/19/14385-256955049_tiny.jpg",
+      },
+      {
+        "storyId": 2,
+        "thumbnailUrl": "https://picsum.photos/seed/story02/400/300",
+      },
+    ],
   },
 };

@@ -13,7 +13,7 @@ import 'package:minigram/ui/pages/story/write/story_write_fm.dart';
 import 'package:minigram/ui/pages/story/write/story_write_page.dart';
 import 'package:minigram/ui/widgets/m_grid_item.dart';
 
-class ProfileGridBuilder extends StatelessWidget {
+class ProfileGridBuilder extends ConsumerWidget {
   final bool isStoryTab;
   final ProfileModel profileModel;
 
@@ -24,7 +24,7 @@ class ProfileGridBuilder extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final storyList = profileModel.storyListObject.storyList;
     final postList = profileModel.postListObject.postList;
 
@@ -35,7 +35,7 @@ class ProfileGridBuilder extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 if (index == storyList.length) {
-                  return _AddBox(context);
+                  return _AddBox(context, ref);
                 } else {
                   final item = storyList[index];
                   return MGridItem(
@@ -69,7 +69,7 @@ class ProfileGridBuilder extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 if (index == postList.length) {
-                  return _AddBox(context);
+                  return _AddBox(context, ref);
                 } else {
                   final item = postList[index];
                   return MGridItem(
@@ -99,20 +99,17 @@ class ProfileGridBuilder extends StatelessWidget {
     }
   }
 
-  Material _AddBox(BuildContext context) {
-    final ImagePicker _picker = ImagePicker();
+  Material _AddBox(BuildContext context, WidgetRef ref) {
+    final ImagePicker picker = ImagePicker();
 
-    Future<void> _pickVideo(BuildContext context) async {
-      final XFile? video = await _picker.pickVideo(
+    Future<void> _pickVideo() async {
+      final XFile? video = await picker.pickVideo(
         source: ImageSource.gallery,
         maxDuration: const Duration(seconds: 60),
       );
 
       if (video != null) {
-        print("선택한 영상 경로: ${video.path}");
-
-        final container = ProviderScope.containerOf(context, listen: false);
-        container.read(storyWriteProvider.notifier).uploadStory(File(video.path));
+        ref.read(storyWriteProvider.notifier).uploadStory(File(video.path));
 
         Navigator.push(
           context,
@@ -124,7 +121,7 @@ class ProfileGridBuilder extends StatelessWidget {
     }
 
     Future<void> _pickImages() async {
-      final List<XFile> images = await _picker.pickMultiImage(
+      final List<XFile> images = await picker.pickMultiImage(
         imageQuality: 85,
         limit: 10,
       );
@@ -145,11 +142,10 @@ class ProfileGridBuilder extends StatelessWidget {
       color: MColor.kBackGround.lightGray,
       child: InkWell(
         onTap: () async {
-          print("추가하기 클릭됨");
           if (isStoryTab) {
-            await _pickVideo(context); // 스토리 탭이면 비디오 선택
+            await _pickVideo();
           } else {
-            await _pickImages(); // 게시글 탭이면 이미지 선택
+            await _pickImages();
           }
         },
         child: const Center(

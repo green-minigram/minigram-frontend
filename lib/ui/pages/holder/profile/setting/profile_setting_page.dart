@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/data/gvm/session_gvm.dart';
 import 'package:minigram/ui/pages/holder/profile/setting/widgets/setting_admin.dart';
 import 'package:minigram/ui/pages/holder/profile/setting/widgets/setting_login.dart';
 import 'package:minigram/ui/pages/holder/profile/setting/widgets/setting_my_account.dart';
 
-class ProfileSettingPage extends StatelessWidget {
+class ProfileSettingPage extends ConsumerWidget {
   const ProfileSettingPage();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final roles = ref.watch(sessionProvider).user?.roles ?? "";
+
     return Scaffold(
       appBar: _appBar(context),
       body: SingleChildScrollView(
@@ -18,7 +22,7 @@ class ProfileSettingPage extends StatelessWidget {
           children: [
             SettingMyAccount(),
             SettingLogin(),
-            SettingAdmin(),
+            roles.contains("ADMIN") ? SettingAdmin() : const SizedBox.shrink(),
           ],
         ),
       ),

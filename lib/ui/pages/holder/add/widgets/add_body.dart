@@ -88,13 +88,16 @@ class AddBody extends ConsumerWidget {
       try {
         final XFile? video = await _picker.pickVideo(
           source: ImageSource.gallery,
-          maxDuration: const Duration(seconds: 60),
+          maxDuration: const Duration(seconds: 30),
         );
 
         if (video != null) {
           print("선택한 영상 경로: ${video.path}");
 
+          // riverpod container 가져오기
           final container = ProviderScope.containerOf(context, listen: false);
+
+          // FM 호출 (업로드 요청은 먼저 수행)
           container.read(storyWriteProvider.notifier).uploadStory(File(video.path));
 
           Navigator.push(

@@ -135,7 +135,7 @@ final Map<String, dynamic> _mockGetListResponse = {
           "userId": 2,
           "username": "ssar",
           "profileImageUrl": "https://picsum.photos/seed/ssar/200",
-          "isFollowing": false,
+          "isFollowing": true,
         },
         "postImageList": [
           {
@@ -154,8 +154,8 @@ final Map<String, dynamic> _mockGetListResponse = {
         "commentCount": 5,
         "createdAt": "2025-09-12T14:41:44",
         "user": {
-          "userId": 2,
-          "username": "ssar",
+          "userId": 3,
+          "username": "love",
           "profileImageUrl": "https://picsum.photos/seed/ssar/200",
           "isFollowing": false,
         },
