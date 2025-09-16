@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/data/gvm/session_gvm.dart';
 import 'package:minigram/ui/widgets/m_show_alert_dialog.dart';
 
-class SettingLogin extends StatelessWidget {
+class SettingLogin extends ConsumerWidget {
   const SettingLogin({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           "로그인",
-          style: TextStyle(color: MColor.kText.description, fontWeight: FontWeight.bold, fontSize: MSize.kFont.m),
+          style: TextStyle(
+            color: MColor.kText.description,
+            fontWeight: FontWeight.bold,
+            fontSize: MSize.kFont.m,
+          ),
         ),
         ListTile(
           contentPadding: EdgeInsets.zero,
@@ -29,14 +35,17 @@ class SettingLogin extends StatelessWidget {
                 print("로그아웃 취소됨");
               },
               onSuccess: () {
-                print("로그아웃 실행");
-                // 로그아웃 로직 실행
+                ref.read(sessionProvider.notifier).logout();
               },
             );
           },
           title: Text(
             "로그아웃",
-            style: TextStyle(fontSize: MSize.kFont.l, fontWeight: FontWeight.bold, color: MColor.kText.red),
+            style: TextStyle(
+              fontSize: MSize.kFont.l,
+              fontWeight: FontWeight.bold,
+              color: MColor.kText.red,
+            ),
           ),
         ),
       ],
