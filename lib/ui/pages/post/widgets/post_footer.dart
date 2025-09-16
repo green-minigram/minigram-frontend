@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/_core/util/m_date.dart';
 import 'package:minigram/data/model/post.dart';
+import 'package:minigram/ui/pages/holder/home/home_vm.dart';
 import 'package:minigram/ui/pages/post/reply/post_comment_page.dart';
 
-class PostFooter extends StatefulWidget {
+class PostFooter extends ConsumerStatefulWidget {
   final Post post;
 
   const PostFooter({
@@ -14,15 +16,49 @@ class PostFooter extends StatefulWidget {
   });
 
   @override
-  State<PostFooter> createState() => _PostFooterState();
+  ConsumerState<PostFooter> createState() => _PostFooterState();
 }
 
-class _PostFooterState extends State<PostFooter> {
+class _PostFooterState extends ConsumerState<PostFooter> {
   bool _expanded = false;
 
   @override
   Widget build(BuildContext context) {
     Post post = widget.post;
+
+    // VM 접근
+    final vm = ref.read(homeProvider.notifier);
+
+    // 좋아요 상태와 개수를 선택적으로 구독
+    final isLiked = ref.watch(
+      homeProvider.select((m) {
+        try {
+          final posts = m?.postObject.postList ?? const [];
+          final p = posts.firstWhere(
+            (e) => e.postId == post.postId,
+            orElse: () => post,
+          );
+          return p.isLiked == true;
+        } catch (_) {
+          return post.isLiked == true;
+        }
+      }),
+    );
+
+    final likesCount = ref.watch(
+      homeProvider.select((m) {
+        try {
+          final posts = m?.postObject.postList ?? const [];
+          final p = posts.firstWhere(
+            (e) => e.postId == post.postId,
+            orElse: () => post,
+          );
+          return p.likesCount ?? 0;
+        } catch (_) {
+          return post.likesCount ?? 0;
+        }
+      }),
+    );
 
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -41,17 +77,19 @@ class _PostFooterState extends State<PostFooter> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      print("좋아요 아이콘 클릭됨");
+                      vm.toggleLike(post.postId);
                     },
                     child: Icon(
-                      Icons.favorite,
-                      color: MColor.kButton.like,
+                      isLiked ? Icons.favorite : Icons.favorite_border,
+                      color: isLiked
+                          ? MColor.kButton.like
+                          : MColor.kIcon.normal,
                       size: MSize.kIcon.s,
                     ),
                   ),
                   SizedBox(width: MSize.kGap.xxs),
                   Text(
-                    "${post.likesCount}",
+                    "$likesCount",
                     style: TextStyle(color: MColor.kText.title),
                   ),
                 ],
