@@ -173,7 +173,7 @@ class StoryRepository {
 
   /// 1. Presigned URL 요청
   Future<Map<String, dynamic>> requestPresignedUrl(String mimeType) async {
-    Logger().e("Presigned URL 요청 호출");
+    Logger().e("영상용 Presigned URL 요청 호출");
     final response = await dio.post(
       "/s/api/storage/presignedUrl",
       data: {
@@ -185,9 +185,22 @@ class StoryRepository {
     return responseBody;
   }
 
+  Future<Map<String, dynamic>> requestImagePresignedUrl(String mimeType) async {
+    Logger().e("이미지용 Presigned URL 요청 호출");
+    final response = await dio.post(
+      "/s/api/storage/presignedUrl",
+      data: {
+        "uploadType": "IMAGE",
+        "mimeType": mimeType,
+      },
+    );
+    final responseBody = response.data;
+    return responseBody;
+  }
+
   /// 2. S3 업로드
   Future<bool> uploadToS3(String presignedUrl, File videoFile) async {
-    Logger().e("S3 업로드 호출");
+    Logger().e("S3 영상 업로드 호출");
     final file = File(videoFile.path);
     final response = await Dio().put(
       presignedUrl,
@@ -203,13 +216,33 @@ class StoryRepository {
     return response.statusCode == 200;
   }
 
+  Future<bool> uploadImgToS3(String presignedUrl, File imageFile) async {
+    Logger().e("S3 이미지 업로드 호출");
+    final file = File(imageFile.path);
+    final response = await Dio().put(
+      presignedUrl,
+      data: imageFile.openRead(),
+      options: Options(
+        headers: {
+          "Content-Type": "image/jpeg",
+          "Content-Length": await file.length(),
+        },
+      ),
+    );
+    Logger().d("S3 응답 코드: ${response.statusCode}");
+    return response.statusCode == 200;
+  }
+
   /// 3. 서버에 최종 등록
-  Future<Map<String, dynamic>> uploadStory(String videoUrl) async {
+  Future<Map<String, dynamic>> uploadStory(String videoUrl, String thumbnailUrl) async {
     Logger().e("스토리 등록 호출");
 
     final response = await dio.post(
       "/s/api/stories",
-      data: {"videoUrl": videoUrl},
+      data: {
+        "videoUrl": videoUrl,
+        "thumbnailUrl": thumbnailUrl,
+      },
     );
     final responseBody = response.data as Map<String, dynamic>;
     return responseBody;
