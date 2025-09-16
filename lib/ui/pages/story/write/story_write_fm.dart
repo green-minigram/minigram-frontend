@@ -16,6 +16,7 @@ class StoryWriteFM extends AutoDisposeNotifier<AsyncValue<void>> {
   AsyncValue<void> build() => const AsyncValue.data(null);
 
   Future<void> uploadStory(File videoFile) async {
+    final bucketBaseUrl = "https://minigram-2025.s3.ap-northeast-2.amazonaws.com/";
     state = const AsyncValue.loading();
 
     // try {
@@ -36,7 +37,8 @@ class StoryWriteFM extends AutoDisposeNotifier<AsyncValue<void>> {
     Logger().d("s3 업로드 호출 끝 : $success");
 
     // 3. 서버 등록
-    final result = await StoryRepository().uploadStory(key);
+    final fullUrl = "$bucketBaseUrl$key";
+    final result = await StoryRepository().uploadStory(fullUrl);
     if (result == null || result["status"] != 200) {
       throw Exception("스토리 등록 실패");
     }
