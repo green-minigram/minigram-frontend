@@ -11,7 +11,6 @@ import 'package:minigram/ui/pages/auth/join_page/email_page.dart';
 import 'package:minigram/ui/pages/auth/join_page/password_page.dart';
 import 'package:minigram/ui/pages/auth/join_page/username_page.dart';
 import 'package:minigram/ui/pages/auth/login_page/login_page.dart';
-import 'package:minigram/ui/pages/follow/follow_page.dart';
 import 'package:minigram/ui/pages/holder/main_holder.dart';
 import 'package:minigram/ui/pages/holder/profile/edit/profile_edit_bio_page.dart';
 import 'package:minigram/ui/pages/holder/profile/edit/profile_edit_birth_date_page.dart';
@@ -50,7 +49,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: mTheme(),
-      home: const MainHolder(),
+      home: const LoginPage(),
       routes: {
         MRoute.mainHolder: (context) => const MainHolder(),
         MRoute.joinEmail: (context) => const EmailPage(),
@@ -60,12 +59,11 @@ class MyApp extends StatelessWidget {
         MRoute.profileEdit: (context) => const ProfileEditPage(),
         MRoute.profileEditName: (context) => const ProfileEditNamePage(),
         MRoute.profileEditBio: (context) => const ProfileEditBioPage(),
-        MRoute.profileEditBirthDate: (context) =>
-            const ProfileEditBirthDatePage(),
+        MRoute.profileEditBirthDate: (context) => const ProfileEditBirthDatePage(),
         MRoute.profileEditGender: (context) => ProfileEditGenderPage(),
         MRoute.profileSetting: (context) => ProfileSettingPage(),
-        MRoute.follower: (context) => const FollowPage(),
-        MRoute.following: (context) => const FollowPage(),
+        // MRoute.follower: (context) => const FollowPage(),
+        // MRoute.following: (context) => const FollowPage(),
         MRoute.abuseReport: (context) => const AbuseReportPage(),
         MRoute.reportComplete: (context) => ReportCompletePage(),
         MRoute.notification: (context) => const NotificationPage(),

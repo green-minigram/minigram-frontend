@@ -56,6 +56,7 @@ class StoryWriteBody extends StatelessWidget {
                   ),
                   onPressed: () {
                     print("스토리 업로드 진행");
+                    Navigator.popUntil(context, (route) => route.isFirst);
                   },
                 ),
               ),

@@ -1,68 +1,156 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/ui/pages/holder/profile/profile_vm.dart';
 import 'package:minigram/ui/pages/post/detail/post_detail_page.dart';
+import 'package:minigram/ui/pages/post/write/post_write_page.dart';
 import 'package:minigram/ui/pages/story/detail/story_detail_page.dart';
+import 'package:minigram/ui/pages/story/write/story_write_fm.dart';
+import 'package:minigram/ui/pages/story/write/story_write_page.dart';
 import 'package:minigram/ui/widgets/m_grid_item.dart';
 
 class ProfileGridBuilder extends StatelessWidget {
   final bool isStoryTab;
+  final ProfileModel profileModel;
 
   const ProfileGridBuilder({
     super.key,
     this.isStoryTab = false,
+    required this.profileModel,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        childAspectRatio: MSize.kRatio.aspect34,
-        crossAxisSpacing: MSize.kGap.xxxs,
-        mainAxisSpacing: MSize.kGap.xxxs,
-      ),
-      itemCount: 9,
-      itemBuilder: (context, index) {
-        final imageUrl =
-            "https://cdn.pixabay.com/photo/2025/08/21/09/51/rouen-cathedral-9787080_960_720.jpg";
+    final storyList = profileModel.storyListObject.storyList;
+    final postList = profileModel.postListObject.postList;
 
-        if (index == 8) {
-          return _AddBox();
-        } else {
-          return MGridItem(
-            imageUrl: imageUrl,
-            onTap: () {
-              if (isStoryTab) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => StoryDetailPage(storyId: 1), // TODO id 할당
-                  ),
-                );
-              } else {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => PostDetailPage(
-                      postId: 1,
-                    ),
-                  ),
-                );
-              }
-            },
-          );
-        }
-      },
-    );
+    if (isStoryTab) {
+      return CustomScrollView(
+        slivers: [
+          SliverGrid(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                if (index == storyList.length) {
+                  return _AddBox(context);
+                } else {
+                  final item = storyList[index];
+                  return MGridItem(
+                    imageUrl: item.thumbnailUrl,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => StoryDetailPage(storyId: item.storyId),
+                        ),
+                      );
+                    },
+                  );
+                }
+              },
+              childCount: storyList.length + 1,
+            ),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              childAspectRatio: MSize.kRatio.aspect34,
+              crossAxisSpacing: MSize.kGap.xxxs,
+              mainAxisSpacing: MSize.kGap.xxxs,
+            ),
+          ),
+        ],
+      );
+    } else {
+      return CustomScrollView(
+        slivers: [
+          SliverGrid(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                if (index == postList.length) {
+                  return _AddBox(context);
+                } else {
+                  final item = postList[index];
+                  return MGridItem(
+                    imageUrl: item.postImageUrl,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => PostDetailPage(postId: item.postId),
+                        ),
+                      );
+                    },
+                  );
+                }
+              },
+              childCount: postList.length + 1,
+            ),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              childAspectRatio: MSize.kRatio.aspect34,
+              crossAxisSpacing: MSize.kGap.xxxs,
+              mainAxisSpacing: MSize.kGap.xxxs,
+            ),
+          ),
+        ],
+      );
+    }
   }
 
-  Material _AddBox() {
+  Material _AddBox(BuildContext context) {
+    final ImagePicker _picker = ImagePicker();
+
+    Future<void> _pickVideo(BuildContext context) async {
+      final XFile? video = await _picker.pickVideo(
+        source: ImageSource.gallery,
+        maxDuration: const Duration(seconds: 60),
+      );
+
+      if (video != null) {
+        print("선택한 영상 경로: ${video.path}");
+
+        final container = ProviderScope.containerOf(context, listen: false);
+        container.read(storyWriteProvider.notifier).uploadStory(File(video.path));
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => StoryWritePage(videoPath: video.path),
+          ),
+        );
+      }
+    }
+
+    Future<void> _pickImages() async {
+      final List<XFile> images = await _picker.pickMultiImage(
+        imageQuality: 85,
+        limit: 10,
+      );
+
+      if (images.isNotEmpty) {
+        final paths = images.map((img) => img.path).toList();
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => PostWritePage(imagePaths: paths),
+          ),
+        );
+      }
+    }
+
     return Material(
       color: MColor.kBackGround.lightGray,
       child: InkWell(
-        onTap: () {
+        onTap: () async {
           print("추가하기 클릭됨");
+          if (isStoryTab) {
+            await _pickVideo(context); // 스토리 탭이면 비디오 선택
+          } else {
+            await _pickImages(); // 게시글 탭이면 이미지 선택
+          }
         },
         child: const Center(
           child: Icon(Icons.add),

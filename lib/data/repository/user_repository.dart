@@ -4,7 +4,11 @@ import 'package:minigram/_core/util/my_http.dart';
 
 /// 책임 -> 통신 & 파싱(body data)
 class UserRepository {
-  Future<Map<String, dynamic>> join(String username, String email, String password) async {
+  Future<Map<String, dynamic>> join(
+    String username,
+    String email,
+    String password,
+  ) async {
     // final requestBody = {
     //   "username": username,
     //   "email": email,
@@ -29,31 +33,34 @@ class UserRepository {
     return response;
   }
 
-  Future<Map<String, dynamic>> login(String username, String password) async {
-    // final requestBody = {
-    //   "username": username,
-    //   "password": password,
-    // };
-    //
-    // Response response = await dio.post("/login", data: requestBody);
-    // Map<String, dynamic> responseBody = response.data;
-    // Logger().d(responseBody);
-    // return responseBody;
+  Future<Map<String, dynamic>> login(String email, String password) async {
+    final requestBody = {
+      "email": email,
+      "password": password,
+    };
+
+    Response response = await dio.post("/api/auth/login", data: requestBody);
+    Map<String, dynamic> responseBody = response.data;
+    Logger().d(responseBody);
+    return responseBody;
 
     // 1. 통신 코드
-    final response = await Future.delayed(
-      Duration(seconds: 2),
-      () {
-        return _mockLoginResponse;
-      },
-    );
+    // final response = await Future.delayed(
+    //   Duration(seconds: 2),
+    //   () {
+    //     return _mockLoginResponse;
+    //   },
+    // );
 
     // 2. 리턴
-    return response;
+    // return response;
   }
 
   Future<Map<String, dynamic>> autoLogin(String accessToken) async {
-    Response response = await dio.post("/auto/login", options: Options(headers: {"Authorization": accessToken}));
+    Response response = await dio.post(
+      "/auto/login",
+      options: Options(headers: {"Authorization": accessToken}),
+    );
     Map<String, dynamic> responseBody = response.data;
     Logger().d(responseBody);
     return responseBody;
@@ -61,11 +68,11 @@ class UserRepository {
 
   // 추가: 아이디 중복 확인
   Future<bool> checkUsernameAvailable(String username) async {
-    // // 백엔드 엔드포인트에 맞게 수정
-    // final Response res = await dio.get("/check/username", queryParameters: {"username": username});
-    // final data = res.data as Map<String, dynamic>;
-    // // 예: { success: true, response: { available: true } }
-    // final available = (data["response"]?["available"]) == true;
+    // 백엔드 엔드포인트에 맞게 수정
+    // Response response = await dio.post("/login", data: requestBody);
+    // Map<String, dynamic> responseBody = response.data;
+    // Logger().d(responseBody);
+    // return responseBody;
     return true;
   }
 
@@ -75,6 +82,24 @@ class UserRepository {
     // final data = res.data as Map<String, dynamic>;
     // final available = (data["response"]?["available"]) == true;
     return true;
+  }
+
+  Future<Map<String, dynamic>> getUserProfile(int userId) async {
+    // Response response = await dio.get('/s/api/users/${userId}/detail');
+    // final responseBody = response.data;
+    // Logger().d(responseBody);
+    // return responseBody;
+
+    // 1. 통신 코드
+    final response = await Future.delayed(
+      Duration(seconds: 2),
+      () {
+        return _mockUserProfileResponse;
+      },
+    );
+
+    // 2. 리턴
+    return response;
   }
 }
 
@@ -94,5 +119,86 @@ final Map<String, dynamic> _mockLoginResponse = {
     "userId": 1,
     "username": "minigram",
     "roles": "ADMIN, USER",
+  },
+};
+
+final Map<String, dynamic> _mockUserProfileResponse = {
+  "status": 200,
+  "msg": "성공",
+  "body": {
+    "profile": {
+      "userId": 2,
+      "username": "ssar",
+      "name": "ssar",
+      "bio": "백엔드 개발자 지망생",
+      "profileImageUrl": "https://picsum.photos/seed/ssar/200",
+      "hasUnseen": true,
+      "isOwner": true,
+      "isFollowing": false,
+      "postCount": 2,
+      "followerCount": 5,
+      "followingCount": 4,
+    },
+    "postList": {
+      "current": 0,
+      "size": 12,
+      "totalCount": 2,
+      "totalPage": 1,
+      "prev": 0,
+      "next": 0,
+      "isFirst": true,
+      "isLast": true,
+      "postList": [
+        {
+          "postId": 4,
+          "postImageUrl": "https://picsum.photos/seed/ssar2_a/800/600",
+        },
+        {
+          "postId": 3,
+          "postImageUrl": "https://picsum.photos/seed/ssar1_a/800/600",
+        },
+      ],
+    },
+    "storyList": {
+      "current": 0,
+      "size": 12,
+      "totalCount": 6,
+      "totalPage": 1,
+      "prev": 0,
+      "next": 0,
+      "isFirst": true,
+      "isLast": true,
+      "storyList": [
+        {
+          "storyId": 14,
+          "thumbnailUrl":
+              "https://cdn.pixabay.com/video/2019/02/01/21116-315137080_tiny.jpg",
+        },
+        {
+          "storyId": 13,
+          "thumbnailUrl":
+              "https://cdn.pixabay.com/video/2016/09/14/5278-182817488_tiny.jpg",
+        },
+        {
+          "storyId": 12,
+          "thumbnailUrl":
+              "https://cdn.pixabay.com/video/2016/05/12/3134-166335905_tiny.jpg",
+        },
+        {
+          "storyId": 11,
+          "thumbnailUrl":
+              "https://cdn.pixabay.com/video/2019/02/01/21116-315137080_tiny.jpg",
+        },
+        {
+          "storyId": 10,
+          "thumbnailUrl":
+              "https://cdn.pixabay.com/video/2018/02/19/14385-256955049_tiny.jpg",
+        },
+        {
+          "storyId": 1,
+          "thumbnailUrl": "https://picsum.photos/seed/story01/400/300",
+        },
+      ],
+    },
   },
 };
