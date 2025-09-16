@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/ui/pages/post/reply/post_comment_vm.dart';
 import 'package:minigram/ui/pages/post/reply/widgets/post_comment_item.dart';
 
 class PostCommentCard extends StatefulWidget {
-  final Map<String, dynamic> comment;
+  final PostComment comment;
   final void Function(String username)? onReplyTap;
 
   const PostCommentCard({
@@ -21,24 +22,24 @@ class _PostCommentCardState extends State<PostCommentCard> {
   bool _showReplies = false;
 
   Widget _buildSlidable({
-    required Map<String, dynamic> data,
+    required PostComment comment,
     required bool isReply,
     required Widget child,
   }) {
     return Slidable(
-      key: ValueKey(data["commentId"]),
+      key: ValueKey(comment.commentId),
       endActionPane: ActionPane(
         motion: const StretchMotion(),
         extentRatio: 0.2,
         children: [
           SlidableAction(
             onPressed: (context) {
-              print("삭제: ${data["commentId"]}");
+              print("삭제: ${comment.commentId}");
             },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
             icon: Icons.delete,
-            padding: EdgeInsets.only(left: 8),
+            padding: const EdgeInsets.only(left: 8),
           ),
         ],
       ),
@@ -48,40 +49,35 @@ class _PostCommentCardState extends State<PostCommentCard> {
 
   @override
   Widget build(BuildContext context) {
-    final List<dynamic> replies = widget.comment["replies"] ?? [];
+    final replies = widget.comment.replies;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 본댓글
         _buildSlidable(
-          data: widget.comment,
+          comment: widget.comment,
           isReply: false,
           child: PostCommentItem(
-            data: widget.comment,
+            comment: widget.comment,
             isReply: false,
             showReplies: _showReplies,
             onToggleReplies: () {
-              setState(() {
-                _showReplies = !_showReplies;
-              });
+              setState(() => _showReplies = !_showReplies);
             },
             onReplyTap: widget.onReplyTap,
           ),
         ),
-
-        // 대댓글 리스트
         if (_showReplies && replies.isNotEmpty)
           Padding(
-            padding: EdgeInsets.only(left: MSize.kGap.l), // 들여쓰기
+            padding: EdgeInsets.only(left: MSize.kGap.l),
             child: Column(
               children: replies
                   .map(
                     (reply) => _buildSlidable(
-                      data: reply,
+                      comment: reply,
                       isReply: true,
                       child: PostCommentItem(
-                        data: reply,
+                        comment: reply,
                         isReply: true,
                         onReplyTap: widget.onReplyTap,
                       ),

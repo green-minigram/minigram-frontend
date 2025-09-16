@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/ui/pages/post/reply/post_comment_vm.dart';
 import 'package:minigram/ui/pages/post/reply/widgets/post_comment_item_body.dart';
 import 'package:minigram/ui/pages/post/reply/widgets/post_comment_item_header.dart';
 import 'package:minigram/ui/pages/post/reply/widgets/post_comment_item_like.dart';
 import 'package:minigram/ui/widgets/m_story.dart';
 
 class PostCommentItem extends StatelessWidget {
-  final Map<String, dynamic> data;
+  final PostComment comment;
   final bool isReply;
   final bool showReplies;
   final VoidCallback? onToggleReplies;
@@ -14,7 +15,7 @@ class PostCommentItem extends StatelessWidget {
 
   const PostCommentItem({
     super.key,
-    required this.data,
+    required this.comment,
     this.isReply = false,
     this.showReplies = false,
     this.onToggleReplies,
@@ -23,9 +24,6 @@ class PostCommentItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final author = data["author"];
-    final List<dynamic> replies = data["replies"] ?? [];
-
     return Padding(
       padding: EdgeInsets.only(
         left: isReply ? MSize.kGap.huge : 0,
@@ -34,45 +32,37 @@ class PostCommentItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 프로필 이미지
           MStory(
             size: isReply ? MSize.kStory.s * 0.8 : MSize.kStory.s,
-            imageUrl: author["profileImageUrl"],
+            imageUrl: comment.user.profileImageUrl,
             isGradient: false,
-            userId: 2, // TODO userId 필요
+            userId: comment.user.userId,
           ),
           SizedBox(width: MSize.kGap.xs),
-
-          // Header + Body
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // 닉네임 + 작성시간 + 작성자 표시
                 PostCommentItemHeader(
-                  username: author["username"],
-                  createdAt: data["createdAt"],
-                  isPostAuthor: author["isPostAuthor"] ?? false,
+                  username: comment.user.username,
+                  createdAt: comment.createdAt.toIso8601String(),
+                  isPostAuthor: false, // TODO: 필요시 추가
                 ),
-
-                // 본문 + 답글달기 + 답글 n개 토글
                 PostCommentItemBody(
-                  content: data["content"],
+                  content: comment.content,
                   isReply: isReply,
-                  replies: replies,
+                  replies: comment.replies,
                   showReplies: showReplies,
                   onToggleReplies: onToggleReplies,
-                  onReplyTap: () => onReplyTap?.call(author["username"]),
+                  onReplyTap: () => onReplyTap?.call(comment.user.username),
                 ),
               ],
             ),
           ),
-
-          // 좋아요 버튼
           PostCommentItemLike(
-            isLiked: data["isLiked"] ?? false,
-            likesCount: data["likesCount"] ?? 0,
-            onLike: () => print("좋아요: ${data["commentId"]}"),
+            isLiked: comment.isLiked,
+            likesCount: comment.likeCount,
+            onLike: () => print("좋아요: ${comment.commentId}"),
           ),
         ],
       ),
