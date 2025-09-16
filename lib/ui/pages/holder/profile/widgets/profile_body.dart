@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/ui/pages/holder/profile/profile_vm.dart';
 import 'package:minigram/ui/pages/holder/profile/widgets/profile_grid_builder.dart';
@@ -7,9 +8,8 @@ import 'package:minigram/ui/pages/holder/profile/widgets/profile_header_button.d
 import 'package:minigram/ui/pages/holder/profile/widgets/profile_header_info.dart';
 
 class ProfileBody extends StatelessWidget {
-  const ProfileBody({super.key, required this.profileModel});
-
-  final ProfileModel profileModel;
+  final int userId;
+  const ProfileBody({super.key, required this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +22,25 @@ class ProfileBody extends StatelessWidget {
               handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
               sliver: SliverPadding(
                 padding: EdgeInsets.symmetric(horizontal: MSize.kGap.l),
-                sliver: SliverList(
-                  delegate: SliverChildListDelegate([
-                    ProfileHeaderInfo(profileModel: profileModel),
-                    ProfileHeaderBio(profileModel: profileModel),
-                    ProfileHeaderButton(profileModel: profileModel),
-                  ]),
+                sliver: Consumer(
+                  builder: (context, ref, _) {
+                    final profileModel = ref.watch(profileProvider(userId));
+                    if (profileModel == null) {
+                      return const SliverToBoxAdapter(
+                        child: SizedBox(
+                          height: 200,
+                          child: Center(child: CircularProgressIndicator()),
+                        ),
+                      );
+                    }
+                    return SliverList(
+                      delegate: SliverChildListDelegate([
+                        ProfileHeaderInfo(profileModel: profileModel),
+                        ProfileHeaderBio(profileModel: profileModel),
+                        ProfileHeaderButton(profileModel: profileModel),
+                      ]),
+                    );
+                  },
                 ),
               ),
             ),
@@ -50,8 +63,7 @@ class ProfileBody extends StatelessWidget {
               builder: (context) {
                 return ProfileGridBuilder(
                   isStoryTab: false,
-                  profileModel: profileModel,
-                  // 내부 SmartRefresher → CustomScrollView 안에 SliverOverlapInjector 필요
+                  userId: userId,
                   injectorHandle:
                       NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                 );
@@ -61,7 +73,7 @@ class ProfileBody extends StatelessWidget {
               builder: (context) {
                 return ProfileGridBuilder(
                   isStoryTab: true,
-                  profileModel: profileModel,
+                  userId: userId,
                   injectorHandle:
                       NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                 );

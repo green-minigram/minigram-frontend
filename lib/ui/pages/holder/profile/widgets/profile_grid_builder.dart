@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/ui/pages/holder/profile/profile_vm.dart';
@@ -7,51 +8,41 @@ import 'package:minigram/ui/pages/story/detail/story_detail_page.dart';
 import 'package:minigram/ui/widgets/m_grid_item.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class ProfileGridBuilder extends StatefulWidget {
+class ProfileGridBuilder extends ConsumerWidget {
   final bool isStoryTab;
-  final ProfileModel profileModel;
-
-  /// NestedScrollView와 연결하기 위해 SliverOverlapAbsorberHandle 전달
+  final int userId;
   final SliverOverlapAbsorberHandle injectorHandle;
 
   const ProfileGridBuilder({
     super.key,
     this.isStoryTab = false,
-    required this.profileModel,
+    required this.userId,
     required this.injectorHandle,
   });
 
   @override
-  State<ProfileGridBuilder> createState() => _ProfileGridBuilderState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final profileModel = ref.watch(profileProvider(userId));
+    final profileVM = ref.read(profileProvider(userId).notifier);
 
-class _ProfileGridBuilderState extends State<ProfileGridBuilder> {
-  final RefreshController _refreshController = RefreshController(
-    initialRefresh: false,
-  );
+    if (profileModel == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
 
-  Future<void> _onLoading() async {
-    // TODO: 추가 데이터 로딩 로직 (API 호출 후 setState)
-    await Future.delayed(const Duration(milliseconds: 1500));
-    _refreshController.loadComplete();
-  }
+    final storyList = profileModel.storyListObject.storyList;
+    final postList = profileModel.postListObject.postList;
 
-  @override
-  Widget build(BuildContext context) {
-    final storyList = widget.profileModel.storyListObject.storyList;
-    final postList = widget.profileModel.postListObject.postList;
-
-    if (widget.isStoryTab) {
-      // 스토리 탭
+    if (isStoryTab) {
       return SmartRefresher(
-        controller: _refreshController,
-        enablePullDown: false,
+        controller: profileVM.storyScrollController,
+        enablePullDown: true,
         enablePullUp: true,
-        onLoading: _onLoading,
+        onRefresh: () => profileVM.init(userId: userId),
+        onLoading: () => profileVM.nextStoryList(userId: userId),
         child: CustomScrollView(
-          key: PageStorageKey<String>("storyTab"),
+          key: const PageStorageKey<String>("storyTab"),
           slivers: [
-            SliverOverlapInjector(handle: widget.injectorHandle),
+            SliverOverlapInjector(handle: injectorHandle),
             SliverGrid(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
@@ -86,16 +77,16 @@ class _ProfileGridBuilderState extends State<ProfileGridBuilder> {
         ),
       );
     } else {
-      // 게시글 탭
       return SmartRefresher(
-        controller: _refreshController,
-        enablePullDown: false,
+        controller: profileVM.postScrollController,
+        enablePullDown: true,
         enablePullUp: true,
-        onLoading: _onLoading,
+        onRefresh: () => profileVM.init(userId: userId),
+        onLoading: () => profileVM.nextPostList(userId: userId),
         child: CustomScrollView(
-          key: PageStorageKey<String>("postTab"),
+          key: const PageStorageKey<String>("postTab"),
           slivers: [
-            SliverOverlapInjector(handle: widget.injectorHandle),
+            SliverOverlapInjector(handle: injectorHandle),
             SliverGrid(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {

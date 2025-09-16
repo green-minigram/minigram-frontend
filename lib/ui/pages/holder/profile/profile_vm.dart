@@ -16,14 +16,16 @@ final profileProvider =
 /// 2. 창고
 class ProfileVM extends AutoDisposeFamilyNotifier<ProfileModel?, int> {
   final mContext = navigatorKey.currentContext!;
-  final verticalScrollController = RefreshController();
+  final postScrollController = RefreshController();
+  final storyScrollController = RefreshController();
 
   @override
   ProfileModel? build(int userId) {
     init(userId: userId);
 
     ref.onDispose(() {
-      verticalScrollController.dispose();
+      postScrollController.dispose();
+      storyScrollController.dispose();
       Logger().d("ProfileVM 파괴됨");
     });
 
@@ -44,90 +46,101 @@ class ProfileVM extends AutoDisposeFamilyNotifier<ProfileModel?, int> {
 
     state = ProfileModel.fromMap(profileBody["body"]);
 
-    verticalScrollController.refreshCompleted();
+    postScrollController.refreshCompleted();
+    storyScrollController.refreshCompleted();
   }
 
-  // Future<void> nextPostList() async {
-  //   ProfileModel prevModel = state!;
+  Future<void> nextPostList({required int userId}) async {
+    final prevModel = state;
+    if (prevModel == null) {
+      postScrollController.loadComplete();
+      return;
+    }
 
-  //   if (prevModel.postList.isLast) {
-  //     await Future.delayed(Duration(milliseconds: 500));
-  //     verticalScrollController.loadComplete();
-  //     return;
-  //   }
+    if (prevModel.postListObject.isLast) {
+      await Future.delayed(Duration(milliseconds: 500));
+      postScrollController.loadComplete();
+      return;
+    }
 
-  //   Map<String, dynamic> body = await PostRepository().getList(
-  //     page: prevModel.postList.next,
-  //   );
-  //   if (body["status"] != 200) {
-  //     ScaffoldMessenger.of(mContext).showSnackBar(
-  //       SnackBar(content: Text("게시글 로딩 실패 : ${body["msg"]}")),
-  //     );
-  //     verticalScrollController.loadComplete();
-  //     return;
-  //   }
+    Map<String, dynamic> body = await UserRepository().getUserProfilePostList(
+      page: prevModel.postListObject.next,
+      userId: userId,
+    );
+    if (body["status"] != 200) {
+      ScaffoldMessenger.of(mContext).showSnackBar(
+        SnackBar(content: Text("유저 프로필 게시글 로딩 실패 : ${body["msg"]}")),
+      );
+      postScrollController.loadComplete();
+      return;
+    }
 
-  //   _PostListObject nextPostObject = _PostListObject.fromMap(body['body']);
+    _PostListObject nextPostObject = _PostListObject.fromMap(body['body']);
 
-  //   state = prevModel.copyWith(
-  //     postList: prevModel.postList.copyWith(
-  //       current: nextPostObject.current,
-  //       size: nextPostObject.size,
-  //       totalCount: nextPostObject.totalCount,
-  //       totalPage: nextPostObject.totalPage,
-  //       prev: nextPostObject.prev,
-  //       next: nextPostObject.next,
-  //       isFirst: nextPostObject.isFirst,
-  //       isLast: nextPostObject.isLast,
-  //       postList: [
-  //         ...prevModel.postList.postList,
-  //         ...nextPostObject.postList,
-  //       ],
-  //     ),
-  //   );
-  //   verticalScrollController.loadComplete();
-  // }
+    state = prevModel.copyWith(
+      postList: prevModel.postListObject.copyWith(
+        current: nextPostObject.current,
+        size: nextPostObject.size,
+        totalCount: nextPostObject.totalCount,
+        totalPage: nextPostObject.totalPage,
+        prev: nextPostObject.prev,
+        next: nextPostObject.next,
+        isFirst: nextPostObject.isFirst,
+        isLast: nextPostObject.isLast,
+        postList: [
+          ...prevModel.postListObject.postList,
+          ...nextPostObject.postList,
+        ],
+      ),
+    );
+    postScrollController.loadComplete();
+  }
 
-  // Future<void> nextStoryList() async {
-  //   ProfileModel prevModel = state!;
+  Future<void> nextStoryList({required int userId}) async {
+    final prevModel = state;
+    if (prevModel == null) {
+      storyScrollController.loadComplete();
+      return;
+    }
 
-  //   if (prevModel.storyList.isLast) {
-  //     await Future.delayed(Duration(milliseconds: 500));
-  //     // horizontalScrollController.loadComplete();
-  //     return;
-  //   }
+    if (prevModel.storyListObject.isLast) {
+      await Future.delayed(Duration(milliseconds: 500));
+      storyScrollController.loadComplete();
+      return;
+    }
 
-  //   Map<String, dynamic> body = await StoryRepository().getRecent(
-  //     prevModel.profile.userId,
-  //   );
-  //   if (body["status"] != 200) {
-  //     ScaffoldMessenger.of(mContext).showSnackBar(
-  //       SnackBar(content: Text("스토리 로딩 실패 : ${body["msg"]}")),
-  //     );
-  //     // horizontalScrollController.loadComplete();
-  //     return;
-  //   }
+    Map<String, dynamic> body = await UserRepository().getUserProfileStoryList(
+      userId: userId,
+      page: prevModel.storyListObject.next,
+    );
+    if (body["status"] != 200) {
+      ScaffoldMessenger.of(mContext).showSnackBar(
+        SnackBar(content: Text("유저 프로필필 스토리 로딩 실패 : ${body["msg"]}")),
+      );
+      storyScrollController.loadComplete();
+      return;
+    }
 
-  //   _StoryListObject nextStoryObject = _StoryListObject.fromMap(body['body']);
+    _StoryListObject nextStoryObject = _StoryListObject.fromMap(body['body']);
 
-  //   state = prevModel.copyWith(
-  //     storyList: prevModel.storyList.copyWith(
-  //       current: nextStoryObject.current,
-  //       size: nextStoryObject.size,
-  //       totalCount: nextStoryObject.totalCount,
-  //       totalPage: nextStoryObject.totalPage,
-  //       prev: nextStoryObject.prev,
-  //       next: nextStoryObject.next,
-  //       isFirst: nextStoryObject.isFirst,
-  //       isLast: nextStoryObject.isLast,
-  //       storyList: [
-  //         ...prevModel.storyList.storyList,
-  //         ...nextStoryObject.storyList,
-  //       ],
-  //     ),
-  //   );
-  //   // horizontalScrollController.loadComplete();
-  // }
+    state = prevModel.copyWith(
+      storyList: prevModel.storyListObject.copyWith(
+        current: nextStoryObject.current,
+        size: nextStoryObject.size,
+        totalCount: nextStoryObject.totalCount,
+        totalPage: nextStoryObject.totalPage,
+        prev: nextStoryObject.prev,
+        next: nextStoryObject.next,
+        isFirst: nextStoryObject.isFirst,
+        isLast: nextStoryObject.isLast,
+        storyList: [
+          ...prevModel.storyListObject.storyList,
+          ...nextStoryObject.storyList,
+        ],
+      ),
+    );
+    storyScrollController.loadComplete();
+  }
 }
 
 /// 3. 창고 데이터 타입
