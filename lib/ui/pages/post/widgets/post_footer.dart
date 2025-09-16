@@ -100,7 +100,11 @@ class _PostFooterState extends ConsumerState<PostFooter> {
                   print("댓글 버튼 클릭됨");
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => PostCommentPage()),
+                    MaterialPageRoute(
+                      builder: (_) => PostCommentPage(
+                        postId: post.postId,
+                      ),
+                    ),
                   );
                 },
                 icon: Icon(
