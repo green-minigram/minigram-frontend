@@ -98,6 +98,7 @@ class _PostWritePageState extends ConsumerState<PostWritePage> {
           onPressed: () async {
             /// 여기서 그냥 호출만 하면 됨
             await postWriteNotifier.registerPost(_textController.text.trim());
+            Navigator.popUntil(context, (route) => route.isFirst);
           },
           child: Text(
             "등록",
