@@ -7,12 +7,19 @@ import 'package:minigram/ui/pages/holder/profile/widgets/profile_header_bio.dart
 import 'package:minigram/ui/pages/holder/profile/widgets/profile_header_button.dart';
 import 'package:minigram/ui/pages/holder/profile/widgets/profile_header_info.dart';
 
-class ProfileBody extends StatelessWidget {
+class ProfileBody extends ConsumerWidget {
   final int userId;
+
   const ProfileBody({super.key, required this.userId});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final profileModel = ref.watch(profileProvider(userId));
+
+    if (profileModel == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return DefaultTabController(
       length: 2,
       child: NestedScrollView(
@@ -22,25 +29,12 @@ class ProfileBody extends StatelessWidget {
               handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
               sliver: SliverPadding(
                 padding: EdgeInsets.symmetric(horizontal: MSize.kGap.l),
-                sliver: Consumer(
-                  builder: (context, ref, _) {
-                    final profileModel = ref.watch(profileProvider(userId));
-                    if (profileModel == null) {
-                      return const SliverToBoxAdapter(
-                        child: SizedBox(
-                          height: 200,
-                          child: Center(child: CircularProgressIndicator()),
-                        ),
-                      );
-                    }
-                    return SliverList(
-                      delegate: SliverChildListDelegate([
-                        ProfileHeaderInfo(profileModel: profileModel),
-                        ProfileHeaderBio(profileModel: profileModel),
-                        ProfileHeaderButton(profileModel: profileModel),
-                      ]),
-                    );
-                  },
+                sliver: SliverList(
+                  delegate: SliverChildListDelegate([
+                    ProfileHeaderInfo(profileModel: profileModel),
+                    ProfileHeaderBio(profileModel: profileModel),
+                    ProfileHeaderButton(profileModel: profileModel),
+                  ]),
                 ),
               ),
             ),
@@ -59,25 +53,13 @@ class ProfileBody extends StatelessWidget {
         },
         body: TabBarView(
           children: [
-            Builder(
-              builder: (context) {
-                return ProfileGridBuilder(
-                  isStoryTab: false,
-                  userId: userId,
-                  injectorHandle:
-                      NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-                );
-              },
+            ProfileGridBuilder(
+              isStoryTab: false,
+              profileModel: profileModel,
             ),
-            Builder(
-              builder: (context) {
-                return ProfileGridBuilder(
-                  isStoryTab: true,
-                  userId: userId,
-                  injectorHandle:
-                      NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-                );
-              },
+            ProfileGridBuilder(
+              isStoryTab: true,
+              profileModel: profileModel,
             ),
           ],
         ),

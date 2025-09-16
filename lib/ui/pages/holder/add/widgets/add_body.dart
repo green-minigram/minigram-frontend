@@ -5,11 +5,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/ui/pages/post/write/post_write_fm.dart';
 import 'package:minigram/ui/pages/post/write/post_write_page.dart';
 import 'package:minigram/ui/pages/story/write/story_write_fm.dart';
 import 'package:minigram/ui/pages/story/write/story_write_page.dart';
 
-class AddBody extends StatelessWidget {
+class AddBody extends ConsumerWidget {
   const AddBody({super.key});
 
   Widget _buildOption({
@@ -49,7 +50,7 @@ class AddBody extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final ImagePicker _picker = ImagePicker();
 
     Future<void> _pickImages() async {
@@ -60,10 +61,14 @@ class AddBody extends StatelessWidget {
         );
         if (images.isNotEmpty) {
           final paths = images.map((img) => img.path).toList();
+          final imageFiles = images.map((img) => File(img.path)).toList();
 
           for (var img in images) {
             print("선택한 이미지 경로: ${img.path}");
           }
+
+          /// 업로드 완료까지 기다리기
+          await ref.read(postWriteProvider.notifier).uploadImagesToS3(imageFiles);
 
           Navigator.push(
             context,
@@ -83,7 +88,7 @@ class AddBody extends StatelessWidget {
       try {
         final XFile? video = await _picker.pickVideo(
           source: ImageSource.gallery,
-          maxDuration: const Duration(seconds: 60),
+          maxDuration: const Duration(seconds: 30),
         );
 
         if (video != null) {

@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:minigram/data/model/post.dart';
 import 'package:minigram/data/repository/follow_repository.dart';
+import 'package:minigram/data/repository/like_repository.dart';
 import 'package:minigram/data/repository/post_repository.dart';
 import 'package:minigram/data/repository/story_repository.dart';
 import 'package:minigram/main.dart';
@@ -222,6 +225,58 @@ class HomeVM extends AutoDisposeNotifier<HomeModel?> {
         SnackBar(content: Text("팔로우 상태 변경 실패: $e")),
       );
     }
+  }
+
+  Timer? _likeDebounce;
+
+  Future<void> toggleLike(int postId) async {
+    if (state == null) return;
+
+    final prevModel = state!;
+    final postList = prevModel.postObject.postList;
+
+    // postId에 해당하는 post 찾기
+    final idx = postList.indexWhere((post) => post.postId == postId);
+    if (idx == -1) return;
+
+    final post = postList[idx];
+    final isLiked = post.isLiked ?? false;
+    final likesCount = post.likesCount ?? 0;
+
+    // 1) UI 먼저 토글
+    final updatedPost = post.copyWith(
+      isLiked: !isLiked,
+      likesCount: isLiked ? (likesCount - 1) : (likesCount + 1),
+    );
+
+    final updatedPostList = List<Post>.from(postList);
+    updatedPostList[idx] = updatedPost;
+
+    state = prevModel.copyWith(
+      postObject: prevModel.postObject.copyWith(
+        postList: updatedPostList,
+      ),
+    );
+    Logger().d(
+      "좋아요 상태 변경 (UI 반영): ${updatedPost.isLiked}, likesCount=${updatedPost.likesCount}",
+    );
+
+    // 2) 디바운스 → 마지막 액션만 서버로 반영
+    _likeDebounce?.cancel();
+    _likeDebounce = Timer(const Duration(milliseconds: 500), () async {
+      try {
+        Logger().d("좋아요 통신 시작 (postId=$postId)");
+        if (updatedPost.isLiked) {
+          await LikeRepository().addPostLike(postId);
+        } else {
+          await LikeRepository().removeLike(postId);
+        }
+        Logger().d("좋아요 통신 성공 (postId=$postId)");
+      } catch (e) {
+        Logger().e("좋아요 통신 오류: $e");
+        // 실패 시 UI 롤백도 고려 가능
+      }
+    });
   }
 }
 
