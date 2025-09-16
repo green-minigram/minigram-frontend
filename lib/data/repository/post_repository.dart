@@ -1,3 +1,9 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
+import 'package:logger/logger.dart';
+import 'package:minigram/_core/util/my_http.dart';
+
 /// 책임 -> 통신 & 파싱(body data)
 class PostRepository {
   Future<Map<String, dynamic>> getList({int page = 0}) async {
@@ -46,6 +52,59 @@ class PostRepository {
 
     // 2. 리턴
     return response;
+  }
+
+  /// Presigned URL 요청 (이미지 업로드용)
+  Future<Map<String, dynamic>> requestPresignedUrl(String mimeType) async {
+    Logger().d("Presigned URL 요청 (이미지) 호출");
+
+    final response = await dio.post(
+      "/s/api/storage/presignedUrl",
+      data: {
+        "uploadType": "IMAGE", // 여기서 IMAGE로 변경
+        "mimeType": mimeType,
+      },
+    );
+
+    return response.data;
+  }
+
+  /// 실제 S3 업로드
+  Future<bool> uploadToS3(String presignedUrl, File imageFile) async {
+    Logger().d("S3 업로드 호출: ${imageFile.path}");
+
+    final response = await Dio().put(
+      presignedUrl,
+      data: imageFile.openRead(),
+      options: Options(
+        headers: {
+          "Content-Type": "image/jpeg", // PNG, JPG 등 mimeType에 맞게 설정
+          "Content-Length": await imageFile.length(),
+        },
+      ),
+    );
+
+    return response.statusCode == 200;
+  }
+
+  /// 게시글 최종 등록 (이미지 여러 장 가능)
+  Future<Map<String, dynamic>> uploadPost({
+    required List<String> imageUrls,
+    required String content,
+  }) async {
+    final body = {
+      "content": content,
+      "imageUrls": imageUrls,
+    };
+    Logger().d("게시글 등록 호출");
+
+    final response = await dio.post(
+      "/s/api/posts",
+      data: body,
+      options: Options(headers: {"Content-Type": "application/json"}),
+    );
+
+    return response.data;
   }
 }
 

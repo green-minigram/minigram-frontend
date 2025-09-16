@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/data/gvm/session_gvm.dart';
 import 'package:minigram/ui/pages/post/widgets/post_form_footer.dart';
 import 'package:minigram/ui/pages/post/widgets/post_form_header.dart';
 import 'package:minigram/ui/pages/post/widgets/post_form_image.dart';
+import 'package:minigram/ui/pages/post/write/post_write_fm.dart';
 import 'package:minigram/ui/pages/post/write/widgets/post_date_picker.dart';
 
-class PostWritePage extends StatefulWidget {
+class PostWritePage extends ConsumerStatefulWidget {
   final List<String> imagePaths;
-  final bool isAdmin; // TODO userRole로 교체해야 합니다
 
   const PostWritePage({
     super.key,
     required this.imagePaths,
-    this.isAdmin = true,
   });
 
   @override
-  State<PostWritePage> createState() => _PostWritePageState();
+  ConsumerState<PostWritePage> createState() => _PostWritePageState();
 }
 
-class _PostWritePageState extends State<PostWritePage> {
+class _PostWritePageState extends ConsumerState<PostWritePage> {
   final TextEditingController _textController = TextEditingController();
   late List<String> _limitedImages;
 
@@ -30,24 +31,16 @@ class _PostWritePageState extends State<PostWritePage> {
   @override
   void initState() {
     super.initState();
-
     if (widget.imagePaths.length > 10) {
       _limitedImages = widget.imagePaths.take(10).toList();
-
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
             title: const Text("알림"),
-            content: Text(
-              "사진은 최대 10장까지만 업로드할 수 있습니다.\n"
-              "추가 ${widget.imagePaths.length - 10}장은 제외됩니다.",
-            ),
+            content: Text("사진은 최대 10장까지만 업로드 가능합니다."),
             actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(ctx),
-                child: const Text("확인"),
-              ),
+              TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("확인")),
             ],
           ),
         );
@@ -59,14 +52,19 @@ class _PostWritePageState extends State<PostWritePage> {
 
   @override
   Widget build(BuildContext context) {
+    final session = ref.watch(sessionProvider);
+    final user = session.user;
+
+    final isAdmin = (user?.roles ?? "").contains("ADMIN");
+
     return Scaffold(
       appBar: _appbar(context),
       body: ListView(
         children: [
-          PostFormHeader(username: 'username'),
+          PostFormHeader(username: user?.username ?? "게스트"),
           PostFormImage(imagePaths: _limitedImages),
 
-          if (widget.isAdmin) ...[
+          if (isAdmin) ...[
             PostDatePicker(
               label: "시작일",
               selectedDate: _startDate,
@@ -82,10 +80,8 @@ class _PostWritePageState extends State<PostWritePage> {
 
           PostFormFooter(
             controller: _textController,
-            onSubmit: () {
-              print("입력한 내용: ${_textController.text}");
-              print("시작날짜: $_startDate");
-              print("끝날짜: $_endDate");
+            onSubmit: () async {
+              await ref.read(postWriteProvider.notifier).registerPost(_textController.text.trim());
             },
           ),
         ],
@@ -94,25 +90,14 @@ class _PostWritePageState extends State<PostWritePage> {
   }
 
   AppBar _appbar(BuildContext context) {
+    final postWriteNotifier = ref.read(postWriteProvider.notifier);
     return AppBar(
-      leading: TextButton(
-        onPressed: () => Navigator.pop(context),
-        child: Text(
-          "취소",
-          style: TextStyle(
-            color: MColor.kText.blue,
-            fontSize: MSize.kFont.m,
-          ),
-        ),
-      ),
       title: const Text('업로드'),
       actions: [
         TextButton(
-          onPressed: () {
-            print("등록 클릭됨");
-            print("내용: ${_textController.text}");
-            print("시작날짜: $_startDate");
-            print("끝날짜: $_endDate");
+          onPressed: () async {
+            /// 여기서 그냥 호출만 하면 됨
+            await postWriteNotifier.registerPost(_textController.text.trim());
           },
           child: Text(
             "등록",
