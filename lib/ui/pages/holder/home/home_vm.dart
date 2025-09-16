@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:minigram/data/model/post.dart';
-import 'package:minigram/data/model/story.dart';
+import 'package:minigram/data/repository/follow_repository.dart';
 import 'package:minigram/data/repository/post_repository.dart';
 import 'package:minigram/data/repository/story_repository.dart';
 import 'package:minigram/main.dart';
-import 'package:minigram/ui/pages/story/write/widget/story_preview.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// 1. 창고 관리자
@@ -182,6 +181,47 @@ class HomeVM extends AutoDisposeNotifier<HomeModel?> {
       ),
     );
     horizontalScrollController.loadComplete();
+  }
+
+  Future<void> toggleFollow(int userId) async {
+    // postList에서 해당 userId를 가진 post의 user를 찾음
+    final prevModel = state!;
+    final postList = prevModel.postObject.postList;
+
+    // postList에서 해당 userId를 가진 post의 인덱스 찾기
+    final idx = postList.indexWhere((post) => post.user.userId == userId);
+    if (idx == -1) return;
+
+    final post = postList[idx];
+    final isFollowing = post.user.isFollowing ?? false;
+
+    try {
+      // 팔로우/언팔로우 API 호출
+      if (isFollowing) {
+        Logger().d("언팔로우 요청함");
+        await FollowRepository().unfollow(userId);
+      } else {
+        Logger().d("팔로우 요청함");
+        await FollowRepository().follow(userId);
+      }
+
+      // postList의 해당 user의 isFollowing 상태를 불변으로 토글
+      final updatedUser = post.user.copyWith(isFollowing: !isFollowing);
+      final updatedPost = post.copyWith(user: updatedUser);
+      final updatedPostList = List<Post>.from(postList);
+      updatedPostList[idx] = updatedPost;
+
+      // 상태 갱신
+      state = prevModel.copyWith(
+        postObject: prevModel.postObject.copyWith(
+          postList: updatedPostList,
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(mContext).showSnackBar(
+        SnackBar(content: Text("팔로우 상태 변경 실패: $e")),
+      );
+    }
   }
 }
 
