@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
+import 'package:minigram/_core/util/my_http.dart';
 
 /// 책임 -> 통신 & 파싱(body data)
 class StoryRepository {
@@ -58,8 +62,7 @@ class StoryRepository {
       "body": {
         "storyId": storyId,
         "userId": 2,
-        "videoUrl":
-            "https://cdn.pixabay.com/video/2015/08/08/125-135736646_large.mp4",
+        "videoUrl": "https://cdn.pixabay.com/video/2015/08/08/125-135736646_large.mp4",
         "thumbnailUrl": "https://picsum.photos/seed/story01/400/300",
         "status": "DELETED",
         "createdAt": "2025-09-08T04:26:54",
@@ -115,8 +118,7 @@ class StoryRepository {
             },
             "story": {
               "storyId": 1,
-              "videoUrl":
-                  "https://www.pexels.com/ko-kr/download/video/32332683/",
+              "videoUrl": "https://www.pexels.com/ko-kr/download/video/32332683/",
               "thumbnailUrl": "https://picsum.photos/seed/story02/400/300",
               "createdAt": "2025-09-08T04:04:47",
             },
@@ -133,8 +135,7 @@ class StoryRepository {
             },
             "story": {
               "storyId": 2,
-              "videoUrl":
-                  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
               "thumbnailUrl": "https://picsum.photos/seed/story02/400/300",
               "createdAt": "2025-09-08T04:04:47",
             },
@@ -151,8 +152,7 @@ class StoryRepository {
             },
             "story": {
               "storyId": 3,
-              "videoUrl":
-                  "https://www.pexels.com/ko-kr/download/video/32332683/",
+              "videoUrl": "https://www.pexels.com/ko-kr/download/video/32332683/",
               "thumbnailUrl": "https://picsum.photos/seed/story02/400/300",
               "createdAt": "2025-09-08T04:04:47",
             },
@@ -171,7 +171,49 @@ class StoryRepository {
   // TODO 좋아요 통신 추가해야 됨
   Future toggleLike(int storyId) async {}
 
+  /// 1. Presigned URL 요청
+  Future<Map<String, dynamic>> requestPresignedUrl(String mimeType) async {
+    Logger().e("Presigned URL 요청 호출");
+    final response = await dio.post(
+      "/s/api/storage/presignedUrl",
+      data: {
+        "uploadType": "VIDEO",
+        "mimeType": mimeType,
+      },
+    );
+    final responseBody = response.data;
+    return responseBody;
+  }
 
+  /// 2. S3 업로드
+  Future<bool> uploadToS3(String presignedUrl, File videoFile) async {
+    Logger().e("S3 업로드 호출");
+    final file = File(videoFile.path);
+    final response = await Dio().put(
+      presignedUrl,
+      data: videoFile.openRead(),
+      options: Options(
+        headers: {
+          "Content-Type": "video/mp4",
+          "Content-Length": await file.length(),
+        },
+      ),
+    );
+    Logger().d("S3 응답 코드: ${response.statusCode}");
+    return response.statusCode == 200;
+  }
+
+  /// 3. 서버에 최종 등록
+  Future<Map<String, dynamic>> uploadStory(String videoUrl) async {
+    Logger().e("스토리 등록 호출");
+
+    final response = await dio.post(
+      "/s/api/stories",
+      data: {"videoUrl": videoUrl},
+    );
+    final responseBody = response.data as Map<String, dynamic>;
+    return responseBody;
+  }
 }
 
 final Map<String, dynamic> _mockPreviewListResponse = {
