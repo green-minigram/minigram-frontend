@@ -24,7 +24,9 @@ class _MSearchBarState extends ConsumerState<MSearchBar> {
   @override
   void dispose() {
     final SearchFM fm = ref.read(searchFormProvider.notifier);
-    fm.focusNode.removeListener(_onFocusChange);
+    try {
+      fm.focusNode.removeListener(_onFocusChange);
+    } catch (_) {}
     super.dispose();
   }
 
