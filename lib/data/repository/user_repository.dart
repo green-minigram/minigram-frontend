@@ -33,27 +33,27 @@ class UserRepository {
     return response;
   }
 
-  Future<Map<String, dynamic>> login(String username, String password) async {
-    // final requestBody = {
-    //   "username": username,
-    //   "password": password,
-    // };
-    //
-    // Response response = await dio.post("/login", data: requestBody);
-    // Map<String, dynamic> responseBody = response.data;
-    // Logger().d(responseBody);
-    // return responseBody;
+  Future<Map<String, dynamic>> login(String email, String password) async {
+    final requestBody = {
+      "email": email,
+      "password": password,
+    };
+
+    Response response = await dio.post("/api/auth/login", data: requestBody);
+    Map<String, dynamic> responseBody = response.data;
+    Logger().d(responseBody);
+    return responseBody;
 
     // 1. 통신 코드
-    final response = await Future.delayed(
-      Duration(seconds: 2),
-      () {
-        return _mockLoginResponse;
-      },
-    );
+    // final response = await Future.delayed(
+    //   Duration(seconds: 2),
+    //   () {
+    //     return _mockLoginResponse;
+    //   },
+    // );
 
     // 2. 리턴
-    return response;
+    // return response;
   }
 
   Future<Map<String, dynamic>> autoLogin(String accessToken) async {

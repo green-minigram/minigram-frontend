@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/ui/pages/post/write/post_write_page.dart';
+import 'package:minigram/ui/pages/story/write/story_write_fm.dart';
 import 'package:minigram/ui/pages/story/write/story_write_page.dart';
 
 class AddBody extends StatelessWidget {
@@ -79,12 +83,18 @@ class AddBody extends StatelessWidget {
       try {
         final XFile? video = await _picker.pickVideo(
           source: ImageSource.gallery,
-          maxDuration: const Duration(seconds: 60), // 최대 60초
+          maxDuration: const Duration(seconds: 60),
         );
 
         if (video != null) {
           print("선택한 영상 경로: ${video.path}");
-          // StoryWritePage로 이동하면서 videoPath 전달
+
+          // riverpod container 가져오기
+          final container = ProviderScope.containerOf(context, listen: false);
+
+          // FM 호출 (업로드 요청은 먼저 수행)
+          container.read(storyWriteProvider.notifier).uploadStory(File(video.path));
+
           Navigator.push(
             context,
             MaterialPageRoute(
