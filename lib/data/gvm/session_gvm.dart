@@ -88,6 +88,7 @@ class SessionGVM extends Notifier<SessionModel> {
     state = SessionModel(isLoggingIn: true);
 
     // 2. 통신
+    Logger().d('레포지토리 호출 전');
     Map<String, dynamic> body = await UserRepository().login(email, password);
     if (body["status"] != 200) {
       ScaffoldMessenger.of(mContext).showSnackBar(
