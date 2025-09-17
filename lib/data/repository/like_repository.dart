@@ -3,7 +3,7 @@ import 'package:minigram/_core/util/my_http.dart';
 class LikeRepository {
   // 게시글 좋아요 등록
   Future<Map<String, dynamic>> addPostLike(int postId) async {
-    final response = await dio.post("/s/api/posts/{postId}/like");
+    final response = await dio.post("/s/api/posts/{postId}/likes");
     return response.data;
 
     // // Mock
@@ -16,7 +16,7 @@ class LikeRepository {
 
   // 게시글 좋아요 취소
   Future<Map<String, dynamic>> removePostLike(int postId) async {
-    final response = await dio.delete("/s/api/posts/{postId}/like");
+    final response = await dio.delete("/s/api/posts/{postId}/likes");
     return response.data;
 
     // // Mock
