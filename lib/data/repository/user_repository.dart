@@ -38,6 +38,7 @@ class UserRepository {
       "email": email,
       "password": password,
     };
+    Logger().d('레포지토리 호출 $requestBody');
 
     Response response = await dio.post("/api/auth/login", data: requestBody);
     Map<String, dynamic> responseBody = response.data;
