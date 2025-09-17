@@ -32,8 +32,10 @@ class SearchVM extends Notifier<SearchModel?> {
 
   Future<void> init({int page = 0, String keyword = ""}) async {
     /// 게시글 목록 조회
-    Map<String, dynamic> searchResultPostBody = await PostRepository()
-        .getSearchResultList(page: page, keyword: keyword);
+    Map<String, dynamic> searchResultPostBody = await PostRepository().getSearchResultList(
+      page: page,
+      keyword: keyword,
+    );
     if (searchResultPostBody["status"] != 200) {
       ScaffoldMessenger.of(mContext).showSnackBar(
         SnackBar(
@@ -123,7 +125,7 @@ class _PostObject {
   final int next;
   final bool isFirst;
   final bool isLast;
-  final List<_SimplePost> postList;
+  final List<SearchSimplePost> postList;
 
   _PostObject({
     required this.current,
@@ -146,9 +148,7 @@ class _PostObject {
       next = map['next'],
       isFirst = map['isFirst'],
       isLast = map['isLast'],
-      postList = (map['postList'] as List)
-          .map((e) => _SimplePost.fromMap(e))
-          .toList();
+      postList = (map['postList'] as List).map((e) => SearchSimplePost.fromMap(e)).toList();
 
   _PostObject copyWith({
     int? current,
@@ -159,7 +159,7 @@ class _PostObject {
     int? next,
     bool? isFirst,
     bool? isLast,
-    List<_SimplePost>? postList,
+    List<SearchSimplePost>? postList,
   }) {
     return _PostObject(
       current: current ?? this.current,
@@ -175,28 +175,28 @@ class _PostObject {
   }
 }
 
-class _SimplePost {
+class SearchSimplePost {
   final int postId;
   final String postImageUrl;
   final String? content;
 
-  _SimplePost({
+  SearchSimplePost({
     required this.postId,
     required this.postImageUrl,
     this.content,
   });
 
-  _SimplePost.fromMap(Map<String, dynamic> map)
+  SearchSimplePost.fromMap(Map<String, dynamic> map)
     : postId = map['postId'],
       postImageUrl = map['postImageUrl'],
       content = map['content'];
 
-  _SimplePost copyWith({
+  SearchSimplePost copyWith({
     int? postId,
     String? postImageUrl,
     String? content,
   }) {
-    return _SimplePost(
+    return SearchSimplePost(
       postId: postId ?? this.postId,
       postImageUrl: postImageUrl ?? this.postImageUrl,
       content: content ?? this.content,

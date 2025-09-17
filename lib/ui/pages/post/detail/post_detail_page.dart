@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
+import 'package:minigram/ui/pages/holder/search/search_vm.dart';
 import 'package:minigram/ui/pages/post/detail/widgets/post_detail_body.dart';
 import 'package:minigram/ui/widgets/m_app_bar_bottom_line.dart';
 import 'package:minigram/ui/widgets/m_button.dart';
 
 class PostDetailPage extends StatelessWidget {
-  final int postId;
+  final SearchSimplePost post;
+
   const PostDetailPage({
     super.key,
-    required this.postId,
+    required this.post,
   });
 
   @override
   Widget build(BuildContext context) {
-    print('게시글 상세 페이지 렌더링됨! ${postId} 포스트 아이디'); // 렌더링 확인용
+    print('게시글 상세 페이지 렌더링됨! ${post.postId} 포스트 아이디'); // 렌더링 확인용
     return Scaffold(
       appBar: _appBar(context),
       body: PostDetailBody(),
