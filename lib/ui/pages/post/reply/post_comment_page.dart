@@ -2,25 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:minigram/ui/pages/post/reply/widgets/post_comment_body.dart';
 
 class PostCommentPage extends StatelessWidget {
-  const PostCommentPage({super.key});
+  final int postId;
+
+  const PostCommentPage({
+    super.key,
+    required this.postId,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar(context),
-      body: PostCommentBody(),
+      body: PostCommentBody(postId: postId), // postId 넘겨주기
     );
   }
 
   AppBar _appBar(BuildContext context) => AppBar(
     leading: IconButton(
       onPressed: () => Navigator.pop(context),
-      icon: Icon(Icons.arrow_back_ios),
+      icon: const Icon(Icons.arrow_back_ios),
     ),
-    title: Column(
-      children: [
-        Text('댓글'),
-      ],
-    ),
+    title: const Text('댓글'),
   );
 }
