@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:minigram/_core/styles/m_color.dart';
 import 'package:minigram/_core/styles/m_size.dart';
 import 'package:minigram/data/gvm/session_gvm.dart';
+import 'package:minigram/ui/pages/holder/home/home_vm.dart';
 import 'package:minigram/ui/pages/post/widgets/post_form_footer.dart';
 import 'package:minigram/ui/pages/post/widgets/post_form_header.dart';
 import 'package:minigram/ui/pages/post/widgets/post_form_image.dart';
@@ -91,6 +92,7 @@ class _PostWritePageState extends ConsumerState<PostWritePage> {
 
   AppBar _appbar(BuildContext context) {
     final postWriteNotifier = ref.read(postWriteProvider.notifier);
+    final homeWriteNotifier = ref.read(homeProvider.notifier);
     return AppBar(
       title: const Text('업로드'),
       actions: [
@@ -98,6 +100,7 @@ class _PostWritePageState extends ConsumerState<PostWritePage> {
           onPressed: () async {
             /// 여기서 그냥 호출만 하면 됨
             await postWriteNotifier.registerPost(_textController.text.trim());
+            homeWriteNotifier.init();
             Navigator.popUntil(context, (route) => route.isFirst);
           },
           child: Text(
