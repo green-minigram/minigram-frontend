@@ -18,11 +18,48 @@ final sessionProvider = NotifierProvider<SessionGVM, SessionModel>(() {
 
 /// 2. 창고
 class SessionGVM extends Notifier<SessionModel> {
-  final mContext = navigatorKey.currentContext!;
+  BuildContext? mContext; // nullable
 
   @override
   SessionModel build() {
     return SessionModel();
+  }
+
+  void setContext(BuildContext ctx) {
+    mContext = ctx;
+  }
+
+  void _showSnack(String msg) {
+    if (mContext != null) {
+      ScaffoldMessenger.of(mContext!).showSnackBar(SnackBar(content: Text(msg)));
+    }
+  }
+
+  // ---- 네비 헬퍼 (navigatorKey 기반) ----
+  NavigatorState? get _nav => navigatorKey.currentState;
+
+  // 프레임 뒤로 미뤄서 attach 안 된 시점도 안전하게
+  void _withNav(void Function(NavigatorState nav) fn) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final nav = _nav;
+      if (nav != null) fn(nav);
+    });
+  }
+
+  void _goNamedAndRemoveAll(String routeName) {
+    _withNav((nav) => nav.pushNamedAndRemoveUntil(routeName, (r) => false));
+  }
+
+  void _goNamedKeepingFirst(String routeName) {
+    _withNav((nav) => nav.pushNamedAndRemoveUntil(routeName, (r) => r.isFirst));
+  }
+
+  void _pushReplacementPage(Widget page) {
+    _withNav(
+      (nav) => nav.pushReplacement(
+        MaterialPageRoute(builder: (_) => page),
+      ),
+    );
   }
 
   // 선택지 A: 제출 전 과정을 한 곳에서 처리
@@ -38,9 +75,7 @@ class SessionGVM extends Notifier<SessionModel> {
     Logger().d("join submit -> username:${s.username}, email:${s.email}");
     final ok = fm.validateWithAvailability();
     if (!ok) {
-      ScaffoldMessenger.of(mContext).showSnackBar(
-        const SnackBar(content: Text("이메일, 아이디, 비밀번호를 확인해주세요")),
-      );
+      _showSnack("이메일, 아이디, 비밀번호를 확인해주세요");
       return;
     }
 
@@ -51,22 +86,19 @@ class SessionGVM extends Notifier<SessionModel> {
       state = SessionModel(isJoining: true);
       final body = await UserRepository().join(s.username, s.email, s.password);
       if (body["status"] != 200) {
-        ScaffoldMessenger.of(mContext).showSnackBar(
-          SnackBar(content: Text("${body["msg"]}")),
-        );
+        _showSnack("${body["msg"]}");
         return;
       }
 
       // 5) 성공 → 로그인으로 스택 초기화 이동
-      Navigator.pushNamedAndRemoveUntil(
-        mContext,
-        MRoute.login,
-        (route) => false,
-      );
+      _goNamedAndRemoveAll(MRoute.login);
+      // Navigator.pushNamedAndRemoveUntil(
+      //   mContext,
+      //   MRoute.login,
+      //   (route) => false,
+      // );
     } catch (e) {
-      ScaffoldMessenger.of(mContext).showSnackBar(
-        const SnackBar(content: Text("일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.")),
-      );
+      _showSnack("일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
     } finally {
       // 6) 로딩 종료(전환 직전/직후에도 안전하게 false)
       state = SessionModel(isJoining: false);
@@ -78,9 +110,7 @@ class SessionGVM extends Notifier<SessionModel> {
     Logger().d("email : ${email}, password : ${password}");
     bool isValid = ref.read(loginProvider.notifier).validate();
     if (!isValid) {
-      ScaffoldMessenger.of(mContext).showSnackBar(
-        SnackBar(content: Text("유효성 검사 실패입니다")),
-      );
+      _showSnack("유효성 검사 실패입니다.");
       return;
     }
 
@@ -90,9 +120,7 @@ class SessionGVM extends Notifier<SessionModel> {
     // 2. 통신
     Map<String, dynamic> body = await UserRepository().login(email, password);
     if (body["status"] != 200) {
-      ScaffoldMessenger.of(mContext).showSnackBar(
-        SnackBar(content: Text("${body["msg"]}")),
-      );
+      _showSnack("${body["msg"]}");
       return;
     }
 
@@ -112,11 +140,12 @@ class SessionGVM extends Notifier<SessionModel> {
     Logger().d("로그인 성공");
 
     // 6. 게시글 목록 페이지 이동
-    Navigator.pushNamedAndRemoveUntil(
-      mContext,
-      MRoute.mainHolder,
-      (route) => false,
-    );
+    // Navigator.pushNamedAndRemoveUntil(
+    //   mContext,
+    //   MRoute.mainHolder,
+    //   (route) => false,
+    // );
+    _goNamedAndRemoveAll(MRoute.mainHolder);
   }
 
   Future<void> logout() async {
@@ -132,7 +161,8 @@ class SessionGVM extends Notifier<SessionModel> {
     Logger().d("로그아웃 성공");
 
     // 4. login 페이지 이동
-    Navigator.pushNamedAndRemoveUntil(mContext, MRoute.login, (route) => false);
+    //Navigator.pushNamedAndRemoveUntil(mContext, MRoute.login, (route) => false);
+    _goNamedAndRemoveAll(MRoute.login);
   }
 
   Future<void> autoLogin() async {
@@ -140,10 +170,11 @@ class SessionGVM extends Notifier<SessionModel> {
     String? accessToken = await secureStorage.read(key: "accessToken");
 
     if (accessToken == null) {
-      Navigator.pushReplacement(
-        mContext,
-        MaterialPageRoute(builder: (_) => LoginPage()),
-      );
+      // Navigator.pushReplacement(
+      //   mContext,
+      //   MaterialPageRoute(builder: (_) => LoginPage()),
+      // );
+      _pushReplacementPage(LoginPage());
       return;
     }
 
@@ -151,13 +182,12 @@ class SessionGVM extends Notifier<SessionModel> {
     Map<String, dynamic> body = await UserRepository().autoLogin(accessToken);
 
     if (!body["success"]) {
-      ScaffoldMessenger.of(mContext).showSnackBar(
-        SnackBar(content: Text("${body["errorMessage"]}")),
-      );
-      Navigator.pushReplacement(
-        mContext,
-        MaterialPageRoute(builder: (_) => LoginPage()),
-      );
+      _showSnack("${body["errorMessage"]}");
+      // Navigator.pushReplacement(
+      //   mContext,
+      //   MaterialPageRoute(builder: (_) => LoginPage()),
+      // );
+      _pushReplacementPage(LoginPage());
       return;
     }
 
@@ -171,11 +201,12 @@ class SessionGVM extends Notifier<SessionModel> {
     dio.options.headers["Authorization"] = user.accessToken;
 
     // 6. 게시글 목록 페이지 이동
-    Navigator.pushNamedAndRemoveUntil(
-      mContext,
-      MRoute.mainHolder,
-      (route) => route.isFirst,
-    );
+    // Navigator.pushNamedAndRemoveUntil(
+    //   mContext,
+    //   MRoute.mainHolder,
+    //   (route) => route.isFirst,
+    // );
+    _goNamedKeepingFirst(MRoute.mainHolder);
   }
 }
 

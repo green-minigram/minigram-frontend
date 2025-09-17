@@ -2,13 +2,8 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:minigram/m_route.dart';
 
-class SplashPage extends StatelessWidget {
+class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
-
-  void _initAsync(BuildContext context) async {
-    await Future.delayed(const Duration(seconds: 5));
-    Navigator.pushReplacementNamed(context, MRoute.login);
-  }
 
   static const List<Color> _igColors = <Color>[
     Color(0xFFDD2A7B),
@@ -24,6 +19,16 @@ class SplashPage extends StatelessWidget {
     fontSize: 36,
     fontWeight: FontWeight.w700,
   );
+
+  @override
+  State<SplashPage> createState() => _SplashPageState();
+}
+
+class _SplashPageState extends State<SplashPage> {
+  void _initAsync(BuildContext context) async {
+    await Future.delayed(const Duration(seconds: 5));
+    Navigator.pushReplacementNamed(context, MRoute.login);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +54,8 @@ class SplashPage extends StatelessWidget {
               animatedTexts: [
                 ColorizeAnimatedText(
                   'Minigram',
-                  textStyle: _colorizeTextStyle,
-                  colors: _igColors,
+                  textStyle: SplashPage._colorizeTextStyle,
+                  colors: SplashPage._igColors,
                   textAlign: TextAlign.center,
                   speed: const Duration(milliseconds: 1000),
                 ),
