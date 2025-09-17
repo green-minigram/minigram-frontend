@@ -32,7 +32,7 @@ class PostGridSliver extends ConsumerWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => PostDetailPage(
-                    post: model.postObject.postList[index],
+                    postId: model.postObject.postList[index].postId,
                   ),
                 ),
               );
