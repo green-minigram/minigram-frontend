@@ -9,7 +9,7 @@ class Post {
   final int commentCount;
   final String createdAt;
   final User user;
-  final List<_PostImage> postImageList;
+  final List<PostImageModel> postImageList;
 
   Post({
     required this.postId,
@@ -33,7 +33,7 @@ class Post {
       createdAt = data['createdAt'],
       user = User.fromMap(data['user']),
       postImageList = (data['postImageList'] as List)
-          .map((data) => _PostImage.fromMap(data))
+          .map((data) => PostImageModel.fromMap(data))
           .toList();
 
   /// 좋아요 누를때 사용할 것 같음
@@ -46,7 +46,7 @@ class Post {
     int? commentCount,
     String? createdAt,
     User? user,
-    List<_PostImage>? postImageList,
+    List<PostImageModel>? postImageList,
   }) {
     return Post(
       postId: postId ?? this.postId,
@@ -62,16 +62,16 @@ class Post {
   }
 }
 
-class _PostImage {
+class PostImageModel {
   final int postImageId;
   final String url;
 
-  _PostImage({
+  PostImageModel({
     required this.postImageId,
     required this.url,
   });
 
-  _PostImage.fromMap(Map<String, dynamic> data)
+  PostImageModel.fromMap(Map<String, dynamic> data)
     : postImageId = data['postImageId'],
       url = data['url'];
 }

@@ -106,6 +106,14 @@ class PostRepository {
 
     return response.data;
   }
+
+  /// 게시글 상세 조회
+  Future<Map<String, dynamic>> getDetail(int postId) async {
+    Response response = await dio.get("/s/api/posts/$postId");
+    final responseBody = response.data;
+    Logger().d(responseBody);
+    return responseBody;
+  }
 }
 
 // 가짜 데이터

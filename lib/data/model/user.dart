@@ -6,6 +6,7 @@ class User {
   String? accessToken;
   bool? isFollowing;
   bool? showFollowButton;
+  bool? isOwner;
 
   User({
     required this.userId,
@@ -15,6 +16,7 @@ class User {
     this.accessToken,
     this.isFollowing,
     this.showFollowButton,
+    this.isOwner,
   });
 
   User.fromMap(Map<String, dynamic> data)
@@ -26,7 +28,8 @@ class User {
       showFollowButton = (data['isFollowing'] == null)
           ? null
           : !((data['isFollowing'] as bool)),
-      accessToken = data['accessToken'] ?? "";
+      accessToken = data['accessToken'] ?? "",
+      isOwner = data['isOwner'];
 
   @override
   String toString() {
