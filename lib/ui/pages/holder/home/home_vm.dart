@@ -269,7 +269,7 @@ class HomeVM extends AutoDisposeNotifier<HomeModel?> {
         if (updatedPost.isLiked) {
           await LikeRepository().addPostLike(postId);
         } else {
-          await LikeRepository().removeLike(postId);
+          await LikeRepository().removePostLike(postId);
         }
         Logger().d("좋아요 통신 성공 (postId=$postId)");
       } catch (e) {
