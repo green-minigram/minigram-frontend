@@ -7,21 +7,24 @@ import 'package:minigram/_core/util/my_http.dart';
 /// 책임 -> 통신 & 파싱(body data)
 class PostRepository {
   Future<Map<String, dynamic>> getList({int page = 0}) async {
-    // Response response = await dio.get("/s/api/feed/posts", queryParameters: {"page": page});
-    // final responseBody = response.data;
-    // Logger().d(responseBody);
-    // return responseBody;
-
-    // 1. 통신 코드
-    final response = await Future.delayed(
-      Duration(seconds: 2),
-      () {
-        return _mockGetListResponse;
-      },
+    Response response = await dio.get(
+      "/s/api/feed/posts",
+      queryParameters: {"page": page},
     );
+    final responseBody = response.data;
+    Logger().d(responseBody);
+    return responseBody;
 
-    // 2. 리턴
-    return response;
+    // // 1. 통신 코드
+    // final response = await Future.delayed(
+    //   Duration(seconds: 2),
+    //   () {
+    //     return _mockGetListResponse;
+    //   },
+    // );
+
+    // // 2. 리턴
+    // return response;
   }
 
   Future<Map<String, dynamic>> getSearchResultList({
@@ -29,29 +32,29 @@ class PostRepository {
     String keyword = "",
   }) async {
     print(keyword);
-    // final query = {
-    //   "page": page,
-    //   if (keyword.isNotEmpty) "keyword": keyword, // 빈 문자열이면 아예 제외됨
-    // };
+    final query = {
+      "page": page,
+      if (keyword.isNotEmpty) "keyword": keyword, // 빈 문자열이면 아예 제외됨
+    };
 
-    // Response response = await dio.get(
-    //   "/s/api/search/posts",
-    //   queryParameters: query,
-    // );
-    // final responseBody = response.data;
-    // Logger().d(responseBody);
-    // return responseBody;
-
-    // 1. 통신 코드
-    final response = await Future.delayed(
-      Duration(seconds: 2),
-      () {
-        return _mockGetSearchResultListResponse;
-      },
+    Response response = await dio.get(
+      "/s/api/search/posts",
+      queryParameters: query,
     );
+    final responseBody = response.data;
+    Logger().d(responseBody);
+    return responseBody;
 
-    // 2. 리턴
-    return response;
+    // // 1. 통신 코드
+    // final response = await Future.delayed(
+    //   Duration(seconds: 2),
+    //   () {
+    //     return _mockGetSearchResultListResponse;
+    //   },
+    // );
+
+    // // 2. 리턴
+    // return response;
   }
 
   /// Presigned URL 요청 (이미지 업로드용)

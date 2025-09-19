@@ -79,12 +79,8 @@ class _MainHolderState extends State<MainHolder> {
         // 프로필 탭 (아이콘 변경 + 빨간 점)
         BottomNavigationBarItem(
           label: '',
-          icon: Badge(
-            smallSize: 8,
-            backgroundColor: Colors.red,
-            child: Icon(
-              selectedIndex == 3 ? Icons.person : Icons.person_outline,
-            ),
+          icon: Icon(
+            selectedIndex == 3 ? Icons.person : Icons.person_outline,
           ),
         ),
       ],
