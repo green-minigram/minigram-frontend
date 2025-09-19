@@ -15,14 +15,23 @@ class NotificationBody extends StatelessWidget {
 
     return ListView(
       children: [
-        _buildSectionTitle("좋아요"),
-        ...data["likes"].map<Widget>((n) => NotificationLikeItem(data: n)).toList(),
+        // 좋아요 데이터가 있을 경우에만 섹션과 아이템을 보여줌
+        if (data["likes"] != null && data["likes"].isNotEmpty) ...[
+          _buildSectionTitle("좋아요"),
+          ...data["likes"].map<Widget>((n) => NotificationLikeItem(data: n)).toList(),
+        ],
 
-        _buildSectionTitle("댓글"),
-        ...data["comments"].map<Widget>((n) => NotificationCommentItem(data: n)).toList(),
+        // 댓글 데이터가 있을 경우에만 섹션과 아이템을 보여줌
+        if (data["comments"] != null && data["comments"].isNotEmpty) ...[
+          _buildSectionTitle("댓글"),
+          ...data["comments"].map<Widget>((n) => NotificationCommentItem(data: n)).toList(),
+        ],
 
-        _buildSectionTitle("팔로우"),
-        ...data["follows"].map<Widget>((n) => NotificationFollowItem(data: n)).toList(),
+        // 팔로우 데이터가 있을 경우에만 섹션과 아이템을 보여줌
+        if (data["follows"] != null && data["follows"].isNotEmpty) ...[
+          _buildSectionTitle("팔로우"),
+          ...data["follows"].map<Widget>((n) => NotificationFollowItem(data: n)).toList(),
+        ],
       ],
     );
   }

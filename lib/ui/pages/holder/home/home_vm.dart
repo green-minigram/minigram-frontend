@@ -339,9 +339,7 @@ class _PostObject {
       next = data['next'],
       isFirst = data['isFirst'],
       isLast = data['isLast'],
-      postList = (data['postList'] as List)
-          .map((data) => Post.fromMap(data))
-          .toList();
+      postList = (data['postList'] as List).map((data) => Post.fromMap(data)).toList();
 
   _PostObject copyWith({
     int? current,
@@ -400,9 +398,7 @@ class _StoryObject {
       next = data['next'],
       isFirst = data['isFirst'],
       isLast = data['isLast'],
-      previewList = (data['previewList'] as List)
-          .map((data) => _Preview.fromMap(data))
-          .toList();
+      previewList = (data['previewList'] as List).map((data) => _Preview.fromMap(data)).toList();
 
   _StoryObject copyWith({
     int? current,

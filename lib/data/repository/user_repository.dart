@@ -86,63 +86,69 @@ class UserRepository {
   }
 
   Future<Map<String, dynamic>> getUserProfile(int userId) async {
-    // Response response = await dio.get('/s/api/users/${userId}/detail');
-    // final responseBody = response.data;
-    // Logger().d(responseBody);
-    // return responseBody;
+    Response response = await dio.get('/s/api/users/${userId}/detail');
+    final responseBody = response.data;
+    Logger().d(responseBody);
+    return responseBody;
 
-    // 1. 통신 코드
-    final response = await Future.delayed(
-      Duration(seconds: 2),
-      () {
-        return _mockUserProfileResponse;
-      },
-    );
+    // // 1. 통신 코드
+    // final response = await Future.delayed(
+    //   Duration(seconds: 2),
+    //   () {
+    //     return _mockUserProfileResponse;
+    //   },
+    // );
 
-    // 2. 리턴
-    return response;
+    // // 2. 리턴
+    // return response;
   }
 
   Future<Map<String, dynamic>> getUserProfilePostList({
     required int userId,
     required int page,
   }) async {
-    // Response response = await dio.get('/s/api/users/${userId}/posts',queryParameters: {"page": page});
-    // final responseBody = response.data;
-    // Logger().d(responseBody);
-    // return responseBody;
-
-    // 1. 통신 코드
-    final response = await Future.delayed(
-      Duration(seconds: 2),
-      () {
-        return _mockUserProfilePostListResponse;
-      },
+    Response response = await dio.get(
+      '/s/api/users/${userId}/posts',
+      queryParameters: {"page": page},
     );
+    final responseBody = response.data;
+    Logger().d(responseBody);
+    return responseBody;
 
-    // 2. 리턴
-    return response;
+    // // 1. 통신 코드
+    // final response = await Future.delayed(
+    //   Duration(seconds: 2),
+    //   () {
+    //     return _mockUserProfilePostListResponse;
+    //   },
+    // );
+
+    // // 2. 리턴
+    // return response;
   }
 
   Future<Map<String, dynamic>> getUserProfileStoryList({
     required int userId,
     required int page,
   }) async {
-    // Response response = await dio.get('/s/api/users/${userId}/stories', queryParameters: {"page": page});
-    // final responseBody = response.data;
-    // Logger().d(responseBody);
-    // return responseBody;
-
-    // 1. 통신 코드
-    final response = await Future.delayed(
-      Duration(seconds: 2),
-      () {
-        return _mockUserProfileStoryListResponse;
-      },
+    Response response = await dio.get(
+      '/s/api/users/${userId}/stories',
+      queryParameters: {"page": page},
     );
+    final responseBody = response.data;
+    Logger().d(responseBody);
+    return responseBody;
 
-    // 2. 리턴
-    return response;
+    // // 1. 통신 코드
+    // final response = await Future.delayed(
+    //   Duration(seconds: 2),
+    //   () {
+    //     return _mockUserProfileStoryListResponse;
+    //   },
+    // );
+
+    // // 2. 리턴
+    // return response;
   }
 }
 

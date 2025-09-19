@@ -20,7 +20,8 @@ class PostWriteFM extends Notifier<AsyncValue<void>> {
   Future<void> uploadImagesToS3(List<File> imageFiles) async {
     state = const AsyncValue.loading();
 
-    final bucketBaseUrl = "https://minigram-2025.s3.ap-northeast-2.amazonaws.com/";
+    final bucketBaseUrl = "https://minigrambucket.s3.ap-northeast-2.amazonaws.com/";
+
     uploadedUrls.clear();
 
     for (final file in imageFiles) {

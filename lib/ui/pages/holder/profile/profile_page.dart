@@ -7,6 +7,7 @@ import 'package:minigram/ui/pages/holder/profile/widgets/profile_body.dart';
 
 class ProfilePage extends ConsumerWidget {
   final int? userId;
+
   const ProfilePage({Key? key, this.userId}) : super(key: key);
 
   @override
